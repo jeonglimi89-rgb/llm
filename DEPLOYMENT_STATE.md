@@ -225,9 +225,25 @@ Pilot 배포 권장 순서:
 
 ---
 
+## ✅ 이후 Round에서 실제로 완성된 것
+
+2026-04-17 update: GitHub push + CI 녹색 검증 완료.
+
+| 항목 | 상태 | 증거 |
+|---|---|---|
+| GitHub push | ✅ 성공 | commit `252f3ac` → `544ee0d` → `587d644` all on main |
+| **GitHub Actions CI** | ✅ **녹색** | Run #2 success (lint + regression + Docker + Trivy) |
+| **Release workflow v0.1.0** | ✅ **녹색** | GHCR에 multi-tag 이미지 자동 푸시됨 |
+| Alertmanager config | ✅ 코드 | Slack/PagerDuty/email 라우팅 템플릿 |
+| certbot 자동화 | ✅ compose profile | renewal sidecar + nginx reloader |
+| 원클릭 deploy.sh | ✅ | 9개 모드 (local/ha/pilot-vm/prod-eks/certbot/alerting/...) |
+| Helm chart | ✅ | 8 templates + HPA/PDB/ServiceMonitor/Ingress + Redis subchart |
+| SBOM + image signing | ✅ workflow | syft SPDX + cosign keyless OIDC |
+| 레포 hygiene | ✅ | LICENSE / SECURITY / CONTRIBUTING / CHANGELOG / CODEOWNERS / Dependabot / templates |
+
 ## 🔑 한 줄 총평
 
-**지금 상태**: Pilot 배포 가능한 코드/설정/테스트/문서가 전부 완성됨. 내 환경(Windows + WSL + 1 GPU)에서 가능한 모든 런타임 검증 완료. 8 종류 external 의존(GitHub push, AWS 계정, 실 도메인 등)은 실 배포 시 최종 확인 필요.
+**지금 상태**: Pilot 배포 가능한 코드/설정/테스트/문서/CI/supply-chain 전부 완성됨. 내 환경(Windows + WSL + 1 GPU)에서 가능한 모든 런타임 검증 완료. 외부 리소스 의존(AWS 계정, 실 도메인, Slack webhook)은 배포 시점에 값만 넣으면 되는 상태.
 
 **"완성"이라 말하지 않는 이유**: 위 8개 중 최소 3개 (GitHub CI 첫 주행, 실 도메인 TLS, 실 클라우드 배포)가 녹색 확인되어야 "프로덕션 배포 완료"라고 부를 수 있음.
 

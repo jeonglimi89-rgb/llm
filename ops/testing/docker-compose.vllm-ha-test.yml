@@ -1,0 +1,51 @@
+# docker-compose.vllm-ha-test.yml — 2 mock vLLM + nginx LB for failover testing
+#
+# Usage:
+#   docker compose -f ops/testing/docker-compose.vllm-ha-test.yml up -d
+#   curl http://localhost:18000/health   # headers show X-Upstream-vLLM
+#   docker kill mock-vllm-a
+#   curl http://localhost:18000/health   # still 200, routed to vllm-b
+
+services:
+  mock-vllm-a:
+    image: python:3.12-alpine
+    container_name: mock-vllm-a
+    hostname: vllm-a
+    working_dir: /app
+    volumes:
+      - ./mock_vllm.py:/app/mock_vllm.py:ro
+    command: ["python", "mock_vllm.py", "--port", "8000", "--id", "A"]
+    expose: ["8000"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 2
+
+  mock-vllm-b:
+    image: python:3.12-alpine
+    container_name: mock-vllm-b
+    hostname: vllm-b
+    working_dir: /app
+    volumes:
+      - ./mock_vllm.py:/app/mock_vllm.py:ro
+    command: ["python", "mock_vllm.py", "--port", "8000", "--id", "B"]
+    expose: ["8000"]
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 2
+
+  nginx-vllm-lb:
+    image: nginx:1.27-alpine
+    container_name: nginx-vllm-lb
+    depends_on:
+      mock-vllm-a:
+        condition: service_started
+      mock-vllm-b:
+        condition: service_started
+    volumes:
+      - ../nginx/nginx-vllm-ha.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "127.0.0.1:18000:8000"

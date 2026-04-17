@@ -5,7 +5,7 @@
 # Run:     docker run --rm -p 8100:8100 --env-file .env vllm-orchestrator:latest
 
 # ---------- Stage 1: dependencies ----------
-FROM python:3.12-slim AS builder
+FROM python:3.14-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -27,7 +27,7 @@ RUN python -m venv /opt/venv \
     && /opt/venv/bin/pip install -r /build/requirements.txt
 
 # ---------- Stage 2: runtime ----------
-FROM python:3.12-slim AS runtime
+FROM python:3.14-slim AS runtime
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \

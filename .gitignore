@@ -110,8 +110,11 @@ terraform.rc
 # === Ops sensitive ===
 # Generated at runtime, not source
 feedback.jsonl
-storage/
+/storage/                               # root-only (not src/app/storage)
+/vllm_orchestrator/storage/             # orchestrator runtime storage
 ops/nginx/logs/
+# Explicit allowlist for source modules that happen to be under 'storage' name
+!vllm_orchestrator/src/app/storage/
 
 # === CI / test artifacts ===
 test-results.xml

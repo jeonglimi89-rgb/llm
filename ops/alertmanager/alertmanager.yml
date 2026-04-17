@@ -1,0 +1,112 @@
+# Alertmanager — routes Prometheus alerts to PagerDuty / Slack / email
+#
+# 활성화:
+#   1. 토큰/URL을 env file로 주입 (아래 ${...} 부분)
+#   2. docker compose --profile observability --profile alerting up -d
+#   3. Prometheus prometheus.yml에 alertmanager target 이미 연결됨
+#
+# Production 권장:
+#   - GitOps로 관리 (변경사항 PR-based)
+#   - Secrets는 Vault / K8s Secret으로
+#   - HA: 3 replica + gossip (이 파일은 단일 replica 기준)
+
+global:
+  resolve_timeout: 5m
+  slack_api_url: ${SLACK_WEBHOOK_URL}
+  # PagerDuty routing key (Events API v2). 없으면 critical alert 라우트 비활성
+  pagerduty_url: https://events.pagerduty.com/v2/enqueue
+  smtp_smarthost: ${SMTP_HOST:-smtp.sendgrid.net:587}
+  smtp_from: alerts@example.com
+  smtp_auth_username: apikey
+  smtp_auth_password: ${SMTP_PASSWORD}
+
+# Route tree — severity/service 별 dispatch
+route:
+  receiver: default
+  group_by: [alertname, service]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+  routes:
+    # Critical → PagerDuty + Slack
+    - receiver: pagerduty-critical
+      matchers:
+        - severity="critical"
+      group_wait: 10s
+      repeat_interval: 30m
+      continue: true         # 계속 다른 route도 매칭
+    - receiver: slack-critical
+      matchers:
+        - severity="critical"
+
+    # Warning → Slack only
+    - receiver: slack-warnings
+      matchers:
+        - severity="warning"
+
+    # Info → email summary
+    - receiver: email-info
+      matchers:
+        - severity="info"
+      group_interval: 30m
+
+# Inhibit rules — critical 떨어져있으면 warning 중복 알림 안 감
+inhibit_rules:
+  - source_matchers: [severity="critical"]
+    target_matchers: [severity="warning"]
+    equal: [alertname, service]
+
+receivers:
+  - name: default
+    slack_configs:
+      - channel: "#alerts-default"
+        send_resolved: true
+        title: "[{{ .Status | toUpper }}] {{ .CommonLabels.alertname }}"
+        text: |
+          *Severity:* {{ .CommonLabels.severity }}
+          *Service:* {{ .CommonLabels.service }}
+          {{ range .Alerts }}*Summary:* {{ .Annotations.summary }}
+          *Description:* {{ .Annotations.description }}
+          {{ end }}
+
+  - name: pagerduty-critical
+    pagerduty_configs:
+      - routing_key: ${PAGERDUTY_ROUTING_KEY}
+        description: "[CRITICAL] {{ .CommonLabels.alertname }} — {{ .CommonAnnotations.summary }}"
+        severity: critical
+        details:
+          firing: "{{ .Alerts.Firing | len }}"
+          service: "{{ .CommonLabels.service }}"
+          description: "{{ .CommonAnnotations.description }}"
+          dashboard: "https://grafana.example.com/d/orch-overview"
+          runbook: "https://github.com/jeonglimi89-rgb/llm/blob/main/ops/README.md"
+
+  - name: slack-critical
+    slack_configs:
+      - channel: "#alerts-critical"
+        send_resolved: true
+        color: "danger"
+        title: ":fire: CRITICAL — {{ .CommonLabels.alertname }}"
+        text: |
+          *Service:* {{ .CommonLabels.service }}
+          *Summary:* {{ .CommonAnnotations.summary }}
+          *Description:* {{ .CommonAnnotations.description }}
+          *Runbook:* https://github.com/jeonglimi89-rgb/llm/blob/main/ops/README.md
+          *Dashboard:* https://grafana.example.com/d/orch-overview
+
+  - name: slack-warnings
+    slack_configs:
+      - channel: "#alerts-warnings"
+        send_resolved: true
+        color: "warning"
+        title: ":warning: {{ .CommonLabels.alertname }}"
+        text: |
+          {{ .CommonAnnotations.summary }}
+          {{ .CommonAnnotations.description }}
+
+  - name: email-info
+    email_configs:
+      - to: oncall@example.com
+        headers:
+          Subject: "[INFO] {{ .CommonLabels.alertname }}"
+        send_resolved: true

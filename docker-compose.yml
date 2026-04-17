@@ -115,6 +115,84 @@ services:
     depends_on:
       - prometheus
 
+  # certbot — Let's Encrypt TLS cert 자동 발급/갱신.
+  # 첫 실행: docker compose --profile certbot run --rm certbot-init
+  # 갱신: 매일 03:00 certbot-renew 실행 (compose timer)
+  certbot-init:
+    image: certbot/certbot:v2.11.0
+    profiles: ["certbot-init"]
+    volumes:
+      - certbot-certs:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    command: >
+      certonly --webroot --webroot-path=/var/www/certbot
+      --email ${CERTBOT_EMAIL:-admin@example.com}
+      --agree-tos --no-eff-email
+      -d ${CERTBOT_DOMAIN:-api.example.com}
+      --non-interactive
+
+  certbot-renew:
+    image: certbot/certbot:v2.11.0
+    profiles: ["certbot"]
+    restart: unless-stopped
+    volumes:
+      - certbot-certs:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        trap exit TERM
+        while :; do
+          certbot renew --webroot --webroot-path=/var/www/certbot --quiet
+          # reload nginx to pick up renewed cert (sends SIGHUP via docker)
+          wget -qO- --post-data= http://nginx-reloader:8080/reload || true
+          sleep 12h & wait $$!
+        done
+
+  # nginx-reloader: 작은 sidecar가 SIGHUP 보냄 (certbot 갱신 후)
+  nginx-reloader:
+    image: alpine:3.20
+    profiles: ["certbot"]
+    restart: unless-stopped
+    depends_on: [nginx]
+    command:
+      - /bin/sh
+      - -c
+      - |
+        apk add --no-cache docker-cli curl busybox-extras >/dev/null
+        while true; do
+          (echo -e 'HTTP/1.1 200 OK\r\n\r\n'; nginx -s reload 2>/dev/null) | nc -l -p 8080 -q 0
+        done
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    expose: ["8080"]
+
+  # Alertmanager — routes to PagerDuty/Slack/email
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    restart: unless-stopped
+    profiles: ["alerting"]
+    volumes:
+      - ./ops/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager-data:/alertmanager
+    environment:
+      # 실 배포 시 override — 비어있으면 receiver는 no-op
+      SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-}
+      PAGERDUTY_ROUTING_KEY: ${PAGERDUTY_ROUTING_KEY:-}
+      SMTP_HOST: ${SMTP_HOST:-smtp.sendgrid.net:587}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+    ports:
+      - "127.0.0.1:9093:9093"
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+      - "--cluster.listen-address="   # single replica
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:9093/-/healthy"]
+      interval: 30s
+      timeout: 5s
+
   # Jaeger for trace visualization (OTEL collector alternative)
   jaeger:
     image: jaegertracing/all-in-one:1.56
@@ -135,3 +213,6 @@ volumes:
   grafana-data:
   jaeger-data:
   nginx-logs:
+  alertmanager-data:
+  certbot-certs:
+  certbot-www:

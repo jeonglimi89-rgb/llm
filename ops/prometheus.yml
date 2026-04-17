@@ -13,3 +13,10 @@ scrape_configs:
 
 rule_files:
   - /etc/prometheus/alerts.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["alertmanager:9093"]
+      # Alertmanager 없으면 조용히 skip — profile 미활성 시에도 prom 기동 가능
+      timeout: 10s

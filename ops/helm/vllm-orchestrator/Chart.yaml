@@ -1,0 +1,22 @@
+apiVersion: v2
+name: vllm-orchestrator
+description: vLLM Orchestrator — LLM task orchestration with cache, critic, variants
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - llm
+  - orchestration
+  - vllm
+  - minecraft
+  - creative-ai
+home: https://github.com/jeonglimi89-rgb/llm
+sources:
+  - https://github.com/jeonglimi89-rgb/llm
+maintainers:
+  - name: jeonglimi89-rgb
+dependencies:
+  - name: redis
+    version: 19.6.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled

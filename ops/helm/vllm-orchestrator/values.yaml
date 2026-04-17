@@ -1,0 +1,141 @@
+# Default values for vllm-orchestrator chart
+
+image:
+  repository: ghcr.io/jeonglimi89-rgb/vllm-orchestrator
+  tag: ""        # defaults to .Chart.AppVersion
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+replicaCount: 2
+
+# Autoscaling — HPA
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilization: 70
+  targetMemoryUtilization: 75
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+
+# Storage — PVC for feedback + cache persistence
+persistence:
+  enabled: false
+  storageClass: ""     # "" = cluster default
+  size: 10Gi
+  accessModes:
+    - ReadWriteOnce
+
+# Configuration (→ ConfigMap)
+config:
+  APP_ENV: "production"
+  LOG_LEVEL: "INFO"
+  UVICORN_WORKERS: "4"
+  REQUEST_CACHE_BACKEND: "auto"
+  REQUEST_CACHE_TTL_S: "3600"
+  SEMANTIC_CACHE_THRESHOLD: "0.55"
+  LLM_CRITIC_MODE: "inline"
+  API_KEY_REQUIRED: "true"
+  RATE_LIMIT_RPS: "5.0"
+  RATE_LIMIT_BURST: "50"
+  RATE_LIMIT_BACKEND: "redis"
+  OTEL_ENABLED: "1"
+  OTEL_TRACES_SAMPLER_ARG: "0.1"
+
+# Secrets — use existingSecret OR inline (inline stores plaintext — not for prod)
+secrets:
+  existingSecret: ""          # preferred: "orchestrator-secrets" (managed externally)
+  inline: {}
+    # LLM_API_KEY: "CHANGEME"
+    # API_KEYS: "key1,key2"
+    # REDIS_URL: "redis://redis-master:6379/0"
+
+# LLM endpoint (external vLLM, not in-chart)
+llm:
+  baseUrl: "http://vllm.vllm-cluster:8000"
+
+# Redis subchart
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false            # for production: enable + provide existingSecret
+  master:
+    persistence:
+      enabled: true
+      size: 5Gi
+
+# Ingress
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: api.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: orchestrator-tls
+      hosts:
+        - api.example.com
+
+# ServiceAccount
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+  # For AWS EKS IRSA:
+  # annotations:
+  #   eks.amazonaws.com/role-arn: arn:aws:iam::ACCOUNT:role/orchestrator-irsa
+
+# Prometheus integration
+serviceMonitor:
+  enabled: true
+  interval: 30s
+  scrapeTimeout: 10s
+  labels:
+    release: prometheus
+
+# PDB
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+# NetworkPolicy
+networkPolicy:
+  enabled: false            # enable for zero-trust clusters
+
+# Pod scheduling
+nodeSelector: {}
+tolerations: []
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: vllm-orchestrator
+
+# Security context
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false   # app writes to /data volume
+  capabilities:
+    drop: [ALL]

@@ -1,0 +1,20 @@
+# CODEOWNERS — auto-assigns reviewers for PRs
+# Format: <path> <@user or @org/team>
+
+# Default reviewer
+*                                    @jeonglimi89-rgb
+
+# Critical orchestration code
+/vllm_orchestrator/src/app/orchestration/   @jeonglimi89-rgb
+/vllm_orchestrator/src/app/review/          @jeonglimi89-rgb
+/vllm_orchestrator/src/app/security/        @jeonglimi89-rgb
+
+# Deployment / ops
+/ops/                                @jeonglimi89-rgb
+/.github/                            @jeonglimi89-rgb
+/docker-compose*.yml                 @jeonglimi89-rgb
+/Dockerfile                          @jeonglimi89-rgb
+/deploy.sh                           @jeonglimi89-rgb
+
+# Tests — anyone can add, but require review for regression changes
+/vllm_orchestrator/tests/regression/ @jeonglimi89-rgb

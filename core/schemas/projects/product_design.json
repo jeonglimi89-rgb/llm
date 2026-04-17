@@ -1,0 +1,552 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "product-design-v1",
+  "project_type": "product_design",
+  "description": "Product Design AI 엔진 파라미터 스키마. 기존 schemas.py의 실제 구조에서 추출.",
+
+  "engine_params": {
+    "type": "object",
+    "description": "Product Design 엔진이 받아들이는 전체 파라미터 구조",
+    "required": ["category", "requirement", "concept"],
+    "properties": {
+
+      "category": {
+        "type": "string",
+        "enum": ["small_appliance", "mobility", "utility_tool", "furniture_small"],
+        "description": "제품 카테고리"
+      },
+
+      "requirement": {
+        "type": "object",
+        "description": "구조화된 요구사항",
+        "required": ["product_goal"],
+        "properties": {
+          "product_goal": {"type": "string"},
+          "target_user": {"type": "string", "default": ""},
+          "environment": {"type": "array", "items": {"type": "string"}, "default": []},
+          "key_functions": {"type": "array", "items": {"type": "string"}, "default": []},
+          "constraints": {"type": "array", "items": {"type": "string"}, "default": []},
+          "budget_level": {"type": "string", "enum": ["low", "medium", "high"], "default": "medium"},
+          "size_goal": {"type": "string", "default": ""},
+          "power_type": {"type": "string", "default": ""},
+          "safety_notes": {"type": "array", "items": {"type": "string"}, "default": []},
+          "body_shape": {"type": "string", "default": ""},
+          "cap_type": {"type": "string", "default": ""},
+          "joint_methods": {"type": "array", "items": {"type": "string"}, "default": []},
+          "internal_structure": {"type": "array", "items": {"type": "string"}, "default": []},
+          "electrical_components": {"type": "array", "items": {"type": "string"}, "default": []},
+          "fluid_system_type": {"type": "string", "default": ""}
+        }
+      },
+
+      "concept": {
+        "type": "object",
+        "description": "선택된 컨셉 파라미터",
+        "required": ["name"],
+        "properties": {
+          "name": {"type": "string"},
+          "summary": {"type": "string", "default": ""},
+          "estimated_complexity": {"type": "string", "enum": ["low", "medium", "high"], "default": "medium"},
+          "estimated_cost_level": {"type": "string", "enum": ["low", "medium", "high"], "default": "medium"},
+          "best_for": {"type": "string", "default": ""},
+          "generation_mode": {
+            "type": "string",
+            "enum": ["standard", "simpler", "cheaper", "expandable", "hybrid"],
+            "default": "standard"
+          }
+        }
+      },
+
+      "dimensions": {
+        "type": "object",
+        "description": "전체 외형 치수",
+        "required": ["overall_width_mm", "overall_depth_mm", "overall_height_mm"],
+        "properties": {
+          "overall_width_mm": {"type": "integer", "minimum": 10, "maximum": 5000},
+          "overall_depth_mm": {"type": "integer", "minimum": 10, "maximum": 5000},
+          "overall_height_mm": {"type": "integer", "minimum": 10, "maximum": 5000},
+          "arm_length_mm": {"type": "integer", "default": 0, "minimum": 0},
+          "grip_width_mm": {"type": "integer", "default": 0, "minimum": 0},
+          "internal_battery_space": {"type": "string", "default": ""}
+        }
+      },
+
+      "modules": {
+        "type": "array",
+        "description": "모듈 구성",
+        "items": {
+          "type": "object",
+          "required": ["name", "role"],
+          "properties": {
+            "module_id": {"type": "string"},
+            "name": {"type": "string"},
+            "role": {"type": "string"},
+            "candidate_parts": {"type": "array", "items": {"type": "string"}, "default": []},
+            "dependencies": {"type": "array", "items": {"type": "string"}, "default": []},
+            "position_mm": {
+              "type": "array",
+              "items": {"type": "number"},
+              "minItems": 3,
+              "maxItems": 3,
+              "default": [0, 0, 0]
+            }
+          }
+        }
+      },
+
+      "bom_items": {
+        "type": "array",
+        "description": "BOM (Bill of Materials)",
+        "items": {
+          "type": "object",
+          "required": ["part_name", "category", "quantity", "role"],
+          "properties": {
+            "item_id": {"type": "string"},
+            "part_name": {"type": "string"},
+            "category": {"type": "string"},
+            "quantity": {"type": "integer", "minimum": 1},
+            "role": {"type": "string"},
+            "substitute_options": {"type": "array", "items": {"type": "string"}, "default": []},
+            "procurement_readiness": {
+              "type": "string",
+              "enum": ["needs_review", "available", "backorder"],
+              "default": "needs_review"
+            }
+          }
+        }
+      },
+
+      "risks": {
+        "type": "array",
+        "description": "리스크 목록",
+        "items": {
+          "type": "object",
+          "required": ["title", "severity", "description", "mitigation"],
+          "properties": {
+            "risk_id": {"type": "string"},
+            "title": {"type": "string"},
+            "severity": {"type": "string", "enum": ["low", "medium", "high"]},
+            "description": {"type": "string"},
+            "mitigation": {"type": "string"}
+          }
+        }
+      },
+
+      "fabrication_mode": {
+        "type": "string",
+        "enum": ["3d_printing", "outsourced_fabrication", "mockup", "assembly_prototype"],
+        "description": "제작 방식"
+      },
+
+      "wiring": {
+        "type": "object",
+        "description": "전기 배선 파라미터",
+        "properties": {
+          "routes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "route_id": {"type": "string"},
+                "label": {"type": "string"},
+                "total_length_mm": {"type": "number", "minimum": 0},
+                "channel_clearance_mm": {"type": "number", "default": 3.0},
+                "waterproof_zones": {"type": "array", "items": {"type": "string"}},
+                "nodes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "node_id": {"type": "string"},
+                      "label": {"type": "string"},
+                      "node_type": {"type": "string", "enum": ["source", "sink", "junction", "connector"]},
+                      "module_ref": {"type": ["string", "null"]},
+                      "position_mm": {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3},
+                      "connector_type": {"type": ["string", "null"]},
+                      "waterproof": {"type": "boolean", "default": false}
+                    }
+                  }
+                },
+                "segments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "segment_id": {"type": "string"},
+                      "from_node_id": {"type": "string"},
+                      "to_node_id": {"type": "string"},
+                      "wire_type": {"type": "string", "enum": ["power", "signal", "sensor", "ground", "data"]},
+                      "wire_gauge_awg": {"type": ["integer", "null"]},
+                      "length_mm": {"type": "number", "minimum": 0},
+                      "shielded": {"type": "boolean", "default": false},
+                      "insulation_rating": {
+                        "type": "string",
+                        "enum": ["basic", "ul_1007", "ul_1015", "ul_758", "silicone_200c", "ptfe_260c"],
+                        "default": "basic"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "connectors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "connector_id": {"type": "string"},
+                "label": {"type": "string"},
+                "connector_type": {
+                  "type": "string",
+                  "enum": ["jst", "molex", "barrel_jack", "usb_c", "screw_terminal", "solder", "custom"]
+                },
+                "pin_count": {"type": "integer", "minimum": 1},
+                "position_mm": {"type": "array", "items": {"type": "number"}},
+                "waterproof": {"type": "boolean", "default": false},
+                "ip_rating": {"type": "string", "default": ""}
+              }
+            }
+          },
+          "pcb_specs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pcb_id": {"type": "string"},
+                "label": {"type": "string"},
+                "board_width_mm": {"type": "number"},
+                "board_depth_mm": {"type": "number"},
+                "board_height_mm": {"type": "number", "default": 1.6},
+                "position_mm": {"type": "array", "items": {"type": "number"}},
+                "component_clearance_mm": {"type": "number", "default": 5.0}
+              }
+            }
+          },
+          "cable_channels": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "channel_id": {"type": "string"},
+                "label": {"type": "string"},
+                "from_position_mm": {"type": "array", "items": {"type": "number"}},
+                "to_position_mm": {"type": "array", "items": {"type": "number"}},
+                "diameter_mm": {"type": "number", "default": 8.0},
+                "through_wall": {"type": "boolean", "default": false},
+                "cable_count": {"type": "integer", "default": 1}
+              }
+            }
+          }
+        }
+      },
+
+      "fluid": {
+        "type": "object",
+        "description": "유체/배수 시스템 파라미터",
+        "properties": {
+          "drainage_paths": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path_id": {"type": "string"},
+                "label": {"type": "string"},
+                "drain_mode": {"type": "string", "enum": ["gravity", "forced", "tank_drain", "cartridge_flush"]},
+                "total_length_mm": {"type": "number", "minimum": 0},
+                "total_volume_ml": {"type": "number", "minimum": 0},
+                "max_pressure_kpa": {"type": "number", "default": 300.0},
+                "gravity_assisted": {"type": "boolean", "default": true},
+                "has_check_valve": {"type": "boolean", "default": false},
+                "flush_capable": {"type": "boolean", "default": false},
+                "ports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "port_id": {"type": "string"},
+                      "label": {"type": "string"},
+                      "direction": {"type": "string", "enum": ["inlet", "outlet", "bidirectional"]},
+                      "fluid_type": {"type": "string", "enum": ["water_supply", "drainage", "coolant", "air", "contaminated", "slurry"]},
+                      "diameter_mm": {"type": "number"},
+                      "fitting_type": {"type": "string", "enum": ["barb", "push_fit", "compression", "threaded", "quick_connect"]}
+                    }
+                  }
+                },
+                "segments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "segment_id": {"type": "string"},
+                      "from_port_id": {"type": "string"},
+                      "to_port_id": {"type": "string"},
+                      "fluid_type": {"type": "string"},
+                      "inner_diameter_mm": {"type": "number"},
+                      "length_mm": {"type": "number"},
+                      "slope_deg": {"type": "number"},
+                      "min_bend_radius_mm": {"type": "number"}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "sealing_zones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "zone_id": {"type": "string"},
+                "label": {"type": "string"},
+                "method": {"type": "string", "enum": ["oring", "gasket", "adhesive", "press_fit", "threaded", "welded"]},
+                "rated_pressure_kpa": {"type": "number"},
+                "max_temperature_c": {"type": "number"},
+                "material_type": {"type": "string"},
+                "ip_rating": {"type": "string"},
+                "replacement_interval_months": {"type": "integer"}
+              }
+            }
+          },
+          "hose_specs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "hose_id": {"type": "string"},
+                "material": {"type": "string", "enum": ["silicone", "rubber", "pvc", "ptfe", "tpe"]},
+                "inner_diameter_mm": {"type": "number"},
+                "outer_diameter_mm": {"type": "number"},
+                "max_pressure_kpa": {"type": "number"},
+                "min_bend_radius_mm": {"type": "number"}
+              }
+            }
+          }
+        }
+      },
+
+      "system_layers": {
+        "type": "array",
+        "description": "시스템 레이어 구성",
+        "items": {
+          "type": "object",
+          "required": ["layer_type", "label"],
+          "properties": {
+            "layer_id": {"type": "string"},
+            "layer_type": {
+              "type": "string",
+              "enum": ["structure", "electrical", "water_supply", "drainage", "sensor_wire", "maintenance_path"]
+            },
+            "label": {"type": "string"},
+            "color_hex": {"type": "string"},
+            "visible": {"type": "boolean", "default": true}
+          }
+        }
+      },
+
+      "interference_records": {
+        "type": "array",
+        "description": "간섭 기록",
+        "items": {
+          "type": "object",
+          "properties": {
+            "record_id": {"type": "string"},
+            "system_a": {"type": "string"},
+            "system_b": {"type": "string"},
+            "interference_type": {"type": "string", "enum": ["collision", "clearance", "thermal", "moisture", "bend_radius"]},
+            "severity": {"type": "string", "enum": ["low", "medium", "high"]},
+            "distance_mm": {"type": "number"},
+            "required_distance_mm": {"type": "number"}
+          }
+        }
+      },
+
+      "maintenance_paths": {
+        "type": "array",
+        "description": "유지보수 경로",
+        "items": {
+          "type": "object",
+          "properties": {
+            "path_id": {"type": "string"},
+            "label": {"type": "string"},
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "order": {"type": "integer"},
+                  "action": {"type": "string"},
+                  "target_module": {"type": ["string", "null"]},
+                  "tools_required": {"type": "array", "items": {"type": "string"}}
+                }
+              }
+            },
+            "estimated_time_min": {"type": "number"}
+          }
+        }
+      }
+    }
+  },
+
+  "path_aliases": {
+    "폭": "/dimensions/overall_width_mm",
+    "전체 폭": "/dimensions/overall_width_mm",
+    "가로": "/dimensions/overall_width_mm",
+    "너비": "/dimensions/overall_width_mm",
+    "깊이": "/dimensions/overall_depth_mm",
+    "전체 깊이": "/dimensions/overall_depth_mm",
+    "두께": "/dimensions/overall_depth_mm",
+    "높이": "/dimensions/overall_height_mm",
+    "전체 높이": "/dimensions/overall_height_mm",
+    "세로": "/dimensions/overall_height_mm",
+    "팔 길이": "/dimensions/arm_length_mm",
+    "그립 폭": "/dimensions/grip_width_mm",
+    "배터리 공간": "/dimensions/internal_battery_space",
+
+    "예산": "/requirement/budget_level",
+    "예산 수준": "/requirement/budget_level",
+    "비용": "/requirement/budget_level",
+    "전원": "/requirement/power_type",
+    "전원 방식": "/requirement/power_type",
+    "사용자": "/requirement/target_user",
+    "타깃 사용자": "/requirement/target_user",
+    "대상 사용자": "/requirement/target_user",
+    "환경": "/requirement/environment",
+    "사용 환경": "/requirement/environment",
+    "기능": "/requirement/key_functions",
+    "핵심 기능": "/requirement/key_functions",
+    "제약": "/requirement/constraints",
+    "안전": "/requirement/safety_notes",
+
+    "컨셉": "/concept/name",
+    "컨셉 이름": "/concept/name",
+    "복잡도": "/concept/estimated_complexity",
+    "비용 수준": "/concept/estimated_cost_level",
+
+    "제작 방식": "/fabrication_mode",
+    "제작": "/fabrication_mode",
+
+    "모듈": "/modules",
+    "부품": "/bom_items",
+    "bom": "/bom_items",
+    "리스크": "/risks",
+    "위험": "/risks",
+
+    "배선": "/wiring/routes",
+    "전선": "/wiring/routes",
+    "와이어": "/wiring/routes",
+    "커넥터": "/wiring/connectors",
+    "pcb": "/wiring/pcb_specs",
+    "기판": "/wiring/pcb_specs",
+    "케이블": "/wiring/cable_channels",
+
+    "배수": "/fluid/drainage_paths",
+    "급수": "/fluid/drainage_paths",
+    "유체": "/fluid/drainage_paths",
+    "실링": "/fluid/sealing_zones",
+    "밀봉": "/fluid/sealing_zones",
+    "호스": "/fluid/hose_specs",
+
+    "레이어": "/system_layers",
+    "간섭": "/interference_records",
+    "유지보수": "/maintenance_paths",
+    "분해": "/maintenance_paths"
+  },
+
+  "constraint_mapping": {
+    "미니멀": {"concept.estimated_complexity": "low", "requirement.constraints": ["미니멀 디자인"]},
+    "저렴": {"requirement.budget_level": "low"},
+    "저비용": {"requirement.budget_level": "low"},
+    "고급": {"requirement.budget_level": "high"},
+    "가볍": {"requirement.constraints": ["경량"]},
+    "경량": {"requirement.constraints": ["경량"]},
+    "방수": {"wiring.connectors[*].waterproof": true},
+    "무선": {"requirement.power_type": "battery"},
+    "배터리": {"requirement.power_type": "battery"},
+    "유선": {"requirement.power_type": "wired"},
+    "실내": {"requirement.environment": ["실내"]},
+    "실외": {"requirement.environment": ["실외"]},
+    "욕실": {"requirement.environment": ["욕실"]},
+    "접이식": {"concept.name": "Fold-Flat"},
+    "안전": {"requirement.safety_notes": ["안전 설계 필수"]},
+    "팔걸이 없는": {"dimensions.arm_length_mm": 0},
+    "소형": {"requirement.size_goal": "compact"},
+    "대형": {"requirement.size_goal": "large"},
+    "3D프린팅": {"concept.fabrication_mode": "3d_printing"},
+    "3d프린팅": {"concept.fabrication_mode": "3d_printing"},
+    "사출": {"concept.fabrication_mode": "injection_molding"},
+    "CNC": {"concept.fabrication_mode": "cnc"},
+    "cnc": {"concept.fabrication_mode": "cnc"}
+  },
+
+  "critique_criteria": [
+    {
+      "name": "constraint_satisfaction",
+      "label": "제약 만족도",
+      "description": "사용자가 명시한 제약 조건을 variant가 얼마나 만족하는지",
+      "weight": 0.35
+    },
+    {
+      "name": "feasibility",
+      "label": "실현 가능성",
+      "description": "해당 카테고리에서 실제 제작 가능한 파라미터 범위인지",
+      "weight": 0.25
+    },
+    {
+      "name": "cost_alignment",
+      "label": "비용 정합성",
+      "description": "예산 수준(budget_level)과 실제 BOM/복잡도의 정합성",
+      "weight": 0.20
+    },
+    {
+      "name": "novelty",
+      "label": "차별성",
+      "description": "다른 variant 대비 의미 있는 차이를 제공하는지",
+      "weight": 0.10
+    },
+    {
+      "name": "safety_compliance",
+      "label": "안전 준수",
+      "description": "안전 요구사항 및 간섭 규칙 준수 여부",
+      "weight": 0.10
+    }
+  ],
+
+  "variant_axes": [
+    {
+      "axis": "complexity",
+      "description": "복잡도 축: 같은 기능을 단순/표준/확장 구조로 변이",
+      "values": ["low", "medium", "high"]
+    },
+    {
+      "axis": "cost",
+      "description": "비용 축: 저가/중가/고가 부품 조합으로 변이",
+      "values": ["low", "medium", "high"]
+    },
+    {
+      "axis": "material",
+      "description": "소재 축: 플라스틱/금속/복합 소재로 변이",
+      "values": ["plastic", "metal", "composite"]
+    },
+    {
+      "axis": "form_factor",
+      "description": "형태 축: 컨셉 템플릿별 변이 (카테고리 의존)",
+      "values": ["template_dependent"]
+    }
+  ],
+
+  "intent_extensions": {
+    "description": "Product Design 전용 intent 확장",
+    "properties": {
+      "target_object": {
+        "enum_extensions": [
+          "concept", "module", "dimension", "bom_item", "risk",
+          "wiring_route", "connector", "pcb", "cable_channel",
+          "drainage_path", "fluid_port", "sealing_zone", "hose",
+          "system_layer", "interference", "maintenance_path",
+          "fabrication_mode", "sketch"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {"type": "grafana", "uid": "-- Grafana --"},
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {"limit": 100, "matchAny": false, "tags": [], "type": "dashboard"},
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "vLLM Orchestrator — overview dashboard. Production monitoring.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "liveNow": false,
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": ["orchestrator", "llm", "vllm"],
+  "templating": {
+    "list": [
+      {
+        "name": "task_type",
+        "label": "Task Type",
+        "type": "query",
+        "datasource": {"type": "prometheus", "uid": "prometheus"},
+        "query": "label_values(orchestrator_requests_total, task_type)",
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*",
+        "current": {"selected": false, "text": "All", "value": "$__all"}
+      }
+    ]
+  },
+  "time": {"from": "now-1h", "to": "now"},
+  "timezone": "",
+  "title": "vLLM Orchestrator — Overview",
+  "uid": "orch-overview",
+  "version": 1,
+  "panels": [
+    {
+      "id": 1,
+      "title": "Requests / second",
+      "type": "stat",
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "sum(rate(orchestrator_requests_total{task_type=~\"$task_type\"}[1m]))",
+          "legendFormat": "req/s",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "decimals": 2,
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "green", "value": null},
+            {"color": "yellow", "value": 100},
+            {"color": "red", "value": 500}
+          ]}
+        }
+      },
+      "options": {"colorMode": "background", "graphMode": "area"}
+    },
+    {
+      "id": 2,
+      "title": "Error rate (%)",
+      "type": "stat",
+      "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "100 * sum(rate(orchestrator_requests_total{status!=\"TaskStatus.DONE\",task_type=~\"$task_type\"}[5m])) / sum(rate(orchestrator_requests_total{task_type=~\"$task_type\"}[5m]))",
+          "legendFormat": "error %",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 2,
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "green", "value": null},
+            {"color": "yellow", "value": 1},
+            {"color": "red", "value": 5}
+          ]}
+        }
+      },
+      "options": {"colorMode": "background"}
+    },
+    {
+      "id": 3,
+      "title": "Cache hit rate",
+      "type": "gauge",
+      "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "orchestrator_cache_hit_rate", "refId": "A"}
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "red", "value": null},
+            {"color": "yellow", "value": 0.2},
+            {"color": "green", "value": 0.5}
+          ]}
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Circuit breaker",
+      "type": "stat",
+      "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [{"expr": "orchestrator_llm_circuit_open", "refId": "A"}],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {"type": "value", "options": {"0": {"text": "CLOSED (OK)", "color": "green"}, "1": {"text": "OPEN (ALERT)", "color": "red"}}}
+          ],
+          "thresholds": {"mode": "absolute", "steps": [
+            {"color": "green", "value": null},
+            {"color": "red", "value": 1}
+          ]}
+        }
+      },
+      "options": {"colorMode": "background"}
+    },
+    {
+      "id": 5,
+      "title": "Request latency (P50 / P95 / P99)",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 4},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "histogram_quantile(0.50, sum(rate(orchestrator_request_latency_seconds_bucket{task_type=~\"$task_type\"}[5m])) by (le))", "legendFormat": "P50", "refId": "A"},
+        {"expr": "histogram_quantile(0.95, sum(rate(orchestrator_request_latency_seconds_bucket{task_type=~\"$task_type\"}[5m])) by (le))", "legendFormat": "P95", "refId": "B"},
+        {"expr": "histogram_quantile(0.99, sum(rate(orchestrator_request_latency_seconds_bucket{task_type=~\"$task_type\"}[5m])) by (le))", "legendFormat": "P99", "refId": "C"}
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {"lineWidth": 2, "fillOpacity": 10, "showPoints": "never"}
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Throughput by task type",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 4},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "sum(rate(orchestrator_requests_total[1m])) by (task_type)", "legendFormat": "{{task_type}}", "refId": "A"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "reqps"}}
+    },
+    {
+      "id": 7,
+      "title": "Cache events",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 13},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "sum(rate(orchestrator_cache_events_total[1m])) by (event)", "legendFormat": "{{event}}", "refId": "A"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "ops"}}
+    },
+    {
+      "id": 8,
+      "title": "Cache size vs hit rate",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 13},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "orchestrator_cache_size", "legendFormat": "size", "refId": "A"},
+        {"expr": "orchestrator_cache_hit_rate", "legendFormat": "hit rate", "refId": "B"}
+      ]
+    },
+    {
+      "id": 9,
+      "title": "LLM latency by phase",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 22},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "histogram_quantile(0.95, sum(rate(orchestrator_llm_latency_seconds_bucket[5m])) by (le, phase))", "legendFormat": "P95 {{phase}}", "refId": "A"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "s"}}
+    },
+    {
+      "id": 10,
+      "title": "Critic quality distribution",
+      "type": "heatmap",
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 22},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "sum(rate(orchestrator_critic_quality_score_bucket[5m])) by (le)", "format": "heatmap", "legendFormat": "{{le}}", "refId": "A"}
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Variant sampling families selected",
+      "type": "piechart",
+      "gridPos": {"h": 9, "w": 6, "x": 0, "y": 31},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "sum(orchestrator_variant_events_total) by (family)", "legendFormat": "{{family}}", "refId": "A"}
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Repair events (heuristic vs critic)",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 6, "x": 6, "y": 31},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "sum(rate(orchestrator_repair_events_total[5m])) by (kind)", "legendFormat": "{{kind}}", "refId": "A"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "ops"}}
+    },
+    {
+      "id": 13,
+      "title": "Auth rejections",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 6, "x": 12, "y": 31},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "sum(rate(orchestrator_auth_rejections_total[1m])) by (reason)", "legendFormat": "{{reason}}", "refId": "A"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "ops"}}
+    },
+    {
+      "id": 14,
+      "title": "Queue depth",
+      "type": "timeseries",
+      "gridPos": {"h": 9, "w": 6, "x": 18, "y": 31},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {"expr": "orchestrator_queue_depth", "legendFormat": "depth", "refId": "A"}
+      ]
+    }
+  ]
+}

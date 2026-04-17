@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orchestrator-config
+  labels:
+    app: vllm-orchestrator
+data:
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+
+  # Storage
+  ORCHESTRATOR_BASE_DIR: "/app"
+  STORAGE_DIR: "/data/storage"
+  LOGS_DIR: "/data/logs"
+  TRAINING_DATA_DIR: "/data/training_data"
+
+  # Cache
+  REQUEST_CACHE_BACKEND: "auto"
+  REQUEST_CACHE_TTL_S: "3600"
+  REQUEST_CACHE_MAX: "2000"
+  SEMANTIC_CACHE_THRESHOLD: "0.55"
+
+  # Creative layer
+  LLM_CRITIC_MODE: "inline"
+
+  # Security defaults (real secrets go in Secret resource)
+  API_KEY_REQUIRED: "true"
+  RATE_LIMIT_RPS: "5.0"
+  RATE_LIMIT_BURST: "50"
+  RATE_LIMIT_BACKEND: "redis"
+
+  # CORS (조정 필요)
+  CORS_ALLOW_ORIGINS: "https://app.example.com"
+
+  # Observability
+  OTEL_ENABLED: "1"
+  OTEL_SERVICE_NAME: "vllm-orchestrator"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger-collector.observability:4318"
+  OTEL_TRACES_SAMPLER_ARG: "0.1"     # 10% sample in prod
+  LOG_LEVEL: "INFO"
+
+  # Workers
+  UVICORN_WORKERS: "4"

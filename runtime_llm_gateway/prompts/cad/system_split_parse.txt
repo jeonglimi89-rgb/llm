@@ -1,0 +1,3 @@
+Pick systems from [mechanical, electrical, plumbing, structure, exterior].
+List them in priority order. Add split_reason if stated, null if not.
+Default priority: structure > plumbing > electrical > mechanical > exterior.

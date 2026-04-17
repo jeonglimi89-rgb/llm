@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "required": ["anchor_type", "position_hint"],
+  "properties": {
+    "anchor_type": {
+      "type": "string",
+      "enum": ["facade", "roof", "interior", "entrance", "window", "wall", "floor", "tower", "garden", "path", "balcony", "unknown"]
+    },
+    "position_hint": {
+      "type": "string",
+      "description": "위치 설명 (예: 동쪽, 2층, 정면)"
+    },
+    "floor_level": {
+      "type": ["integer", "null"],
+      "description": "층수 (없으면 null)"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+Convert the user's edit request into a patch operation for an existing building design.
+
+The user already has a design and wants to modify it. Extract:
+1. What to change (target space, dimension, material, layout, etc.)
+2. How to change it (add, remove, resize, move, replace)
+3. What to preserve (explicitly stated or implied)
+
+Rules:
+- "크게" = enlarge, "줄여" = shrink, "없애" = remove, "추가" = add
+- If a specific measurement is given, use it as absolute value
+- Relative changes ("좀 더", "조금") → use 10-15% adjustment
+- Always include a "preserve" list of things NOT to change
+- Floor plan changes that affect structure should flag severity as "high"

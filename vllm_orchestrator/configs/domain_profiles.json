@@ -1,0 +1,335 @@
+{
+  "cad": {
+    "vocabulary": {
+      "PCB": 2.5, "방수": 2.0, "IP67": 2.5, "모터": 2.0, "배수": 1.8,
+      "치수": 2.5, "tolerance": 2.5, "공차": 2.5, "재질": 2.0, "material": 2.0,
+      "하우징": 2.0, "housing": 2.0, "케이스": 1.5, "부품": 2.0, "part": 2.0,
+      "조립": 2.0, "assembly": 2.0, "배선": 2.0, "wiring": 2.0,
+      "설계": 1.5, "제작": 1.5, "기구": 2.0, "접이식": 1.8,
+      "센서": 2.0, "충전": 1.5, "USB": 1.8, "필터": 1.5,
+      "전기": 1.8, "구조": 1.5, "기계": 1.8, "제품": 1.5,
+      "mm": 2.0, "cm": 1.5, "인치": 1.5
+    },
+    "task_signals": {
+      "constraint_parse": ["제약", "조건", "방수", "IP67", "필요", "요구", "사양"],
+      "system_split_parse": ["시스템", "분리", "서브시스템", "분해", "구성"],
+      "priority_parse": ["우선순위", "중요도", "순서", "먼저"],
+      "patch_parse": ["수정", "변경", "바꿔", "고쳐"],
+      "context_query": ["질문", "어떻게", "왜", "설명"]
+    },
+    "reasoning_template": "You are a mechanical/product design engineer. Focus on: dimensional constraints, material specs, manufacturing tolerances, system interfaces. All outputs must be concrete engineering specifications.",
+    "constraint_fields": ["dimensions", "tolerances", "material", "interfaces", "sealing", "power"],
+    "soft_preference_fields": ["surface_finish", "weight_target", "cost_target"],
+    "output_schema_ref": "cad/slots.schema.json",
+    "required_output_keys": ["constraints"],
+    "domain_slots": {"dimensions": "str", "tolerances": "str", "material": "str", "connection_type": "str"},
+    "validation_checklist": ["치수 명시", "재질 지정", "제약 구체성", "인터페이스 정의"],
+    "fail_modes": ["generic_advice", "missing_dimensions", "wrong_material", "hallucinated_values"],
+    "fallback_task_name": "constraint_parse",
+    "escalation_threshold": 0.3,
+    "chain_name": "cad_full_design",
+    "allowed_tools": ["cad.generate_part", "cad.solve_assembly", "cad.route_wiring", "cad.route_drainage", "cad.validate_geometry"],
+    "repair_policy": "retry_once",
+    "reasoning_schema": {
+      "focus_areas": ["geometry", "topology", "part_decomposition", "material_selection", "interface_design", "electrical_routing", "drainage_routing", "manufacturability"],
+      "output_structure": ["systems", "parts", "dimensions", "materials", "interfaces", "wiring", "drainage", "validation_points"]
+    },
+    "constraint_schema": {
+      "hard": ["dimensions", "tolerances", "sealing_grade", "material_spec", "power_requirements"],
+      "soft": ["surface_finish", "weight", "cost", "aesthetics"]
+    },
+    "output_schema": {
+      "required": ["systems", "constraints"],
+      "recommended": ["parts", "interfaces", "dimensions", "materials"],
+      "validation": ["waterproof_check", "assembly_feasibility", "wiring_conflicts", "drainage_slope"]
+    },
+    "creative_profile": {
+      "mode": "conservative",
+      "novelty": 0.34,
+      "constraint_strictness": 0.97,
+      "style_risk": 0.06,
+      "variant_count": 2,
+      "diversity_target": "low"
+    }
+  },
+  "builder": {
+    "vocabulary": {
+      "주택": 2.5, "아파트": 2.0, "건물": 2.5, "층": 2.5, "평": 2.0,
+      "거실": 2.5, "주방": 2.5, "침실": 2.5, "화장실": 2.5, "안방": 2.5,
+      "현관": 2.0, "발코니": 2.0, "옥상": 2.0, "지하": 2.0,
+      "카페": 1.5, "사무실": 1.5, "상가": 2.0, "원룸": 2.0,
+      "모던": 1.5, "클래식": 1.5, "벽돌": 1.5, "미니멀": 1.5,
+      "면적": 2.0, "m2": 2.0, "건폐율": 2.5, "용적률": 2.5,
+      "설비": 2.0, "배관": 1.8, "구조": 1.5, "건축": 2.5
+    },
+    "task_signals": {
+      "requirement_parse": ["지어", "설계", "짓고", "만들", "새", "신축", "주택", "건물"],
+      "patch_intent_parse": ["수정", "변경", "바꿔", "키워", "줄여", "넓게"],
+      "zone_priority_parse": ["우선순위", "중요", "먼저", "배치"],
+      "exterior_style_parse": ["외관", "스타일", "디자인", "모던", "클래식"],
+      "context_query": ["질문", "어떻게", "왜", "설명"]
+    },
+    "reasoning_template": "You are a Korean architectural planner. Focus on: spatial requirements, building codes, structural feasibility, MEP considerations. Output must be a concrete building program.",
+    "constraint_fields": ["floors", "total_area", "room_types", "building_code"],
+    "soft_preference_fields": ["style_family", "budget", "orientation"],
+    "output_schema_ref": "builder/slots.schema.json",
+    "required_output_keys": ["floors", "spaces"],
+    "domain_slots": {"code_region": "str", "occupancy": "str", "floor_count": "int", "mep_scope": "str"},
+    "validation_checklist": ["층수 명시", "공간 목록", "면적 합리성", "필수실 포함"],
+    "fail_modes": ["missing_floor_count", "unrealistic_areas", "missing_required_rooms", "generic_description"],
+    "fallback_task_name": "requirement_parse",
+    "escalation_threshold": 0.3,
+    "chain_name": "builder_full_plan",
+    "allowed_tools": ["builder.generate_plan", "builder.validate", "builder.export"],
+    "repair_policy": "retry_once",
+    "reasoning_schema": {
+      "focus_areas": ["rule_search", "zoning", "space_planning", "structural", "MEP", "constructability"],
+      "output_structure": ["occupancy", "code_region", "floor_plan_requirements", "structure_requirements", "mep_requirements", "code_checks", "risks"]
+    },
+    "constraint_schema": {
+      "hard": ["floor_count", "total_area", "building_code", "required_rooms"],
+      "soft": ["style", "budget", "orientation", "view_preference"]
+    },
+    "output_schema": {
+      "required": ["floors", "spaces"],
+      "recommended": ["preferences", "constraints", "project_type"],
+      "validation": ["required_rooms_present", "area_reasonableness", "code_compliance"]
+    },
+    "creative_profile": {
+      "mode": "balanced",
+      "novelty": 0.42,
+      "constraint_strictness": 0.95,
+      "style_risk": 0.12,
+      "variant_count": 2,
+      "diversity_target": "medium"
+    }
+  },
+  "minecraft": {
+    "vocabulary": {
+      "마인크래프트": 3.0, "minecraft": 3.0, "블록": 2.5, "block": 2.5,
+      "정면": 2.0, "지붕": 2.0, "벽": 1.5, "창문": 2.0, "문": 1.5,
+      "돌": 2.0, "참나무": 2.5, "스프루스": 2.5, "벽돌": 1.5,
+      "유리": 1.5, "울타리": 2.0, "횃불": 2.0, "랜턴": 2.0,
+      "중세": 2.0, "판타지": 2.0, "일본식": 2.0, "빌드": 2.5,
+      "팔레트": 2.5, "palette": 2.5, "실루엣": 2.0, "silhouette": 2.0,
+      "성": 2.0, "탑": 2.0, "다리": 1.5, "항구": 1.5, "게이트": 1.5
+    },
+    "task_signals": {
+      "build_parse": ["지어", "만들어", "빌드", "건축", "짓", "생성", "집", "성", "탑", "가게", "농장", "다리", "항구", "신사"],
+      "edit_parse": ["바꿔", "수정", "넓게", "키워", "추가", "제거", "교체"],
+      "style_check": ["스타일", "체크", "검사", "맞는지", "어울리"],
+      "anchor_resolution": ["위치", "어디", "좌표", "방향"]
+    },
+    "reasoning_template": "You are a Minecraft building expert. Focus on: build composition, silhouette design, palette coherence, block grammar, and gameplay function. Output specific Minecraft blocks and placement strategy.",
+    "constraint_fields": ["anchor_type", "materials", "preserve_list"],
+    "soft_preference_fields": ["style_theme", "scale", "biome"],
+    "output_schema_ref": "minecraft/build_plan.schema.json",
+    "required_output_keys": [],
+    "domain_slots": {"style": "str", "scale": "str", "biome": "str", "block_palette": "list", "function": "str"},
+    "validation_checklist": ["앵커 유효", "블록 실존", "보존 목록 반영", "스타일 일관성"],
+    "fail_modes": ["invalid_anchor", "nonexistent_block", "ignored_preserve", "style_inconsistency"],
+    "fallback_task_name": "edit_parse",
+    "escalation_threshold": 0.3,
+    "chain_name": "minecraft_llm_active_build",
+    "allowed_tools": ["minecraft.compile_archetype", "minecraft.place_blocks", "minecraft.validate_palette"],
+    "repair_policy": "retry_once",
+    "reasoning_schema": {
+      "focus_areas": ["build_composition", "silhouette", "palette", "block_grammar", "gameplay_context", "world_integration"],
+      "output_structure": ["build_type", "style", "scale", "biome_context", "block_palette", "structure_rules", "gameplay_functions", "improvement_targets"]
+    },
+    "constraint_schema": {
+      "hard": ["anchor_type", "preserve_list", "block_availability"],
+      "soft": ["style_theme", "scale", "biome_fit", "aesthetic_preference"]
+    },
+    "output_schema": {
+      "required": ["target_anchor", "operations"],
+      "recommended": ["block_palette", "style", "preserve"],
+      "validation": ["block_exists", "anchor_valid", "style_coherence", "proportion"]
+    },
+    "creative_profile": {
+      "mode": "balanced",
+      "novelty": 0.72,
+      "constraint_strictness": 0.82,
+      "style_risk": 0.38,
+      "variant_count": 3,
+      "diversity_target": "high"
+    }
+  },
+  "animation": {
+    "vocabulary": {
+      "클로즈업": 2.5, "와이드": 2.5, "미디엄": 2.0, "close_up": 2.5,
+      "카메라": 2.5, "camera": 2.5, "렌즈": 2.0, "앵글": 2.0,
+      "노을": 2.0, "밤": 1.5, "비": 1.5, "어둠": 2.0,
+      "슬픈": 2.0, "공포": 2.5, "외로운": 2.0, "따뜻": 1.5,
+      "연기": 2.0, "표정": 2.5, "감정": 2.5, "무드": 2.0,
+      "조명": 2.5, "lighting": 2.5, "컷": 2.5, "shot": 2.5,
+      "스토리보드": 3.0, "storyboard": 3.0, "연속성": 2.5, "continuity": 2.5,
+      "프레임": 2.0, "씬": 2.0, "scene": 2.0, "애니메이션": 3.0,
+      "연출": 2.5, "리드로": 2.5, "redraw": 2.5
+    },
+    "task_signals": {
+      "shot_parse": ["클로즈업", "와이드", "미디엄", "샷", "장면", "연출", "무드"],
+      "camera_intent_parse": ["카메라", "앵글", "움직임", "팬", "틸트", "트래킹"],
+      "lighting_intent_parse": ["조명", "빛", "분위기", "노을", "밤", "어둠"],
+      "edit_patch_parse": ["수정", "변경", "바꿔", "고쳐"],
+      "context_query": ["질문", "어떻게", "왜", "설명"]
+    },
+    "reasoning_template": "You are a cinematic animation director. Focus on: shot composition, acting/expression direction, lighting mood, camera motion, and cross-shot continuity. Output must be specific enough for an animator to execute.",
+    "constraint_fields": ["framing", "mood", "camera_motion"],
+    "soft_preference_fields": ["emotion_hint", "pacing", "style_reference"],
+    "output_schema_ref": "animation/slots.schema.json",
+    "required_output_keys": ["framing", "mood"],
+    "domain_slots": {"shot_type": "str", "acting_intent": "str", "camera_motion": "str", "continuity_anchors": "list"},
+    "validation_checklist": ["프레이밍 유효", "무드 명시", "카메라 구체성", "감정 연결"],
+    "fail_modes": ["vague_framing", "missing_mood", "generic_description", "continuity_break"],
+    "fallback_task_name": "shot_parse",
+    "escalation_threshold": 0.3,
+    "chain_name": "animation_full_scene",
+    "allowed_tools": ["animation.solve_shot", "animation.render_preview", "animation.check_continuity"],
+    "repair_policy": "retry_once",
+    "reasoning_schema": {
+      "focus_areas": ["storyboard", "shot_planning", "camera", "acting", "expression", "continuity", "redraw_conditioning"],
+      "output_structure": ["scene_goal", "shot_list", "camera_plan", "acting_notes", "expression_notes", "continuity_anchors", "redraw_constraints", "review_points"]
+    },
+    "constraint_schema": {
+      "hard": ["framing", "mood", "continuity_requirements"],
+      "soft": ["emotion_hint", "pacing", "camera_style", "acting_intensity"]
+    },
+    "output_schema": {
+      "required": ["framing", "mood"],
+      "recommended": ["camera_move", "emotion_hint", "speed", "angle"],
+      "validation": ["framing_valid", "mood_specified", "camera_concrete", "continuity_maintained"]
+    },
+    "creative_profile": {
+      "mode": "balanced",
+      "novelty": 0.58,
+      "constraint_strictness": 0.90,
+      "style_risk": 0.10,
+      "variant_count": 3,
+      "diversity_target": "medium"
+    }
+  },
+  "product_design": {
+    "vocabulary": {
+      "제품": 2.5, "product": 2.5, "소형가전": 3.0, "가전": 2.5,
+      "샤워필터": 3.0, "IoT": 2.5, "LED": 2.0, "조명기기": 2.5,
+      "소비자": 2.0, "consumer": 2.0, "사용자경험": 2.0, "UX": 2.0,
+      "양산": 2.5, "mass_production": 2.5, "금형": 2.5, "사출": 2.5,
+      "컨셉": 2.5, "concept": 2.5, "BOM": 2.5, "원가": 2.0,
+      "필터": 2.0, "센서모듈": 2.5, "램프": 2.0, "스탠드": 1.5,
+      "인증": 2.0, "KC": 2.5, "CE": 2.0, "FCC": 2.0,
+      "패키징": 2.0, "packaging": 2.0, "사용성": 2.0, "usability": 2.0,
+      "제조": 2.0, "manufacturing": 2.0, "조립공정": 2.0,
+      "디자인": 1.5, "외형": 2.0, "마감": 2.0, "색상": 1.5,
+      "배터리": 1.8, "충전": 1.5, "USB": 1.5, "방수": 1.5
+    },
+    "task_signals": {
+      "requirement_parse": ["만들어", "설계", "개발", "제품", "컨셉", "아이디어", "요구사항"],
+      "concept_parse": ["컨셉", "후보", "대안", "옵션", "비교", "제안"],
+      "bom_parse": ["BOM", "부품", "원가", "재질", "소재", "자재"],
+      "patch_parse": ["수정", "변경", "바꿔", "고쳐", "교체"],
+      "context_query": ["질문", "어떻게", "왜", "설명", "추천"]
+    },
+    "reasoning_template": "You are a consumer product design engineer. Focus on: product concept definition, user experience, manufacturing feasibility, cost optimization, certification requirements (KC/CE/FCC), and BOM planning. Output must be actionable for product development teams.",
+    "constraint_fields": ["target_user", "budget_level", "certification", "manufacturing_method", "materials"],
+    "soft_preference_fields": ["color", "finish", "brand_style", "packaging"],
+    "output_schema_ref": "product_design/slots.schema.json",
+    "required_output_keys": ["concept", "specifications"],
+    "domain_slots": {"category": "str", "target_user": "str", "budget_level": "str", "certification": "list", "manufacturing_method": "str"},
+    "validation_checklist": ["컨셉 명확성", "사용자 타겟 정의", "제조 가능성", "인증 요구사항", "BOM 합리성"],
+    "fail_modes": ["vague_concept", "missing_target_user", "unrealistic_cost", "ignored_certification", "generic_description"],
+    "fallback_task_name": "requirement_parse",
+    "escalation_threshold": 0.3,
+    "chain_name": "product_design_full_cycle",
+    "allowed_tools": ["cad.generate_part", "cad.solve_assembly", "cad.route_wiring", "cad.route_drainage", "cad.validate_geometry"],
+    "repair_policy": "retry_once",
+    "reasoning_schema": {
+      "focus_areas": ["product_concept", "user_experience", "manufacturing", "cost_analysis", "certification", "bom_planning", "assembly_process"],
+      "output_structure": ["concept", "specifications", "target_user", "bom", "manufacturing_plan", "certification_checklist", "risks"]
+    },
+    "constraint_schema": {
+      "hard": ["budget_level", "certification", "manufacturing_method", "safety_requirements"],
+      "soft": ["color", "finish", "packaging", "brand_alignment"]
+    },
+    "output_schema": {
+      "required": ["concept", "specifications"],
+      "recommended": ["bom", "target_user", "manufacturing_plan", "certification"],
+      "validation": ["concept_clarity", "cost_feasibility", "manufacturing_feasibility", "certification_compliance"]
+    },
+    "creative_profile": {
+      "mode": "conservative",
+      "novelty": 0.34,
+      "constraint_strictness": 0.97,
+      "style_risk": 0.06,
+      "variant_count": 2,
+      "diversity_target": "low"
+    }
+  },
+  "resourcepack": {
+    "vocabulary": {
+      "리소스팩": 3.0, "텍스처": 3.0, "texture": 3.0, "resourcepack": 3.0,
+      "팔레트": 2.5, "palette": 2.5, "스타일": 2.0, "블록": 2.0,
+      "다크": 2.0, "판타지": 2.0, "사이버펑크": 2.5, "모던": 2.0,
+      "일본": 2.0, "중세": 2.0, "네온": 2.0, "밝은": 1.5, "어두운": 1.5,
+      "패턴": 2.0, "노이즈": 2.0, "마모": 1.5, "색온도": 1.5
+    },
+    "task_signals": {
+      "style_parse": ["만들어", "생성", "디자인", "스타일", "팔레트", "텍스처", "리소스팩"]
+    },
+    "reasoning_template": "You are a Minecraft resource pack artist and color theorist. Focus on: palette cohesion, block-to-texture mapping, pattern design (brick, wood, stone, cobble), noise/wear levels, and era-appropriate aesthetics. Output must define complete texture sets for Minecraft blocks.",
+    "constraint_fields": ["style_name", "era", "mood"],
+    "soft_preference_fields": ["noise_level", "wear_level", "color_bias"],
+    "output_schema_ref": "resourcepack/style.schema.json",
+    "required_output_keys": ["name", "palette", "textures"],
+    "domain_slots": {"style": "str", "era": "str", "mood": "str", "palette": "list"},
+    "validation_checklist": ["팔레트 일관성", "블록 ID 유효", "텍스처 수 충분", "패턴 다양성"],
+    "fail_modes": ["incoherent_palette", "invalid_block_id", "too_few_textures", "monotone_patterns"],
+    "fallback_task_name": "style_parse",
+    "escalation_threshold": 0.3,
+    "chain_name": null,
+    "allowed_tools": [],
+    "repair_policy": "retry_once",
+    "creative_profile": {
+      "mode": "expressive",
+      "novelty": 0.85,
+      "constraint_strictness": 0.60,
+      "style_risk": 0.70,
+      "variant_count": 1,
+      "diversity_target": "high"
+    }
+  },
+  "npc": {
+    "vocabulary": {
+      "NPC": 3.0, "npc": 3.0, "캐릭터": 3.0, "character": 3.0,
+      "상인": 2.5, "기사": 2.5, "보스": 2.5, "치유사": 2.5,
+      "대사": 2.5, "dialogue": 2.5, "성격": 2.0, "외형": 2.0,
+      "배경": 2.0, "스킨": 2.5, "skin": 2.5, "역할": 2.0,
+      "퀘스트": 2.0, "행동": 1.5, "전투": 2.0, "마법사": 2.5
+    },
+    "task_signals": {
+      "character_parse": ["만들어", "생성", "디자인", "캐릭터", "NPC", "상인", "기사", "보스"],
+      "dialogue_generate": ["대사", "말", "세리프", "대화", "인사"]
+    },
+    "reasoning_template": "You are a creative game narrative designer specializing in Minecraft RPG characters. Focus on: unique personality with contradictions, culturally fitting names, vivid appearance descriptions, character-specific dialogue patterns, backstory hooks for quests, and behavior schedules. Every character must feel distinct and memorable.",
+    "constraint_fields": ["role", "personality_core"],
+    "soft_preference_fields": ["culture", "combat_style", "age", "faction"],
+    "output_schema_ref": "npc/character.schema.json",
+    "required_output_keys": ["name", "role", "personality", "appearance", "dialogue", "backstory"],
+    "domain_slots": {"role": "str", "personality": "str", "culture": "str", "combat_style": "str"},
+    "validation_checklist": ["이름 고유성", "성격 구체성", "대사 자연스러움", "외형 색상 유효", "배경 훅 포함"],
+    "fail_modes": ["generic_character", "inconsistent_personality", "unnatural_dialogue", "missing_backstory_hook"],
+    "fallback_task_name": "character_parse",
+    "escalation_threshold": 0.3,
+    "chain_name": null,
+    "allowed_tools": [],
+    "repair_policy": "retry_once",
+    "creative_profile": {
+      "mode": "expressive",
+      "novelty": 0.90,
+      "constraint_strictness": 0.50,
+      "style_risk": 0.80,
+      "variant_count": 1,
+      "diversity_target": "high"
+    }
+  }
+}

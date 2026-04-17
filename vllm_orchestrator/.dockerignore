@@ -1,0 +1,55 @@
+# Don't ship secrets / large files into image
+.env
+.env.*
+!.env.example
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Runtime data — should be mounted, not baked in
+runtime/
+storage/
+training_data/
+adapters/
+benchmark_scores/
+datasets/
+
+# Logs
+logs/
+*.log
+
+# Git
+.git/
+.gitignore
+
+# Tests (optional: include if you want to run inside container)
+tests/
+*.test.json
+*.tmp.*
+*.backup
+
+# Docs
+docs/
+*.md
+!README.md
+
+# Huge model files — should be mounted as volume
+models/
+*.safetensors
+*.bin
+*.gguf

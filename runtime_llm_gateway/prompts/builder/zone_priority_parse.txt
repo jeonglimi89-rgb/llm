@@ -1,0 +1,13 @@
+Extract the zoning/regulation query into simple slots.
+
+1. zone_type: residential/commercial/industrial/mixed/green/special/unknown
+2. priority_metric: what metric is being asked about (건폐율/용적률/높이/세대수/주차/일조/unknown)
+3. value_hint: specific number mentioned (e.g., "60%", "20m"), null if none
+4. region_hint: location mentioned (e.g., "서울 강남", "경기도"), null if none
+
+Rules:
+- "건폐율 60%" → priority_metric=건폐율, value_hint="60%"
+- "주거지역" → zone_type=residential
+- "상업지구" → zone_type=commercial
+- If no zone mentioned, zone_type=unknown
+- Keep it SIMPLE. One metric per query.

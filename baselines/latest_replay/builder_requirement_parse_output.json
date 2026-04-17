@@ -1,0 +1,49 @@
+{
+  "request_id": "req_8cedea89071b",
+  "task_type": "builder.requirement_parse",
+  "provider": "vllm",
+  "model_profile": "strict-json-pool",
+  "resolved_model": "qwen2.5-0.5b-instruct",
+  "structured_content": {
+    "project_type": "주거",
+    "floors": 2,
+    "spaces": [
+      {
+        "type": "living_room",
+        "count": 1,
+        "priority": "high",
+        "min_area_m2": null,
+        "preferred_area_m2": null
+      },
+      {
+        "type": "kitchen",
+        "count": 1,
+        "priority": "high",
+        "min_area_m2": null,
+        "preferred_area_m2": null
+      }
+    ],
+    "preferences": {
+      "style": "모던",
+      "material": "스타일러",
+      "orientation": "서쪽",
+      "atmosphere": "가족감"
+    },
+    "constraints": {}
+  },
+  "raw_text": "```json\n{\n  \"project_type\": \"주거\",\n  \"floors\": 2,\n  \"spaces\": [\n    {\n      \"type\": \"living_room\",\n      \"count\": 1,\n      \"priority\": \"high\",\n      \"min_area_m2\": null,\n      \"preferred_area_m2\": null\n    },\n    {\n      \"type\": \"kitchen\",\n      \"count\": 1,\n      \"priority\": \"high\",\n      \"min_area_m2\": null,\n      \"preferred_area_m2\": null\n    }\n  ],\n  \"preferences\": {\n    \"style\": \"모던\",\n    \"material\": \"스타일러\",\n    \"orientation\": \"서쪽\",\n    \"atmosphere\": \"가족감\"\n  },\n  \"constraints\": {}\n}\n```",
+  "validation": {
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair_attempted": false,
+    "repair_success": false,
+    "errors": []
+  },
+  "latency_ms": 39470,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "route_shard": "strict-json-pool-shard-2",
+  "error_code": null,
+  "error_message": null,
+  "_latency_ms": 39471
+}

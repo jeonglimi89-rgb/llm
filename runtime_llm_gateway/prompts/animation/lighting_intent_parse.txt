@@ -1,0 +1,18 @@
+Extract the lighting/atmosphere intent into simple slots.
+
+1. mood: warm/cold/dramatic/soft/dark/bright/neutral
+2. time_of_day: dawn/morning/noon/afternoon/sunset/night/unknown
+3. weather_hint: clear/cloudy/rain/snow/fog, null if not mentioned
+4. emotion_hint: emotion keyword (외로움, 공포, 평화, etc.), null if none
+
+Mapping rules:
+- "노을" = sunset + warm
+- "밤" = night + dark
+- "비 오는" = rain
+- "눈" = snow
+- "안개" = fog
+- "밝은 낮" = noon + bright
+- "어둠" = night + dark
+- "따뜻한" = warm
+
+Do NOT generate detailed lighting parameters. Just classify the mood and context.

@@ -1,0 +1,11 @@
+Extract the design priorities from the user's request.
+
+1. priorities: ordered list of priorities (most important first)
+2. top_constraint: single most important constraint keyword, null if not clear
+
+Rules:
+- "방수 최우선" → priorities=["방수", ...], top_constraint="방수"
+- "경량 두번째" → 경량 goes second in priorities
+- "안전 > 비용 > 크기" → priorities=["안전", "비용", "크기"]
+- If no explicit priority, infer from context: safety > function > cost > aesthetics
+- Keep priorities to 3-5 items max.

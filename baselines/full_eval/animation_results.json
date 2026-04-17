@@ -1,0 +1,102 @@
+[
+  {
+    "id": "A01",
+    "text": "노을빛 슬픈 클로즈업",
+    "status": "network_failure",
+    "latency_ms": 5104,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A02",
+    "text": "추격 장면, 핸드헬드 카메라로 빠르게",
+    "status": "network_failure",
+    "latency_ms": 5097,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A03",
+    "text": "두 캐릭터 대화 오버숄더 샷",
+    "status": "network_failure",
+    "latency_ms": 5133,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A04",
+    "text": "비 오는 밤 외로운 실루엣 와이드샷",
+    "status": "network_failure",
+    "latency_ms": 5143,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A05",
+    "text": "놀란 표정 극단적 클로즈업",
+    "status": "network_failure",
+    "latency_ms": 5122,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A06",
+    "text": "크레인 업으로 도시 전경 보여주기",
+    "status": "network_failure",
+    "latency_ms": 5097,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A07",
+    "text": "격투 장면 빠른 컷 연속",
+    "status": "network_failure",
+    "latency_ms": 5047,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A08",
+    "text": "꽃잎 떨어지는 슬로모션 디테일",
+    "status": "network_failure",
+    "latency_ms": 5062,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A09",
+    "text": "문 열리면서 밝은 빛 역광",
+    "status": "network_failure",
+    "latency_ms": 5068,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A10",
+    "text": "어둠 속 눈만 보이는 공포 연출",
+    "status": "network_failure",
+    "latency_ms": 5080,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  }
+]

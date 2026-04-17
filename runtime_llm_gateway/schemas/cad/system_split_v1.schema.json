@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": ["systems", "priority_order"],
+  "properties": {
+    "systems": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["mechanical", "electrical", "plumbing", "structure", "exterior"]
+      }
+    },
+    "priority_order": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "우선순위 순서"
+    },
+    "split_reason": {
+      "type": ["string", "null"],
+      "description": "분리 이유 (예: 방수 우선, 배선 분리 필요)"
+    }
+  }
+}

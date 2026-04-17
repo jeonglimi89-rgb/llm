@@ -1,0 +1,56 @@
+{
+  "request_id": "req_24b70b3829c1",
+  "task_type": "animation.shot_parse",
+  "provider": "vllm",
+  "model_profile": "strict-json-pool",
+  "resolved_model": "qwen2.5-3b",
+  "structured_content": {
+    "shot_id": "1",
+    "characters": [
+      {
+        "character_id": "char_1",
+        "role": "주인공"
+      },
+      {
+        "character_id": "char_2",
+        "role": "주인공"
+      }
+    ],
+    "camera": {
+      "framing": "close_up",
+      "angle": "dolly",
+      "lens_mm": 85,
+      "move_type": "slow_dolly out"
+    },
+    "acting": {
+      "key_expressions": [
+        "슬픔"
+      ],
+      "gestures": [
+        "smile"
+      ],
+      "eye_direction": "right"
+    },
+    "lighting": {
+      "mood": "cold_blue",
+      "color_temperature": "soft_diffuse",
+      "direction": "low"
+    },
+    "duration_frames": 24
+  },
+  "raw_text": "```json\n{\n  \"shot_id\": \"1\",\n  \"characters\": [\n    {\n      \"character_id\": \"char_1\",\n      \"role\": \"주인공\"\n    },\n    {\n      \"character_id\": \"char_2\",\n      \"role\": \"주인공\"\n    }\n  ],\n  \"camera\": {\n    \"framing\": \"close_up\",\n    \"angle\": \"dolly\",\n    \"lens_mm\": 85,\n    \"move_type\": \"slow_dolly out\"\n  },\n  \"acting\": {\n    \"key_expressions\": [\"슬픔\"],\n    \"gestures\": [\"smile\"],\n    \"eye_direction\": \"right\"\n  },\n  \"lighting\": {\n    \"mood\": \"cold_blue\",\n    \"color_temperature\": \"soft_diffuse\",\n    \"direction\": \"low\"\n  },\n  \"duration_frames\": 24\n}\n```",
+  "validation": {
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair_attempted": false,
+    "repair_success": false,
+    "errors": []
+  },
+  "latency_ms": 44831,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "route_shard": "strict-json-pool-shard-0",
+  "error_code": null,
+  "error_message": null,
+  "_latency_ms": 44832
+}

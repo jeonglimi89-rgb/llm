@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Animation Slot Extraction",
+  "oneOf": [
+    {
+      "title": "shot_parse",
+      "type": "object",
+      "properties": {
+        "framing": {"type": "string", "enum": ["wide", "medium", "close_up", "extreme_close_up", "full", "cowboy", "over_shoulder"]},
+        "mood": {"type": "string", "enum": ["warm", "cold", "dramatic", "neutral", "dark", "bright", "mysterious"]},
+        "speed": {"type": "string", "enum": ["slow", "moderate", "fast"]},
+        "emotion_hint": {"type": "string"},
+        "angle": {"type": "string", "enum": ["eye_level", "low", "high", "birds_eye", "dutch"]},
+        "camera_move": {"type": "string", "enum": ["static", "pan", "tilt", "dolly", "crane", "handheld", "tracking"]}
+      },
+      "required": ["framing", "mood"]
+    },
+    {
+      "title": "camera_intent_parse",
+      "type": "object",
+      "properties": {
+        "movement": {"type": "string"},
+        "angle": {"type": "string"},
+        "subject": {"type": "string"},
+        "focus": {"type": "string", "enum": ["sharp", "shallow", "rack"]}
+      },
+      "required": ["movement"]
+    },
+    {
+      "title": "lighting_intent_parse",
+      "type": "object",
+      "properties": {
+        "atmosphere": {"type": "string"},
+        "mood_tag": {"type": "string"},
+        "intensity": {"type": "string", "enum": ["low", "medium", "high"]},
+        "color_temperature": {"type": "string", "enum": ["warm", "neutral", "cold"]}
+      },
+      "required": ["atmosphere", "mood_tag"]
+    }
+  ]
+}

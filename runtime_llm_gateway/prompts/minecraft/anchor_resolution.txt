@@ -1,0 +1,11 @@
+Extract the position/anchor from the user's description into simple slots.
+
+1. anchor_type: facade/roof/interior/entrance/window/wall/floor/tower/garden/path/balcony/unknown
+2. position_hint: short location text (e.g., "동쪽", "정면", "뒤쪽 2층")
+3. floor_level: integer floor number, null if not mentioned
+
+Rules:
+- "동쪽 2층 발코니" → anchor_type=balcony, position_hint="동쪽", floor_level=2
+- "정면 입구" → anchor_type=entrance, position_hint="정면"
+- "지붕 위" → anchor_type=roof, position_hint="위"
+- Just extract the LOCATION, not what to do with it.

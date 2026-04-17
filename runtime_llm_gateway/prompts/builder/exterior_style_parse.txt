@@ -1,0 +1,12 @@
+Extract the exterior style intent into simple slots.
+
+1. style_family: modern/classic/brick/natural/industrial/minimalist/korean_traditional/unknown
+2. material_hint: material keyword (벽돌, 스톤, 목재, 유리, etc.), null if not mentioned
+3. color_tone: warm/cool/neutral/dark/bright, null if not specified
+
+Rules:
+- "벽돌 외관" → style_family=brick, material_hint=벽돌
+- "모던 스타일" → style_family=modern
+- "화이트톤" → color_tone=bright
+- "따뜻한 느낌" → color_tone=warm
+- If ambiguous, pick the dominant style.

@@ -1,0 +1,63 @@
+=====================================================================================
+[검증 단계 보고]
+=====================================================================================
+
+### 1) 전체 상태
+  이번 턴 범위: 26-task smoke + 7-core quality + consistency + recovery
+  사용 모델: Qwen2.5-7B-Instruct-AWQ (GPU, RTX 5070)
+  structured output: vLLM native guided decoding (json_schema)
+  fallback server: yes
+
+### 2) 전수 스모크 결과
+  전체 태스크 수: 26
+  성공: 26
+  실패: 0
+  schema valid: 26
+  invalid JSON: 0
+  empty/timeout: 0
+
+### 3) 핵심 태스크 품질 결과
+  builder.requirement_parse: 3/3 usable, grades=['B', 'B', 'B']
+  builder.patch_parse: 3/3 usable, grades=['A', 'A', 'A']
+  cad.constraint_parse: 3/3 usable, grades=['A', 'A', 'A']
+  minecraft.edit_parse: 3/3 usable, grades=['A', 'A', 'A']
+  minecraft.style_guard: 3/3 usable, grades=['A', 'A', 'A']
+  animation.shot_parse: 3/3 usable, grades=['B', 'B', 'B']
+  animation.camera_lighting_v1: 3/3 usable, grades=['A', 'A', 'A']
+
+### 4) 등급 분포
+  A: 15
+  B: 6
+  C: 0
+  D: 0
+
+### 5) 실패 Top 5
+  (none)
+
+### 6) 실패 유형 분포
+  F1_NO_RESPONSE No Response: 0
+  F2_INVALID_JSON Invalid JSON: 0
+  F3_SCHEMA_MISMATCH Schema Mismatch: 0
+  F4_SEMANTIC_DRIFT Semantic Drift: 0
+  F5_PARTIAL Partial Completion: 0
+  F6_OVER_INFERENCE Over-Inference: 0
+  F7_UNDER_SPEC Under-Specification: 0
+  F8_CONSISTENCY Consistency Failure: 0
+
+### 7) 성능
+  평균 latency: 30ms
+  P50: 5ms
+  P95: 322ms
+  최대값: 322ms
+
+### 8) 메트릭/운영
+  request_id 추적: OK
+  freeform fallback: OK
+  recovery tests: 5/5 pass
+
+### 9) 결론
+  즉시 운영 가능 (A): 5 tasks
+  후처리 후 운영 (B): 2 tasks
+  프롬프트 수정 필요 (C): 0 tasks
+  스키마 재설계 필요 (D): 0 tasks
+=====================================================================================

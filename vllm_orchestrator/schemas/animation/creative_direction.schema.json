@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Creative Shot Direction",
+  "type": "object",
+  "properties": {
+    "acting": {
+      "type": "object",
+      "required": ["expression", "gesture", "eye_direction", "body_language"],
+      "properties": {
+        "expression": {"type": "string", "minLength": 10},
+        "gesture": {"type": "string", "minLength": 10},
+        "eye_direction": {"type": "string", "minLength": 5},
+        "body_language": {"type": "string", "minLength": 10}
+      }
+    },
+    "lighting_detail": {
+      "type": "object",
+      "required": ["key_description", "color_palette", "shadow_character"],
+      "properties": {
+        "key_description": {"type": "string", "minLength": 10},
+        "color_palette": {"type": "string", "minLength": 5},
+        "shadow_character": {"type": "string", "minLength": 5},
+        "atmosphere_particles": {"type": "string"}
+      }
+    },
+    "scene_description": {"type": "string", "minLength": 10},
+    "sd_prompt_enhancement": {"type": "string", "minLength": 5}
+  },
+  "required": ["acting", "scene_description"]
+}

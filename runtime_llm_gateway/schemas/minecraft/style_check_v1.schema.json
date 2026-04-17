@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "required": ["theme", "palette_ok", "proportion_ok", "decoration_ok", "verdict"],
+  "properties": {
+    "theme": {
+      "type": "string",
+      "description": "감지된 스타일 테마 (medieval, modern, etc.)"
+    },
+    "palette_ok": {
+      "type": "boolean",
+      "description": "블록 팔레트가 테마에 맞는지"
+    },
+    "proportion_ok": {
+      "type": "boolean",
+      "description": "비례가 자연스러운지"
+    },
+    "decoration_ok": {
+      "type": "boolean",
+      "description": "장식 수준이 테마에 맞는지"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["pass", "fail", "warn"]
+    },
+    "main_issue": {
+      "type": ["string", "null"],
+      "description": "가장 큰 문제 1줄 (없으면 null)"
+    }
+  }
+}

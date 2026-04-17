@@ -1,0 +1,308 @@
+{
+  "_comment": "permanent regression corpus — known false-positive payloads from HR-001..HR-012 (2026-04-04 review_data.json) plus reconstructed fixtures inspired by 2026-03-30 verification_report.txt D-grade tasks. Each entry must NOT auto_validate under the layered review gate. Update with care: removing entries weakens regression protection.",
+  "schema_version": "1.0",
+  "generated_at": "2026-04-06",
+  "cases": [
+    {
+      "id": "HR-001",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "builder",
+      "task": "requirement_parse",
+      "user_input": "2층 주택 거실 크게, 모던 스타일",
+      "parsed_payload": {
+        "楼层": "2층",
+        "户型": "모던 스타일"
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["wrong_key_locale"],
+      "expected_final_judgment": "fail",
+      "notes": "Chinese keys leaked from base model. Must fail language gate."
+    },
+    {
+      "id": "HR-002",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "builder",
+      "task": "requirement_parse",
+      "user_input": "지하 카페 + 2층 주거, 벽돌 외관",
+      "parsed_payload": {
+        "name": "지하 카페",
+        "address": "서울특별시 종로구",
+        "floor": "2층",
+        "building_type": "주거",
+        "construction_material": "벽돌"
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["task_contract_violation"],
+      "expected_final_judgment": "fail",
+      "notes": "plausible-looking keys but outside the canonical builder schema (name/address/building_type are not in BUILDER_ALLOWED_KEYS); also hallucinates 'address: 서울특별시 종로구' from no input signal."
+    },
+    {
+      "id": "HR-003",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "builder",
+      "task": "patch_intent_parse",
+      "user_input": "창문 유지하고 출입문만 키워줘",
+      "parsed_payload": {
+        "intent": "출입문과 창문을 유지하고, 출입이 가능하게 해주세요"
+      },
+      "old_auto_validated": true,
+      "expected_final_judgment": "pass",
+      "expected_failure_categories": [],
+      "notes": "Genuinely acceptable. Single intent key in Korean. Used as a positive control — must NOT regress to fail."
+    },
+    {
+      "id": "HR-004",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "cad",
+      "task": "constraint_parse",
+      "user_input": "방수 샤워필터, 배수 연결 포함",
+      "parsed_payload": {
+        "valid": true,
+        "message": "이 문법은 정확한 JSON 형식으로 작성되어 있지 않습니다.",
+        "error": null
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["validator_shaped_response"],
+      "expected_final_judgment": "fail",
+      "notes": "validator-shape leak ({valid, message, error}). The model returned its own validator opinion instead of constraints."
+    },
+    {
+      "id": "HR-005",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "cad",
+      "task": "constraint_parse",
+      "user_input": "모터+PCB 내장 접이식 기구부",
+      "parsed_payload": {
+        "constraint_type": "접이식기구",
+        "description": "모터와 PCB 내장 접이식 기구",
+        "category": "기계",
+        "input_requirements": [
+          {"component_name": "모터", "quantity": 1, "unit": "개"},
+          {"component_name": "PCB", "quantity": 1, "unit": "개"}
+        ],
+        "output_requirements": [
+          {"component_name": "접이식기구", "quantity": 1, "unit": "개"}
+        ]
+      },
+      "old_auto_validated": true,
+      "expected_final_judgment": "pass",
+      "expected_failure_categories": [],
+      "notes": "Genuinely acceptable. Used as positive control."
+    },
+    {
+      "id": "HR-006",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "cad",
+      "task": "system_split_parse",
+      "user_input": "전기/배수/구조 시스템 분리",
+      "parsed_payload": {
+        "분리": [
+          {"시스템": "전기", "설명": "전기 전원과 배터리"},
+          {"시스템": "배수", "설명": "배수 장치와 배수 소프트웨어"},
+          {"시스템": "구조", "설명": "구조체 및 구조 기술"}
+        ]
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["task_contract_violation"],
+      "expected_final_judgment": "fail",
+      "notes": "Korean keys (분리/시스템/설명) outside the snake_case canonical contract."
+    },
+    {
+      "id": "HR-007",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "minecraft",
+      "task": "edit_parse",
+      "user_input": "정면 창문 넓게, 지붕 유지",
+      "parsed_payload": {
+        "result": "정면 창문 넓게, 지붕 유지"
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["schema_pass_but_semantic_fail"],
+      "expected_final_judgment": "fail",
+      "notes": "Wrapper key 'result' echoes the input verbatim — no slot extraction occurred."
+    },
+    {
+      "id": "HR-008",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "minecraft",
+      "task": "style_check",
+      "user_input": "중세풍 스타일에 맞는지 체크",
+      "parsed_payload": {
+        "style": "중세풍",
+        "check": {
+          "color_scheme": true,
+          "texture": true,
+          "pattern": true,
+          "shape": true,
+          "line_style": true,
+          "letter_spacing": true,
+          "margin": true,
+          "padding": true,
+          "shadow": true,
+          "border_color": true,
+          "border_width": true,
+          "text_color": true,
+          "font_family": true,
+          "font_size": true,
+          "font_weight": true,
+          "font_style": true,
+          "alignment": true,
+          "indentation": true,
+          "leading": true,
+          "space_after": true,
+          "space_before": true,
+          "spacing": true
+        }
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["css_property_leak"],
+      "expected_final_judgment": "fail",
+      "notes": "CSS/typography vocabulary (font_family, padding, letter_spacing, etc.) leaked into Minecraft style_check output."
+    },
+    {
+      "id": "HR-009",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "minecraft",
+      "task": "anchor_resolution",
+      "user_input": "동쪽 2층 발코니 위치",
+      "parsed_payload": {
+        "text": "동쪽 2층 발코니 위치"
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["schema_pass_but_semantic_fail"],
+      "expected_final_judgment": "fail",
+      "notes": "Wrapper key 'text' echoes the input verbatim."
+    },
+    {
+      "id": "HR-010",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "animation",
+      "task": "shot_parse",
+      "user_input": "노을빛에 슬픈 클로즈업",
+      "parsed_payload": {
+        "text": "노을빛에 슬픈 클로즈업"
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["schema_pass_but_semantic_fail"],
+      "expected_final_judgment": "fail",
+      "notes": "Wrapper key 'text' echoes the input verbatim."
+    },
+    {
+      "id": "HR-011",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "animation",
+      "task": "camera_intent_parse",
+      "user_input": "공포 장면 어둠 연출",
+      "parsed_payload": {
+        "intent": "camera",
+        "action": "play",
+        "data": {
+          "image_url": "https://example.com/image.jpg"
+        }
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["hallucinated_external_reference"],
+      "expected_final_judgment": "fail",
+      "notes": "Animation camera_intent must never produce URLs. example.com is a placeholder hallucination."
+    },
+    {
+      "id": "HR-012",
+      "source": "vllm_orchestrator/runtime/human_review/review_data.json",
+      "domain": "animation",
+      "task": "lighting_intent_parse",
+      "user_input": "비 오는 밤 외로운 분위기",
+      "parsed_payload": {
+        "intent": "외로운 분위기",
+        "reasoning": "The user is expressing a desire for an environment that is not too crowded or noisy, which aligns with the concept of '비 오는 밤' (outside night) in Korean language."
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["semantic_mistranslation", "wrong_language"],
+      "expected_final_judgment": "fail",
+      "notes": "The reasoning is in English; the phrase '비 오는 밤' is mistranslated to 'outside night'; '외로운' becomes 'not too crowded' (semantic loss)."
+    },
+
+    {
+      "id": "DG-builder-patch_parse-01",
+      "source": "reconstructed from baselines/verification_report/verification_report.txt (2026-03-30)",
+      "domain": "builder",
+      "task": "patch_intent_parse",
+      "user_input": "거실만 1.5배 크게",
+      "parsed_payload": {
+        "操作": "resize",
+        "目标": "거실",
+        "倍率": 1.5
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["wrong_key_locale"],
+      "expected_final_judgment": "fail",
+      "notes": "Reconstructed fixture: builder.patch_parse was a verified D-grade task with F4_SEMANTIC_DRIFT failures. This payload reproduces the Chinese-key family observed in HR-001."
+    },
+    {
+      "id": "DG-cad-constraint-01",
+      "source": "reconstructed from baselines/verification_report/verification_report.txt (2026-03-30)",
+      "domain": "cad",
+      "task": "constraint_parse",
+      "user_input": "방수 샤워필터, 배수 연결 포함",
+      "parsed_payload": {
+        "valid": false,
+        "message": "constraints not parseable",
+        "error": "PARSE_FAIL"
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["validator_shaped_response"],
+      "expected_final_judgment": "fail",
+      "notes": "Second validator-shape variant. Same family as HR-004 but with valid=false branch."
+    },
+    {
+      "id": "DG-minecraft-style-01",
+      "source": "reconstructed from HR-008 family",
+      "domain": "minecraft",
+      "task": "style_check",
+      "user_input": "현대풍 카페 룩",
+      "parsed_payload": {
+        "style": "modern_cafe",
+        "css": {
+          "background-color": "#aabbcc",
+          "border-radius": "12px",
+          "box-shadow": "0 2px 8px rgba(0,0,0,0.2)",
+          "padding": "8px"
+        }
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["css_property_leak"],
+      "expected_final_judgment": "fail",
+      "notes": "CSS leak with hyphenated keys. Tests dash-form coverage of detect_css_property_leak."
+    },
+    {
+      "id": "DG-animation-camera-url-01",
+      "source": "reconstructed from HR-011 family",
+      "domain": "animation",
+      "task": "camera_intent_parse",
+      "user_input": "긴장감 높은 추격 와이드샷",
+      "parsed_payload": {
+        "framing": "wide",
+        "movement": "tracking",
+        "reference_url": "http://www.shutterstock.com/preview/abc"
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["hallucinated_external_reference"],
+      "expected_final_judgment": "fail",
+      "notes": "URL hallucination with non-placeholder domain. Tests bare http:// + shutterstock.com leak path."
+    },
+    {
+      "id": "DG-animation-lighting-en-01",
+      "source": "reconstructed from HR-012 family",
+      "domain": "animation",
+      "task": "lighting_intent_parse",
+      "user_input": "노을빛 따뜻한 거실",
+      "parsed_payload": {
+        "intent": "warm living room",
+        "reasoning": "User wants a warm tone with sunset light coming from the west."
+      },
+      "old_auto_validated": true,
+      "expected_failure_categories": ["wrong_language"],
+      "expected_final_judgment": "fail",
+      "notes": "intent and reasoning are entirely English. Korean anchor '노을' must be preserved somewhere; here it isn't."
+    }
+  ]
+}

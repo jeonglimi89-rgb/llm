@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "required": ["request_id", "task_type", "provider", "model_profile", "resolved_model", "validation", "latency_ms"],
+  "properties": {
+    "request_id": {"type": "string"},
+    "task_type": {"type": "string"},
+    "provider": {"type": "string"},
+    "model_profile": {"type": "string"},
+    "resolved_model": {"type": "string"},
+    "raw_text": {"type": ["string", "null"]},
+    "structured_content": {"type": ["object", "null"]},
+    "validation": {
+      "type": "object",
+      "required": ["schema_ok", "domain_ok", "repair_attempted", "repair_success"],
+      "properties": {
+        "schema_ok": {"type": "boolean"},
+        "domain_ok": {"type": "boolean"},
+        "repair_attempted": {"type": "boolean"},
+        "repair_success": {"type": "boolean"},
+        "errors": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "latency_ms": {"type": "integer"},
+    "prompt_tokens": {"type": ["integer", "null"]},
+    "completion_tokens": {"type": ["integer", "null"]},
+    "route_shard": {"type": ["string", "null"]},
+    "error_code": {"type": ["string", "null"]},
+    "error_message": {"type": ["string", "null"]}
+  }
+}

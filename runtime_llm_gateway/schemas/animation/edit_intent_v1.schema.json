@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": ["edit_target", "edit_direction"],
+  "properties": {
+    "edit_target": {
+      "type": "string",
+      "enum": ["camera", "lighting", "timing", "character", "transition", "framing", "angle", "unknown"]
+    },
+    "edit_direction": {
+      "type": "string",
+      "enum": ["increase", "decrease", "change", "add", "remove"]
+    },
+    "detail_hint": {
+      "type": ["string", "null"],
+      "description": "구체적 지시 (예: 더 높게, 85mm로)"
+    },
+    "preserve": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "보존 대상"
+    }
+  }
+}

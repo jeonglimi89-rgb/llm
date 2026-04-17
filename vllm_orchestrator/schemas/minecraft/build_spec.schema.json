@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Minecraft Build Spec V1",
+  "type": "object",
+  "required": ["version", "kind", "buildingType"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"type": "integer", "enum": [1]},
+    "kind": {"type": "string", "enum": ["build"]},
+    "buildingType": {
+      "type": "string",
+      "enum": ["cottage", "castle", "tower", "shrine", "shop", "farm", "gate", "bridge", "harbor", "outpost"]
+    },
+    "style": {
+      "type": "string",
+      "enum": ["medieval", "rustic", "defensive", "ceremonial", "fantasy"]
+    },
+    "scale": {
+      "type": "string",
+      "enum": ["small", "medium", "large"]
+    },
+    "mood": {
+      "type": "string",
+      "enum": ["plain", "ornate", "cozy", "grand", "fortified"]
+    },
+    "materialHints": {
+      "type": "array",
+      "items": {"type": "string"},
+      "maxItems": 8
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxTowers": {"type": "integer", "minimum": 0, "maximum": 12},
+        "avoidOverDecoration": {"type": "boolean"},
+        "symmetryBias": {"type": "string", "enum": ["low", "medium", "high"]}
+      }
+    }
+  }
+}

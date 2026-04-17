@@ -1,0 +1,22 @@
+test_id,task_type,input_summary,response_ok,schema_valid,domain_valid,grade,latency_ms,repair_used,failure_type
+BLD-Q01,builder.requirement_parse,"2층 주택, 거실/주방/욕실 포함, 모던 스타일",True,True,True,B,1,False,PASS
+BLD-Q02,builder.requirement_parse,"3층 다세대 원룸 2개씩, 옥상 테라스",True,True,True,B,0,False,PASS
+BLD-Q03,builder.requirement_parse,"지하 카페 + 2층 주거, 벽돌 외관",True,True,True,B,0,False,PASS
+BLD-Q04,builder.patch_parse,창문 유지하고 출입문만 키워줘,True,True,True,A,1,False,PASS
+BLD-Q05,builder.patch_parse,2층 방 하나 없애고 거실로 합쳐줘,True,True,True,A,1,False,PASS
+BLD-Q06,builder.patch_parse,외벽 재료를 스톤으로 변경,True,True,True,A,1,False,PASS
+CAD-Q01,cad.constraint_parse,"배수/전기/구조 분리, 방수 IP67",True,True,True,A,0,False,PASS
+CAD-Q02,cad.constraint_parse,3D프린팅 경량 브래킷 설계,True,True,True,A,0,False,PASS
+CAD-Q03,cad.constraint_parse,모터+PCB 내장 접이식 기구부,True,True,True,A,0,False,PASS
+MC-Q01,minecraft.edit_parse,"stone 외장 추가, door 유지",True,True,True,A,0,False,PASS
+MC-Q02,minecraft.edit_parse,"지붕 박공으로 바꿔, 높이는 유지",True,True,True,A,0,False,PASS
+MC-Q03,minecraft.edit_parse,"2층 발코니 추가, 기존 벽 유지",True,True,True,A,0,False,PASS
+MC-Q04,minecraft.style_guard,이 빌드가 중세풍 스타일에 맞는지 체크,True,True,True,A,0,False,PASS
+MC-Q05,minecraft.style_guard,모던 빌드인데 나무 블록이 너무 많은지 확인,True,True,True,A,0,False,PASS
+MC-Q06,minecraft.style_guard,일본식 건축 팔레트 검증해줘,True,True,True,A,0,False,PASS
+ANI-Q01,animation.shot_parse,"클로즈업, 슬픈 감정, 노을빛",True,True,True,B,1,False,PASS
+ANI-Q02,animation.shot_parse,추격 장면 핸드헬드 빠른 컷,True,True,True,B,1,False,PASS
+ANI-Q03,animation.shot_parse,두 캐릭터 대화 오버숄더,True,True,True,B,0,False,PASS
+ANI-Q04,animation.camera_lighting_v1,"밤 인테리어, 느린 푸시인",True,True,True,A,1,False,PASS
+ANI-Q05,animation.camera_lighting_v1,"노을 역광, 실루엣 와이드샷",True,True,True,A,1,False,PASS
+ANI-Q06,animation.camera_lighting_v1,"공포 장면, 어둠 속 눈만 보임",True,True,True,A,1,False,PASS

@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": ["mood", "time_of_day"],
+  "properties": {
+    "mood": {
+      "type": "string",
+      "enum": ["warm", "cold", "dramatic", "soft", "dark", "bright", "neutral"]
+    },
+    "time_of_day": {
+      "type": "string",
+      "enum": ["dawn", "morning", "noon", "afternoon", "sunset", "night", "unknown"]
+    },
+    "weather_hint": {
+      "type": ["string", "null"],
+      "enum": ["clear", "cloudy", "rain", "snow", "fog", null]
+    },
+    "emotion_hint": {
+      "type": ["string", "null"],
+      "description": "감정 키워드"
+    }
+  }
+}

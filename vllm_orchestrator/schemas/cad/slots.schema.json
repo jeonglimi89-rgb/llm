@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CAD Slot Extraction",
+  "oneOf": [
+    {
+      "title": "constraint_parse",
+      "type": "object",
+      "properties": {
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "constraint_type": {"type": "string"},
+              "description": {"type": "string"},
+              "category": {"type": "string", "enum": ["기계", "전기", "배수", "구조"]}
+            },
+            "required": ["constraint_type", "description"]
+          },
+          "minItems": 1
+        }
+      },
+      "required": ["constraints"]
+    },
+    {
+      "title": "system_split_parse",
+      "type": "object",
+      "properties": {
+        "systems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "subsystems": {"type": "array", "items": {"type": "string"}}
+            },
+            "required": ["name"]
+          },
+          "minItems": 1
+        }
+      },
+      "required": ["systems"]
+    },
+    {
+      "title": "priority_parse",
+      "type": "object",
+      "properties": {
+        "priorities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rank": {"type": "integer", "minimum": 1},
+              "priority": {"type": "string"}
+            },
+            "required": ["rank", "priority"]
+          }
+        }
+      },
+      "required": ["priorities"]
+    }
+  ]
+}

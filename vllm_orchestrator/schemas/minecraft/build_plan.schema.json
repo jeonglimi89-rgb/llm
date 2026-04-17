@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Minecraft Build Plan",
+  "type": "object",
+  "required": ["build_type", "style", "footprint"],
+  "properties": {
+    "build_type": {"type": "string"},
+    "style": {"type": "string"},
+    "tone": {"type": "string"},
+
+    "footprint": {
+      "type": "object",
+      "required": ["width", "depth"],
+      "properties": {
+        "width": {"type": "integer", "minimum": 6, "maximum": 40},
+        "depth": {"type": "integer", "minimum": 6, "maximum": 32},
+        "shape": {"type": "string"},
+        "orientation": {"type": "string"}
+      }
+    },
+
+    "floors": {
+      "type": "object",
+      "properties": {
+        "count": {"type": "integer", "minimum": 1, "maximum": 8},
+        "floor_heights": {"type": "array", "items": {"type": "integer"}},
+        "has_basement": {"type": "boolean"},
+        "has_attic": {"type": "boolean"},
+        "vertical_progression": {"type": "string"}
+      }
+    },
+
+    "silhouette_strategy": {"type": "string"},
+    "wall_height": {"type": "integer", "minimum": 3, "maximum": 20},
+
+    "wall": {
+      "type": "object",
+      "properties": {
+        "height_per_floor": {"type": "integer", "minimum": 3, "maximum": 10},
+        "thickness": {"type": "integer", "minimum": 1, "maximum": 4},
+        "corner_style": {"type": "string"},
+        "detail_pattern": {"type": "string"}
+      }
+    },
+
+    "roof": {
+      "type": "object",
+      "properties": {
+        "type": {"type": "string"},
+        "peak_height": {"type": "integer", "minimum": 0, "maximum": 12},
+        "overhang": {"type": "integer", "minimum": 0, "maximum": 5},
+        "material": {"type": "string"},
+        "ornamentation": {"type": "string"}
+      }
+    },
+
+    "windows": {
+      "type": "object",
+      "properties": {
+        "pattern": {"type": "string"},
+        "count_per_floor": {"type": "integer", "minimum": 0, "maximum": 20},
+        "style": {"type": "string"},
+        "size": {"type": "string"}
+      }
+    },
+
+    "entrance": {
+      "type": "object",
+      "properties": {
+        "position": {"type": "string"},
+        "door_style": {"type": "string"},
+        "porch_type": {"type": "string"},
+        "steps": {"type": "integer", "minimum": 0, "maximum": 12}
+      }
+    },
+
+    "ornament_density": {"type": "number", "minimum": 0, "maximum": 1},
+    "defense_level": {"type": "number", "minimum": 0, "maximum": 1},
+    "verticality": {"type": "number", "minimum": 0, "maximum": 1},
+    "symmetry_bias": {"type": "number", "minimum": 0, "maximum": 1},
+
+    "palette_strategy": {"type": "string"},
+
+    "primary_materials": {
+      "type": "object",
+      "properties": {
+        "foundation": {"type": "string"},
+        "walls": {"type": "string"},
+        "wall_accent": {"type": "string"},
+        "roof": {"type": "string"},
+        "trim": {"type": "string"},
+        "floor": {"type": "string"}
+      }
+    },
+
+    "material_hints": {"type": "array", "items": {"type": "string"}},
+    "key_features": {"type": "array", "items": {"type": "string"}},
+    "interior_rooms": {"type": "array", "items": {"type": "string"}},
+    "exterior_elements": {"type": "array", "items": {"type": "string"}},
+    "lighting_scheme": {"type": "string"},
+
+    "landscape_context": {
+      "type": "object",
+      "properties": {
+        "biome_fit": {"type": "string"},
+        "terrain_adaptation": {"type": "string"},
+        "surrounding_elements": {"type": "string"}
+      }
+    },
+
+    "narrative_hook": {"type": "string"},
+    "creative_notes": {"type": "string"}
+  }
+}

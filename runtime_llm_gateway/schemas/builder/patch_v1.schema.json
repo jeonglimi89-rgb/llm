@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "required": ["target", "operation", "preserve"],
+  "properties": {
+    "target": {
+      "type": "object",
+      "required": ["element_type"],
+      "properties": {
+        "element_type": {"type": "string", "enum": ["space", "wall", "opening", "floor", "roof", "stair", "mep", "exterior"]},
+        "element_id": {"type": "string"},
+        "floor_level": {"type": ["integer", "null"]}
+      }
+    },
+    "operation": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {"type": "string", "enum": ["resize", "add", "remove", "move", "replace", "merge", "split"]},
+        "params": {
+          "type": "object",
+          "properties": {
+            "delta_area_m2": {"type": ["number", "null"]},
+            "absolute_area_m2": {"type": ["number", "null"]},
+            "new_material": {"type": ["string", "null"]},
+            "direction": {"type": ["string", "null"]},
+            "amount": {"type": ["number", "null"]}
+          }
+        }
+      }
+    },
+    "preserve": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "변경하지 말아야 할 요소 목록"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["low", "normal", "high"],
+      "default": "normal",
+      "description": "구조 영향도"
+    }
+  }
+}

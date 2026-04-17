@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "builder-v1",
+  "project_type": "builder",
+  "description": "Builder AI - 건축 규제/법규 질의 변환. 정확성 우선, 창의성은 해석 대안에서만.",
+
+  "engine_params": {
+    "type": "object",
+    "description": "Builder AI 규제 검색/해석 엔진 파라미터",
+    "required": ["query_type", "jurisdiction"],
+    "properties": {
+      "query_type": {
+        "type": "string",
+        "enum": ["zoning", "building_code", "fire_safety", "accessibility", "environmental", "structural", "electrical", "plumbing", "general"],
+        "description": "규제 질의 유형"
+      },
+      "jurisdiction": {
+        "type": "object",
+        "properties": {
+          "country": {"type": "string", "default": "KR"},
+          "region": {"type": "string", "description": "시/도"},
+          "district": {"type": "string", "description": "구/군"},
+          "zone_type": {"type": "string", "enum": ["residential", "commercial", "industrial", "mixed", "green", "special"]}
+        }
+      },
+      "building_info": {
+        "type": "object",
+        "properties": {
+          "use": {"type": "string", "description": "건물 용도"},
+          "stories": {"type": "integer", "description": "층수"},
+          "total_area_sqm": {"type": "number", "description": "연면적 (m2)"},
+          "lot_area_sqm": {"type": "number", "description": "대지면적 (m2)"},
+          "building_coverage_ratio": {"type": "number", "description": "건폐율 (%)"},
+          "floor_area_ratio": {"type": "number", "description": "용적률 (%)"},
+          "height_m": {"type": "number", "description": "건물 높이 (m)"},
+          "structure_type": {"type": "string", "enum": ["rc", "src", "steel", "wood", "masonry"]}
+        }
+      },
+      "search_params": {
+        "type": "object",
+        "properties": {
+          "keywords": {"type": "array", "items": {"type": "string"}},
+          "law_references": {"type": "array", "items": {"type": "string"}, "description": "관련 법규 조항 (e.g., 건축법 제56조)"},
+          "date_range": {"type": "string", "description": "법규 시행일 범위"},
+          "include_amendments": {"type": "boolean", "default": true}
+        }
+      },
+      "interpretation": {
+        "type": "object",
+        "properties": {
+          "question": {"type": "string", "description": "사용자의 원래 질문"},
+          "normalized_query": {"type": "string", "description": "정규화된 규제 질의"},
+          "applicable_laws": {"type": "array", "items": {"type": "string"}},
+          "interpretation_variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reading": {"type": "string", "description": "해석 방향"},
+                "basis": {"type": "string", "description": "근거 조항"},
+                "confidence": {"type": "number"}
+              }
+            }
+          }
+        }
+      },
+      "output_format": {
+        "type": "string",
+        "enum": ["summary", "detailed", "checklist", "comparison"],
+        "default": "summary"
+      }
+    }
+  },
+
+  "path_aliases": {
+    "질의 유형": "/query_type",
+    "관할": "/jurisdiction",
+    "국가": "/jurisdiction/country",
+    "지역": "/jurisdiction/region",
+    "구": "/jurisdiction/district",
+    "용도지역": "/jurisdiction/zone_type",
+    "건물 용도": "/building_info/use",
+    "층수": "/building_info/stories",
+    "연면적": "/building_info/total_area_sqm",
+    "대지면적": "/building_info/lot_area_sqm",
+    "건폐율": "/building_info/building_coverage_ratio",
+    "용적률": "/building_info/floor_area_ratio",
+    "높이": "/building_info/height_m",
+    "구조": "/building_info/structure_type",
+    "키워드": "/search_params/keywords",
+    "법규": "/search_params/law_references",
+    "질문": "/interpretation/question",
+    "정규화": "/interpretation/normalized_query",
+    "해석": "/interpretation/interpretation_variants",
+    "출력형식": "/output_format"
+  },
+
+  "constraint_mapping": {
+    "주거": {"jurisdiction/zone_type": "residential"},
+    "상업": {"jurisdiction/zone_type": "commercial"},
+    "공업": {"jurisdiction/zone_type": "industrial"},
+    "혼합": {"jurisdiction/zone_type": "mixed"},
+    "녹지": {"jurisdiction/zone_type": "green"},
+    "철근콘크리트": {"building_info/structure_type": "rc"},
+    "철골": {"building_info/structure_type": "steel"},
+    "목조": {"building_info/structure_type": "wood"},
+    "상세": {"output_format": "detailed"},
+    "요약": {"output_format": "summary"},
+    "체크리스트": {"output_format": "checklist"},
+    "비교": {"output_format": "comparison"}
+  },
+
+  "critique_criteria": [
+    {
+      "name": "accuracy",
+      "label": "정확성",
+      "description": "인용된 법규 조항이 정확하고 최신인지",
+      "weight": 0.40
+    },
+    {
+      "name": "completeness",
+      "label": "완전성",
+      "description": "관련 규제를 빠짐없이 다루는지",
+      "weight": 0.30
+    },
+    {
+      "name": "clarity",
+      "label": "명확성",
+      "description": "해석이 모호하지 않고 실무 적용 가능한지",
+      "weight": 0.20
+    },
+    {
+      "name": "alternative_coverage",
+      "label": "대안 포괄성",
+      "description": "복수 해석 가능성을 적절히 제시하는지",
+      "weight": 0.10
+    }
+  ],
+
+  "variant_axes": [
+    {
+      "axis": "interpretation_strictness",
+      "description": "해석 엄격도: 보수적 / 표준 / 진보적",
+      "values": ["conservative", "standard", "progressive"]
+    },
+    {
+      "axis": "detail_level",
+      "description": "상세도: 요약 / 표준 / 전문가급",
+      "values": ["summary", "standard", "expert"]
+    },
+    {
+      "axis": "scope",
+      "description": "검토 범위: 핵심만 / 관련법 포함 / 전체",
+      "values": ["core_only", "with_related", "comprehensive"]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+Parse the user's scene description into a structured shot graph.
+
+Extract:
+1. shot_id: generate a unique short ID
+2. characters: who appears in this shot
+   - character_id: identifier
+   - role: "주인공", "상대역", "엑스트라", etc.
+3. camera:
+   - framing: shot type (wide/medium/close_up/etc.)
+   - angle: eye_level, low, high, dutch, bird_eye
+   - lens_mm: 24(wide) to 135(telephoto), infer from context
+     - 풍경/전경 → 24-35mm
+     - 대화/일반 → 50-85mm
+     - 클로즈업/감정 → 85-135mm
+   - move_type: camera movement
+4. acting:
+   - Key expressions, gestures, eye direction
+   - Map Korean emotion words: 슬픈=sad, 화난=angry, 놀란=surprised, 행복한=happy, 불안한=anxious
+5. lighting:
+   - mood, color_temperature, direction
+   - Map scene cues: 노을=warm_golden+backlit, 밤=cold_blue+low_key, 낮=neutral+high_key
+6. duration_frames:
+   - 짧은 컷 = 12-24 frames (0.5-1초)
+   - 보통 = 48-72 frames (2-3초)
+   - 롱테이크 = 120+ frames (5초+)
+   - "천천히" = longer duration, add ease_in/ease_out
+
+Rules:
+- Emotion drives EVERYTHING: camera choice, lighting, timing
+- "돌아보는" = character rotation → tracking or pan to follow
+- "걸어가는" = movement → dolly or tracking shot
+- If ambiguous, output both options in uncertainties field

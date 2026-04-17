@@ -1,0 +1,100 @@
+{
+  "shower_filter": {
+    "category": "personal_care_device",
+    "display_name": "충전식 샤워필터",
+    "systems": ["mechanical", "electrical", "plumbing"],
+    "default_parts": [
+      {"name": "filter_housing", "role": "외장 하우징", "material": "PP (식품용)", "dims_mm": {"x": 70, "y": 70, "z": 220}, "sealing": "IP67"},
+      {"name": "filter_cartridge", "role": "필터 카트리지 (교체형)", "material": "활성탄+세디먼트", "dims_mm": {"x": 50, "y": 50, "z": 150}},
+      {"name": "usb_charge_port", "role": "USB-C 충전 포트", "material": "스테인리스+실리콘 방수캡", "dims_mm": {"x": 12, "y": 8, "z": 5}, "sealing": "IP67"},
+      {"name": "battery_cell", "role": "리튬 배터리", "material": "Li-ion 18650", "dims_mm": {"x": 18, "y": 18, "z": 65}},
+      {"name": "charge_pcb", "role": "충전 제어 PCB", "material": "FR-4", "dims_mm": {"x": 30, "y": 20, "z": 2}},
+      {"name": "pump_motor", "role": "소형 급수 펌프", "material": "DC 모터", "dims_mm": {"x": 25, "y": 25, "z": 40}},
+      {"name": "water_inlet", "role": "급수 어댑터 (샤워호스 연결)", "material": "스테인리스", "dims_mm": {"x": 25, "y": 25, "z": 30}},
+      {"name": "water_outlet", "role": "배수 출구", "material": "PP", "dims_mm": {"x": 20, "y": 20, "z": 25}},
+      {"name": "oring_set", "role": "O-링 세트 (방수 씰)", "material": "실리콘", "dims_mm": {"x": 70, "y": 70, "z": 3}}
+    ],
+    "default_constraints": [
+      {"constraint_type": "방수", "description": "IP67 등급 방수 (충전 포트 포함)", "category": "기계"},
+      {"constraint_type": "충전", "description": "USB-C 5V/2A 충전", "category": "전기"},
+      {"constraint_type": "필터 교체", "description": "카트리지 도구 없이 교체 가능", "category": "기계"},
+      {"constraint_type": "급수 연결", "description": "표준 1/2인치 샤워호스 어댑터", "category": "배수"}
+    ],
+    "default_interfaces": {
+      "electrical": [
+        {"name": "charge_circuit", "from_part": "usb_charge_port", "to_part": "charge_pcb", "type": "power", "wire_gauge_awg": 22},
+        {"name": "motor_drive", "from_part": "charge_pcb", "to_part": "pump_motor", "type": "power", "wire_gauge_awg": 20},
+        {"name": "battery_charge", "from_part": "charge_pcb", "to_part": "battery_cell", "type": "power", "wire_gauge_awg": 22}
+      ],
+      "drainage": [
+        {"name": "water_path", "from_part": "water_inlet", "to_part": "filter_cartridge", "min_slope_deg": 0, "diameter_mm": 15},
+        {"name": "filtered_output", "from_part": "filter_cartridge", "to_part": "water_outlet", "min_slope_deg": 2.0, "diameter_mm": 15}
+      ],
+      "mounting": [
+        {"from_part": "filter_housing", "to_part": "filter_cartridge", "method": "twist_lock"},
+        {"from_part": "filter_housing", "to_part": "charge_pcb", "method": "screw_M2"},
+        {"from_part": "filter_housing", "to_part": "battery_cell", "method": "snap_fit"},
+        {"from_part": "filter_housing", "to_part": "oring_set", "method": "press_fit"}
+      ]
+    },
+    "keywords": ["샤워필터", "shower filter", "필터", "샤워", "정수"]
+  },
+  "iot_sensor_module": {
+    "category": "iot_device",
+    "display_name": "IoT 센서 모듈",
+    "systems": ["mechanical", "electrical"],
+    "default_parts": [
+      {"name": "enclosure", "role": "방수 케이스", "material": "ABS", "dims_mm": {"x": 60, "y": 40, "z": 25}, "sealing": "IP65"},
+      {"name": "main_pcb", "role": "메인 PCB (MCU+센서)", "material": "FR-4", "dims_mm": {"x": 45, "y": 30, "z": 2}},
+      {"name": "battery", "role": "리튬 배터리", "material": "Li-Po", "dims_mm": {"x": 40, "y": 25, "z": 8}},
+      {"name": "antenna", "role": "무선 안테나 (WiFi/BLE)", "material": "PCB antenna", "dims_mm": {"x": 20, "y": 5, "z": 1}},
+      {"name": "sensor_unit", "role": "센서 유닛 (온습도/가스)", "material": "MEMS", "dims_mm": {"x": 5, "y": 5, "z": 2}}
+    ],
+    "default_constraints": [
+      {"constraint_type": "방수", "description": "IP65 방진방수", "category": "기계"},
+      {"constraint_type": "저전력", "description": "배터리 1년 이상 동작", "category": "전기"},
+      {"constraint_type": "소형", "description": "60x40x25mm 이내", "category": "기계"}
+    ],
+    "default_interfaces": {
+      "electrical": [
+        {"name": "sensor_bus", "from_part": "main_pcb", "to_part": "sensor_unit", "type": "signal", "wire_gauge_awg": 28},
+        {"name": "power_bus", "from_part": "battery", "to_part": "main_pcb", "type": "power", "wire_gauge_awg": 24},
+        {"name": "antenna_feed", "from_part": "main_pcb", "to_part": "antenna", "type": "signal", "wire_gauge_awg": 30}
+      ],
+      "mounting": [
+        {"from_part": "enclosure", "to_part": "main_pcb", "method": "screw_M2"},
+        {"from_part": "enclosure", "to_part": "battery", "method": "adhesive"}
+      ]
+    },
+    "keywords": ["IoT", "센서", "모듈", "sensor", "무선", "WiFi", "BLE"]
+  },
+  "led_lamp": {
+    "category": "lighting_device",
+    "display_name": "LED 스탠드 조명",
+    "systems": ["mechanical", "electrical"],
+    "default_parts": [
+      {"name": "lamp_body", "role": "본체 (스탠드)", "material": "aluminum", "dims_mm": {"x": 80, "y": 80, "z": 350}},
+      {"name": "led_module", "role": "LED 모듈", "material": "COB LED", "dims_mm": {"x": 50, "y": 50, "z": 5}},
+      {"name": "driver_pcb", "role": "LED 드라이버 PCB", "material": "FR-4", "dims_mm": {"x": 40, "y": 25, "z": 2}},
+      {"name": "power_adapter", "role": "전원 어댑터 (12V DC)", "material": "plastic", "dims_mm": {"x": 60, "y": 40, "z": 30}},
+      {"name": "diffuser", "role": "확산판 (빛 균일화)", "material": "PC (폴리카보네이트)", "dims_mm": {"x": 60, "y": 60, "z": 3}}
+    ],
+    "default_constraints": [
+      {"constraint_type": "밝기", "description": "최대 800 루멘", "category": "전기"},
+      {"constraint_type": "색온도", "description": "3000K-6500K 조절 가능", "category": "전기"},
+      {"constraint_type": "방열", "description": "알루미늄 본체 방열", "category": "기계"}
+    ],
+    "default_interfaces": {
+      "electrical": [
+        {"name": "led_power", "from_part": "driver_pcb", "to_part": "led_module", "type": "power", "wire_gauge_awg": 20},
+        {"name": "dc_input", "from_part": "power_adapter", "to_part": "driver_pcb", "type": "power", "wire_gauge_awg": 18}
+      ],
+      "mounting": [
+        {"from_part": "lamp_body", "to_part": "led_module", "method": "screw_M3"},
+        {"from_part": "lamp_body", "to_part": "diffuser", "method": "snap_fit"},
+        {"from_part": "lamp_body", "to_part": "driver_pcb", "method": "screw_M2"}
+      ]
+    },
+    "keywords": ["LED", "조명", "스탠드", "램프", "lamp", "light", "lighting"]
+  }
+}

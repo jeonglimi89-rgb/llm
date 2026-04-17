@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "required": ["framing", "mood", "speed"],
+  "properties": {
+    "framing": {
+      "type": "string",
+      "enum": ["wide", "medium", "close_up", "extreme_close_up", "over_shoulder", "pov", "bird_eye"],
+      "description": "샷 프레이밍"
+    },
+    "camera_move": {
+      "type": ["string", "null"],
+      "enum": ["static", "pan", "tilt", "dolly", "zoom", "crane", "handheld", "orbit", null],
+      "description": "카메라 움직임 (없으면 null)"
+    },
+    "angle": {
+      "type": ["string", "null"],
+      "enum": ["eye_level", "low", "high", "dutch", "bird_eye", null]
+    },
+    "mood": {
+      "type": "string",
+      "enum": ["warm", "cold", "dramatic", "soft", "dark", "bright", "neutral"],
+      "description": "전체 분위기"
+    },
+    "speed": {
+      "type": "string",
+      "enum": ["slow", "moderate", "fast"],
+      "description": "장면 속도감"
+    },
+    "emotion_hint": {
+      "type": ["string", "null"],
+      "description": "감정 힌트 (슬픔, 긴장, 기쁨 등)"
+    }
+  }
+}

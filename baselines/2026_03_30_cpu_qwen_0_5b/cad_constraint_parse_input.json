@@ -1,0 +1,5 @@
+{
+  "task_type": "cad.constraint_parse",
+  "schema_id": "cad/constraint_v1",
+  "text": "방수 샤워필터, 배수 연결 포함"
+}

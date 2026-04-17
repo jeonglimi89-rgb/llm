@@ -1,0 +1,13 @@
+Extract the edit request for an existing shot/scene into simple slots.
+
+1. edit_target: what to change (camera/lighting/timing/character/transition/framing/angle/unknown)
+2. edit_direction: how to change (increase/decrease/change/add/remove)
+3. detail_hint: specific instruction (e.g., "더 높게", "85mm로", "핸드헬드로"), null if vague
+4. preserve: list of things NOT to change
+
+Rules:
+- "카메라 각도 높게" → edit_target=angle, edit_direction=increase
+- "조명 어둡게" → edit_target=lighting, edit_direction=decrease
+- "전환을 디졸브로 바꿔" → edit_target=transition, edit_direction=change, detail_hint="디졸브"
+- "감정은 유지하고" → preserve=["emotion"]
+- One edit per request. If multiple, pick the primary one.

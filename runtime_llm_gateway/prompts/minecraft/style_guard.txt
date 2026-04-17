@@ -1,0 +1,9 @@
+Evaluate if the proposed design changes maintain style coherence.
+
+Check:
+1. Does the palette remain consistent with the theme?
+2. Are proportions natural for Minecraft (1 block = 1m)?
+3. Do decorations match the declared style level?
+4. Is material variety within reasonable limits (3-5 primary, 2-3 accent)?
+
+Return a style guard verdict with pass/fail per criterion and suggestions if failing.

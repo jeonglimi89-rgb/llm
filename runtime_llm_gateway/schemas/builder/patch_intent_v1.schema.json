@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "required": ["target_type", "operation_type", "preserve"],
+  "properties": {
+    "target_type": {
+      "type": "string",
+      "enum": ["space", "wall", "opening", "floor", "roof", "stair", "mep", "exterior"],
+      "description": "변경 대상 유형"
+    },
+    "target_hint": {
+      "type": "string",
+      "description": "대상 설명 (예: 거실 창문, 2층 벽)"
+    },
+    "operation_type": {
+      "type": "string",
+      "enum": ["resize", "add", "remove", "move", "replace", "merge", "split"],
+      "description": "수정 작업 유형"
+    },
+    "direction": {
+      "type": ["string", "null"],
+      "enum": ["bigger", "smaller", "higher", "lower", "wider", "narrower", null],
+      "description": "resize 방향"
+    },
+    "absolute_value": {
+      "type": ["string", "null"],
+      "description": "절대값 (예: 360mm, 30평)"
+    },
+    "material_hint": {
+      "type": ["string", "null"],
+      "description": "재료 변경 시 대상 (예: 벽돌, 스톤)"
+    },
+    "preserve": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "보존할 요소 목록"
+    }
+  }
+}

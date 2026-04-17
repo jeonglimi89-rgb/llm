@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Variant Plans",
+  "type": "object",
+  "required": ["variants"],
+  "properties": {
+    "variants": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["label", "strategy", "axes_override"],
+        "properties": {
+          "label": {"type": "string"},
+          "strategy": {"type": "string"},
+          "description": {"type": "string"},
+          "axes_override": {"type": "object"},
+          "footprint_adjust": {"type": "object"},
+          "roof_override": {"type": "object"},
+          "extra_features": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+Parse the user's design request into structured system constraints.
+
+Extract:
+1. systems: which engineering systems are involved
+   - "mechanical": housing, modules, moving parts, joints
+   - "electrical": wiring, connectors, PCB, sensors, power
+   - "plumbing": drainage, water supply, sealing, fluid paths
+   - "structure": load-bearing, wall thickness, reinforcement
+   - "exterior": form factor, surface finish, aesthetics
+2. constraints: list of specific constraints with severity
+   - constraint_type: what kind (dimension, clearance, material, interface, environmental)
+   - severity: "critical" (must satisfy), "high" (strong preference), "normal" (nice to have), "low" (optional)
+   - details: specific values, ranges, or conditions (REQUIRED when severity is "critical" or "high")
+3. priorities: ordered list of what matters most
+   - e.g., ["waterproof_integrity", "compact_size", "easy_maintenance"]
+
+Rules:
+- "심플" = prioritize simplicity, fewer modules, clean exterior
+- "배수 고려" = add plumbing system with drainage constraints
+- "전기선도 같이" = add electrical system
+- If user mentions "방수" → critical constraint with IP rating
+- Structural constraints are always at least "normal" severity
+- Manufacturing method affects ALL system constraints (injection molding vs 3D print)

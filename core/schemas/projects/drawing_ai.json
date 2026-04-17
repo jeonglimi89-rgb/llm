@@ -1,0 +1,296 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "drawing-ai-v1",
+  "project_type": "drawing_ai",
+  "description": "Drawing AI 엔진 파라미터 스키마. structural_drawing_engine.py + integrated_drawing_export.py 기반.",
+
+  "engine_params": {
+    "type": "object",
+    "description": "Drawing AI 엔진이 받아들이는 전체 파라미터 구조",
+    "required": ["sheet", "views", "source_design"],
+    "properties": {
+
+      "sheet": {
+        "type": "object",
+        "description": "도면 용지 설정",
+        "required": ["width", "height"],
+        "properties": {
+          "width": {"type": "integer", "default": 1400, "description": "시트 폭 (px)"},
+          "height": {"type": "integer", "default": 960, "description": "시트 높이 (px)"},
+          "scale": {"type": "string", "default": "1:1", "description": "도면 축척"},
+          "projection_method": {
+            "type": "string",
+            "enum": ["first_angle", "third_angle"],
+            "default": "third_angle",
+            "description": "투영법"
+          },
+          "title_block": {
+            "type": "object",
+            "properties": {
+              "drawing_number": {"type": "string"},
+              "title": {"type": "string"},
+              "material": {"type": "string", "default": ""},
+              "revision": {"type": "string", "default": "A"},
+              "date": {"type": "string"},
+              "author": {"type": "string", "default": ""},
+              "checker": {"type": "string", "default": ""},
+              "notes": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      },
+
+      "views": {
+        "type": "array",
+        "description": "도면 뷰 구성",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": ["view_type"],
+          "properties": {
+            "view_id": {"type": "string"},
+            "view_type": {
+              "type": "string",
+              "enum": ["front", "top", "side", "section", "detail", "isometric", "exploded"],
+              "description": "뷰 유형"
+            },
+            "position": {
+              "type": "object",
+              "properties": {
+                "x": {"type": "number"},
+                "y": {"type": "number"}
+              }
+            },
+            "scale_override": {"type": "string", "description": "뷰별 축척 오버라이드"},
+            "section_plane": {
+              "type": "object",
+              "description": "단면도일 때 절단면 정의",
+              "properties": {
+                "label": {"type": "string", "description": "단면 라벨 (A-A, B-B 등)"},
+                "axis": {"type": "string", "enum": ["x", "y", "z"]},
+                "offset_mm": {"type": "number"},
+                "direction": {"type": "string", "enum": ["left", "right", "up", "down"]}
+              }
+            },
+            "show_hidden_lines": {"type": "boolean", "default": true},
+            "show_center_lines": {"type": "boolean", "default": true},
+            "show_hatching": {"type": "boolean", "default": false}
+          }
+        }
+      },
+
+      "dimensions": {
+        "type": "array",
+        "description": "치수선 배치",
+        "items": {
+          "type": "object",
+          "required": ["dim_type", "value_mm"],
+          "properties": {
+            "dim_id": {"type": "string"},
+            "dim_type": {
+              "type": "string",
+              "enum": ["horizontal", "vertical", "angular", "radius", "diameter"],
+              "description": "치수선 유형"
+            },
+            "value_mm": {"type": "number", "description": "치수값 (mm)"},
+            "tolerance": {"type": "string", "default": "", "description": "공차 (예: ±0.5)"},
+            "view_ref": {"type": "string", "description": "치수가 속한 뷰 ID"},
+            "position": {
+              "type": "object",
+              "properties": {
+                "x1": {"type": "number"},
+                "y1": {"type": "number"},
+                "x2": {"type": "number"},
+                "y2": {"type": "number"}
+              }
+            }
+          }
+        }
+      },
+
+      "annotations": {
+        "type": "array",
+        "description": "주석/라벨/기호",
+        "items": {
+          "type": "object",
+          "required": ["annotation_type", "text"],
+          "properties": {
+            "annotation_id": {"type": "string"},
+            "annotation_type": {
+              "type": "string",
+              "enum": ["label", "note", "surface_finish", "gdt", "balloon", "weld_symbol"],
+              "description": "주석 유형"
+            },
+            "text": {"type": "string"},
+            "view_ref": {"type": "string"},
+            "position": {
+              "type": "object",
+              "properties": {
+                "x": {"type": "number"},
+                "y": {"type": "number"}
+              }
+            },
+            "leader_to": {
+              "type": "object",
+              "description": "지시선 끝점",
+              "properties": {
+                "x": {"type": "number"},
+                "y": {"type": "number"}
+              }
+            }
+          }
+        }
+      },
+
+      "system_layers": {
+        "type": "array",
+        "description": "시스템 레이어 오버레이 (배선/유체/구조 등)",
+        "items": {
+          "type": "object",
+          "required": ["layer_type"],
+          "properties": {
+            "layer_type": {
+              "type": "string",
+              "enum": ["structure", "electrical", "water_supply", "drainage", "sensor_wire", "maintenance_path"]
+            },
+            "visible": {"type": "boolean", "default": true},
+            "color_hex": {"type": "string"},
+            "opacity": {"type": "number", "minimum": 0, "maximum": 1, "default": 1.0}
+          }
+        }
+      },
+
+      "source_design": {
+        "type": "object",
+        "description": "도면 생성 소스가 되는 설계 데이터 참조",
+        "required": ["project_id"],
+        "properties": {
+          "project_id": {"type": "string"},
+          "category": {"type": "string"},
+          "dimensions": {
+            "type": "object",
+            "properties": {
+              "overall_width_mm": {"type": "integer"},
+              "overall_depth_mm": {"type": "integer"},
+              "overall_height_mm": {"type": "integer"}
+            }
+          },
+          "modules": {"type": "array", "items": {"type": "object"}},
+          "wiring_routes": {"type": "array", "items": {"type": "object"}},
+          "drainage_paths": {"type": "array", "items": {"type": "object"}}
+        }
+      },
+
+      "output_format": {
+        "type": "string",
+        "enum": ["svg", "pdf"],
+        "default": "svg",
+        "description": "출력 형식"
+      },
+
+      "three_js_model": {
+        "type": "boolean",
+        "default": false,
+        "description": "3D 뷰어용 모델 데이터 포함 여부"
+      }
+    }
+  },
+
+  "path_aliases": {
+    "시트 폭": "/sheet/width",
+    "시트 높이": "/sheet/height",
+    "용지": "/sheet",
+    "축척": "/sheet/scale",
+    "투영법": "/sheet/projection_method",
+    "도면 번호": "/sheet/title_block/drawing_number",
+    "도면 제목": "/sheet/title_block/title",
+    "재질": "/sheet/title_block/material",
+    "리비전": "/sheet/title_block/revision",
+
+    "뷰": "/views",
+    "정면도": "/views[view_type=front]",
+    "평면도": "/views[view_type=top]",
+    "측면도": "/views[view_type=side]",
+    "단면도": "/views[view_type=section]",
+    "상세도": "/views[view_type=detail]",
+    "아이소메트릭": "/views[view_type=isometric]",
+    "분해도": "/views[view_type=exploded]",
+
+    "치수": "/dimensions",
+    "치수선": "/dimensions",
+    "공차": "/dimensions[*]/tolerance",
+
+    "주석": "/annotations",
+    "라벨": "/annotations",
+    "표면 거칠기": "/annotations[annotation_type=surface_finish]",
+    "기하공차": "/annotations[annotation_type=gdt]",
+    "풍선": "/annotations[annotation_type=balloon]",
+
+    "레이어": "/system_layers",
+    "숨은선": "/views[*]/show_hidden_lines",
+    "중심선": "/views[*]/show_center_lines",
+    "해칭": "/views[*]/show_hatching",
+
+    "출력 형식": "/output_format",
+    "3d 모델": "/three_js_model"
+  },
+
+  "constraint_mapping": {
+    "간단한": {"views": [{"view_type": "front"}]},
+    "기본": {"views": [{"view_type": "front"}, {"view_type": "top"}, {"view_type": "side"}]},
+    "상세": {"views": [{"view_type": "front"}, {"view_type": "top"}, {"view_type": "side"}, {"view_type": "section"}, {"view_type": "detail"}]},
+    "단면 포함": {"views_add": {"view_type": "section"}},
+    "단면도": {"views_add": {"view_type": "section"}},
+    "아이소메트릭": {"views_add": {"view_type": "isometric"}},
+    "분해도": {"views_add": {"view_type": "exploded"}},
+    "상세도": {"views_add": {"view_type": "detail"}},
+    "pdf": {"output_format": "pdf"},
+    "svg": {"output_format": "svg"},
+    "3d 포함": {"three_js_model": true}
+  },
+
+  "critique_criteria": [
+    {
+      "name": "completeness",
+      "label": "완성도",
+      "description": "필수 뷰가 모두 포함되어 있는지, 치수가 빠짐없는지",
+      "weight": 0.30
+    },
+    {
+      "name": "iso_compliance",
+      "label": "ISO 규격 준수",
+      "description": "ISO 128/129 규격에 맞는 선종, 치수선, 투영법 사용 여부",
+      "weight": 0.30
+    },
+    {
+      "name": "readability",
+      "label": "가독성",
+      "description": "치수선 겹침, 라벨 가림, 레이어 혼잡도",
+      "weight": 0.25
+    },
+    {
+      "name": "layer_accuracy",
+      "label": "레이어 정확성",
+      "description": "시스템 레이어(배선/유체)가 설계 데이터와 정합하는지",
+      "weight": 0.15
+    }
+  ],
+
+  "variant_axes": [
+    {
+      "axis": "view_set",
+      "description": "뷰 구성 축: 최소(정면만) / 표준(3면) / 상세(3면+단면+상세)",
+      "values": ["minimal", "standard", "detailed"]
+    },
+    {
+      "axis": "annotation_density",
+      "description": "주석 밀도 축: 핵심 치수만 / 전체 치수 / 전체+GD&T",
+      "values": ["essential", "full", "full_with_gdt"]
+    },
+    {
+      "axis": "layer_visibility",
+      "description": "레이어 가시성 축: 구조만 / 구조+전기 / 전체 시스템",
+      "values": ["structure_only", "structure_electrical", "all_systems"]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Minecraft Scene Graph",
+  "type": "object",
+  "required": ["nodes"],
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 40,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "primitive_type", "position", "material"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 40},
+          "kind": {"const": "primitive"},
+          "primitive_type": {"enum": ["cuboid", "cylinder", "cone", "opening"]},
+          "position": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["x", "y", "z"],
+                "properties": {
+                  "x": {"type": "number"},
+                  "y": {"type": "number"},
+                  "z": {"type": "number"}
+                }
+              },
+              {"type": "string", "minLength": 1, "maxLength": 80}
+            ]
+          },
+          "material": {"type": "string", "maxLength": 60},
+          "hollow": {"type": "boolean"},
+          "subtract": {"type": "boolean"},
+          "size": {
+            "type": "object",
+            "properties": {
+              "x": {"type": "integer"},
+              "y": {"type": "integer"},
+              "z": {"type": "integer"}
+            }
+          },
+          "radius": {"type": "integer", "minimum": 1, "maximum": 16},
+          "height": {"type": "integer", "minimum": 1, "maximum": 32},
+          "axis": {"enum": ["x", "y", "z"]},
+          "base_radius": {"type": "integer", "minimum": 1, "maximum": 16},
+          "tip_ratio": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "palette_hints": {
+      "type": "object",
+      "additionalProperties": {"type": "string"}
+    },
+    "concept_notes": {
+      "type": "string",
+      "maxLength": 400
+    }
+  }
+}

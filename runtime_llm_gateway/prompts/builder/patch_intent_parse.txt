@@ -1,0 +1,18 @@
+Extract the user's edit intent into simple slots. Do NOT generate the full patch — just identify WHAT to change and HOW.
+
+Slots to fill:
+1. target_type: what kind of element (space, wall, opening, floor, roof, stair, mep, exterior)
+2. target_hint: short description of the specific target (e.g., "거실 창문", "2층 벽")
+3. operation_type: what to do (resize, add, remove, move, replace, merge, split)
+4. direction: if resizing, which way (bigger/smaller/higher/lower/wider/narrower, null if not resize)
+5. absolute_value: specific measurement if given (e.g., "360mm", "30평"), null if not specified
+6. material_hint: new material if replacing, null if not material change
+7. preserve: list of things NOT to change (extract from "유지", "그대로", "건드리지 마")
+
+Rules:
+- "크게" = resize + bigger
+- "없애" = remove
+- "바꿔" with material = replace
+- "합쳐" = merge
+- If no explicit preserve, infer from context (e.g., editing window → preserve walls)
+- Keep it SIMPLE. One target, one operation.

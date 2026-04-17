@@ -1,0 +1,23 @@
+[
+  {
+    "test": "empty_input",
+    "handled": true
+  },
+  {
+    "test": "unknown_schema",
+    "handled": true
+  },
+  {
+    "test": "long_input",
+    "handled": true,
+    "latency_ms": 0
+  },
+  {
+    "test": "request_id_tracking",
+    "handled": true
+  },
+  {
+    "test": "freeform_task",
+    "handled": true
+  }
+]

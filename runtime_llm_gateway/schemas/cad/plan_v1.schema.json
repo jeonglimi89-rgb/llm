@@ -1,0 +1,122 @@
+{
+  "type": "object",
+  "required": ["design_type", "functional_requirements", "dimensions", "parts", "interfaces"],
+  "properties": {
+    "design_type": {
+      "type": "string",
+      "enum": ["product", "mechanism", "assembly", "wiring", "plumbing"]
+    },
+    "functional_requirements": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "dimensions": {
+      "type": "object",
+      "required": ["target_units"],
+      "properties": {
+        "target_units": {"type": "string", "default": "mm"},
+        "bounds": {
+          "type": "object",
+          "properties": {
+            "max_width": {"type": "number"},
+            "max_depth": {"type": "number"},
+            "max_height": {"type": "number"}
+          }
+        },
+        "critical_dims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "value_mm"],
+            "properties": {
+              "name": {"type": "string"},
+              "value_mm": {"type": "number"},
+              "tolerance": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "parts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "role"],
+        "properties": {
+          "name": {"type": "string"},
+          "role": {"type": "string"},
+          "material": {"type": "string"},
+          "manufacturing_hint": {"type": "string", "enum": ["injection_molding", "cnc", "3d_printing", "sheet_metal", "casting", ""]},
+          "estimated_dims": {"type": "object"}
+        }
+      }
+    },
+    "assembly_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step": {"type": "integer"},
+          "action": {"type": "string"},
+          "parts_involved": {"type": "array", "items": {"type": "string"}},
+          "method": {"type": "string"}
+        }
+      }
+    },
+    "interfaces": {
+      "type": "object",
+      "properties": {
+        "electrical": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "type": {"type": "string"},
+              "from_part": {"type": "string"},
+              "to_part": {"type": "string"}
+            }
+          }
+        },
+        "water_inlet": {"type": "array", "items": {"type": "object"}},
+        "drainage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "from_part": {"type": "string"},
+              "to_part": {"type": "string"},
+              "min_slope_deg": {"type": "number"}
+            }
+          }
+        },
+        "mounting": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "tolerances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "feature": {"type": "string"},
+          "type": {"type": "string"},
+          "value": {"type": "string"}
+        }
+      }
+    },
+    "safety_constraints": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "outputs": {
+      "type": "object",
+      "properties": {
+        "2d_drawing": {"type": "boolean", "default": true},
+        "3d_model": {"type": "boolean", "default": true},
+        "bom": {"type": "boolean", "default": true},
+        "validation_report": {"type": "boolean", "default": true}
+      }
+    }
+  }
+}

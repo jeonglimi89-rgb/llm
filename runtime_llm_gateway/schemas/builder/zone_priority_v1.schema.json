@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": ["zone_type", "priority_metric", "value_hint"],
+  "properties": {
+    "zone_type": {
+      "type": "string",
+      "enum": ["residential", "commercial", "industrial", "mixed", "green", "special", "unknown"]
+    },
+    "priority_metric": {
+      "type": "string",
+      "enum": ["건폐율", "용적률", "높이", "세대수", "주차", "일조", "unknown"]
+    },
+    "value_hint": {
+      "type": ["string", "null"],
+      "description": "사용자가 언급한 수치 (예: 60%, 20m)"
+    },
+    "region_hint": {
+      "type": ["string", "null"],
+      "description": "지역 힌트 (예: 서울 강남, 경기 용인)"
+    }
+  }
+}

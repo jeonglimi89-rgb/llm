@@ -1,0 +1,40 @@
+{
+  "date": "2026-03-30",
+  "server": "WSL CPU fallback",
+  "model": "Qwen2.5-0.5B-Instruct",
+  "provider": "fallback_server.py",
+  "results": [
+    {
+      "task": "builder.requirement_parse",
+      "status": "PASS",
+      "schema_ok": true,
+      "domain_ok": true,
+      "latency_ms": 47351,
+      "repair": false
+    },
+    {
+      "task": "cad.constraint_parse",
+      "status": "PASS",
+      "schema_ok": true,
+      "domain_ok": true,
+      "latency_ms": 54426,
+      "repair": false
+    },
+    {
+      "task": "minecraft.edit_parse",
+      "status": "PASS",
+      "schema_ok": true,
+      "domain_ok": true,
+      "latency_ms": 22013,
+      "repair": false
+    },
+    {
+      "task": "animation.shot_parse",
+      "status": "PASS",
+      "schema_ok": true,
+      "domain_ok": true,
+      "latency_ms": 44832,
+      "repair": false
+    }
+  ]
+}

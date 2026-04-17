@@ -1,0 +1,52 @@
+{
+  "request_id": "req_ea81f3e0fb9a",
+  "task_type": "cad.constraint_parse",
+  "provider": "vllm",
+  "model_profile": "strict-json-pool",
+  "resolved_model": "qwen2.5-0.5b-instruct",
+  "structured_content": {
+    "systems": [
+      "exterior",
+      "plumbing",
+      "structure",
+      "electrical"
+    ],
+    "constraints": [
+      {
+        "constraint_type": "waterproof_integrity",
+        "severity": "normal",
+        "details": {
+          "IP ratings": "waterproof"
+        }
+      },
+      {
+        "constraint_type": "external_connection",
+        "severity": "normal",
+        "details": {
+          "length": "50mm",
+          "width": "10mm",
+          "material": "ABS plastic"
+        }
+      }
+    ],
+    "priorities": [
+      "waterproof_integrity",
+      "external_connection"
+    ]
+  },
+  "raw_text": "```json\n{\n  \"systems\": [\n    \"exterior\",\n    \"plumbing\",\n    \"structure\",\n    \"electrical\"\n  ],\n  \"constraints\": [\n    {\n      \"constraint_type\": \"waterproof_integrity\",\n      \"severity\": \"normal\",\n      \"details\": {\n        \"IP ratings\": \"waterproof\"\n      }\n    },\n    {\n      \"constraint_type\": \"external_connection\",\n      \"severity\": \"normal\",\n      \"details\": {\n        \"length\": \"50mm\",\n        \"width\": \"10mm\",\n        \"material\": \"ABS plastic\"\n      }\n    }\n  ],\n  \"priorities\": [\n    \"waterproof_integrity\",\n    \"external_connection\"\n  ]\n}\n```",
+  "validation": {
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair_attempted": false,
+    "repair_success": false,
+    "errors": []
+  },
+  "latency_ms": 33048,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "route_shard": "strict-json-pool-shard-2",
+  "error_code": null,
+  "error_message": null,
+  "_latency_ms": 33050
+}

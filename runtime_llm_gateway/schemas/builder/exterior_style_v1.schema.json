@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "required": ["style_family", "material_hint"],
+  "properties": {
+    "style_family": {
+      "type": "string",
+      "enum": ["modern", "classic", "brick", "natural", "industrial", "minimalist", "korean_traditional", "unknown"]
+    },
+    "material_hint": {
+      "type": ["string", "null"],
+      "description": "재료 키워드 (예: 벽돌, 스톤, 목재, 유리)"
+    },
+    "color_tone": {
+      "type": ["string", "null"],
+      "enum": ["warm", "cool", "neutral", "dark", "bright", null]
+    }
+  }
+}

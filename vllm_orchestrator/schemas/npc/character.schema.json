@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NPC Character",
+  "type": "object",
+  "required": ["name", "role", "personality", "appearance", "dialogue", "backstory"],
+  "properties": {
+    "name": {"type": "string"},
+    "role": {"type": "string"},
+    "personality": {"type": "string", "minLength": 10},
+    "appearance": {
+      "type": "object",
+      "required": ["skinColor", "hairColor", "eyeColor", "outfit", "outfitColor"],
+      "properties": {
+        "skinColor": {"type": "string"},
+        "hairColor": {"type": "string"},
+        "eyeColor": {"type": "string"},
+        "outfit": {"type": "string"},
+        "outfitColor": {"type": "string"},
+        "accessory": {"type": ["string", "null"]},
+        "height": {"type": "string", "enum": ["short", "average", "tall"]},
+        "build": {"type": "string", "enum": ["slim", "average", "muscular", "stocky"]},
+        "distinguishing_feature": {"type": "string"}
+      }
+    },
+    "dialogue": {"type": "array", "items": {"type": "string"}, "minItems": 2},
+    "backstory": {"type": "string", "minLength": 10},
+    "behavior": {
+      "type": "object",
+      "properties": {
+        "schedule": {"type": "string"},
+        "combat_style": {"type": "string"},
+        "relationships": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

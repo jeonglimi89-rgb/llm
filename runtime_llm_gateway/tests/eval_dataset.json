@@ -1,0 +1,56 @@
+{
+  "version": "v1",
+  "description": "4개 프로그램 x 10케이스 = 40개 eval 세트",
+
+  "builder": [
+    {"id": "B01", "text": "2층 주택 거실 크게, 모던 스타일", "schema_id": "builder/requirement_v1", "expect_keys": ["project_type", "floors", "spaces"]},
+    {"id": "B02", "text": "3층 다세대 주택, 각 층 원룸 2개씩", "schema_id": "builder/requirement_v1", "expect_keys": ["floors", "spaces"]},
+    {"id": "B03", "text": "지하 1층 포함 상가주택, 1층 카페", "schema_id": "builder/requirement_v1", "expect_keys": ["floors", "spaces"]},
+    {"id": "B04", "text": "전원주택 평면 설계, 마당 넓게", "schema_id": "builder/requirement_v1", "expect_keys": ["spaces", "preferences"]},
+    {"id": "B05", "text": "서재랑 드레스룸 있는 30평대 아파트", "schema_id": "builder/requirement_v1", "expect_keys": ["spaces"]},
+    {"id": "B06", "text": "1층 필로티 주차장, 2~3층 주거", "schema_id": "builder/requirement_v1", "expect_keys": ["floors", "spaces"]},
+    {"id": "B07", "text": "외관은 벽돌, 내부는 화이트톤 인테리어", "schema_id": "builder/requirement_v1", "expect_keys": ["preferences"]},
+    {"id": "B08", "text": "건폐율 60% 이하로 맞춰줘", "schema_id": "builder/requirement_v1", "expect_keys": ["constraints"]},
+    {"id": "B09", "text": "4인 가족 주택, 방 3개 화장실 2개", "schema_id": "builder/requirement_v1", "expect_keys": ["spaces"]},
+    {"id": "B10", "text": "옥상 테라스가 있는 2층 단독주택", "schema_id": "builder/requirement_v1", "expect_keys": ["floors", "spaces"]}
+  ],
+
+  "cad": [
+    {"id": "C01", "text": "방수 샤워필터, 배수 연결 포함", "schema_id": "cad/constraint_v1", "expect_keys": ["systems", "constraints"]},
+    {"id": "C02", "text": "USB-C 충전 도킹스테이션 설계", "schema_id": "cad/constraint_v1", "expect_keys": ["systems"]},
+    {"id": "C03", "text": "모터 내장 접이식 테이블 기구부", "schema_id": "cad/constraint_v1", "expect_keys": ["systems", "constraints"]},
+    {"id": "C04", "text": "IP67 방수 센서 하우징", "schema_id": "cad/constraint_v1", "expect_keys": ["systems", "constraints"]},
+    {"id": "C05", "text": "3D프린팅 가능한 경량 브래킷", "schema_id": "cad/constraint_v1", "expect_keys": ["systems"]},
+    {"id": "C06", "text": "급수+배수 배관 연결 어댑터", "schema_id": "cad/constraint_v1", "expect_keys": ["systems", "constraints"]},
+    {"id": "C07", "text": "PCB 고정 + 배선 정리 케이스", "schema_id": "cad/constraint_v1", "expect_keys": ["systems"]},
+    {"id": "C08", "text": "내열 200도 견디는 노즐 부품", "schema_id": "cad/constraint_v1", "expect_keys": ["constraints"]},
+    {"id": "C09", "text": "알루미늄 CNC 가공 히트싱크", "schema_id": "cad/constraint_v1", "expect_keys": ["systems"]},
+    {"id": "C10", "text": "펌프 교체 가능한 유지보수 하우징", "schema_id": "cad/constraint_v1", "expect_keys": ["systems", "constraints"]}
+  ],
+
+  "minecraft": [
+    {"id": "M01", "text": "중세풍 성 정면 창문 넓게", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["target_anchor", "operations"]},
+    {"id": "M02", "text": "지붕을 박공지붕으로 바꿔줘", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["target_anchor", "operations"]},
+    {"id": "M03", "text": "입구에 아치형 문 추가해줘", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["operations"]},
+    {"id": "M04", "text": "2층 발코니 만들어줘", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["operations"]},
+    {"id": "M05", "text": "벽을 스프루스 나무로 바꿔", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["operations"]},
+    {"id": "M06", "text": "내부 조명을 랜턴으로 교체", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["operations"]},
+    {"id": "M07", "text": "탑 높이를 5블록 더 높여줘", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["operations"]},
+    {"id": "M08", "text": "정원에 울타리랑 꽃 추가", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["operations"]},
+    {"id": "M09", "text": "전체적으로 디테일 더 넣어줘", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["scope", "operations"]},
+    {"id": "M10", "text": "동쪽 벽만 스테인드글라스로", "schema_id": "minecraft/edit_patch_v1", "expect_keys": ["target_anchor", "operations"]}
+  ],
+
+  "animation": [
+    {"id": "A01", "text": "노을빛 슬픈 클로즈업", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera", "duration_frames"]},
+    {"id": "A02", "text": "추격 장면, 핸드헬드 카메라로 빠르게", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera", "duration_frames"]},
+    {"id": "A03", "text": "두 캐릭터 대화 오버숄더 샷", "schema_id": "animation/shot_graph_v1", "expect_keys": ["characters", "camera"]},
+    {"id": "A04", "text": "비 오는 밤 외로운 실루엣 와이드샷", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera", "lighting"]},
+    {"id": "A05", "text": "놀란 표정 극단적 클로즈업", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera", "acting"]},
+    {"id": "A06", "text": "크레인 업으로 도시 전경 보여주기", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera"]},
+    {"id": "A07", "text": "격투 장면 빠른 컷 연속", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera", "duration_frames"]},
+    {"id": "A08", "text": "꽃잎 떨어지는 슬로모션 디테일", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera", "duration_frames"]},
+    {"id": "A09", "text": "문 열리면서 밝은 빛 역광", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera", "lighting"]},
+    {"id": "A10", "text": "어둠 속 눈만 보이는 공포 연출", "schema_id": "animation/shot_graph_v1", "expect_keys": ["camera", "lighting"]}
+  ]
+}

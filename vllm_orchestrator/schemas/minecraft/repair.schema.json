@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Repair Plan",
+  "type": "object",
+  "required": ["repair_steps"],
+  "properties": {
+    "repair_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target", "action", "priority"],
+        "properties": {
+          "target": {"type": "string"},
+          "action": {"type": "string"},
+          "description": {"type": "string"},
+          "priority": {"type": "integer", "minimum": 1, "maximum": 10},
+          "estimated_block_count": {"type": "integer"},
+          "parameters": {"type": "object"}
+        }
+      }
+    },
+    "expected_improvements": {"type": "array", "items": {"type": "string"}},
+    "risk_areas": {"type": "array", "items": {"type": "string"}},
+    "repair_order_rationale": {"type": "string"}
+  }
+}

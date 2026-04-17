@@ -1,0 +1,162 @@
+[
+  {
+    "id": "M01",
+    "text": "중세풍 성 정면 창문 넓게",
+    "status": "pass",
+    "latency_ms": 33429,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M02",
+    "text": "지붕을 박공지붕으로 바꿔줘",
+    "status": "pass",
+    "latency_ms": 33430,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M03",
+    "text": "입구에 아치형 문 추가해줘",
+    "status": "pass",
+    "latency_ms": 32203,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M04",
+    "text": "2층 발코니 만들어줘",
+    "status": "pass",
+    "latency_ms": 32576,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M05",
+    "text": "벽을 스프루스 나무로 바꿔",
+    "status": "pass",
+    "latency_ms": 24226,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M06",
+    "text": "내부 조명을 랜턴으로 교체",
+    "status": "pass",
+    "latency_ms": 25049,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M07",
+    "text": "탑 높이를 5블록 더 높여줘",
+    "status": "pass",
+    "latency_ms": 20916,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M08",
+    "text": "정원에 울타리랑 꽃 추가",
+    "status": "pass",
+    "latency_ms": 35786,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M09",
+    "text": "전체적으로 디테일 더 넣어줘",
+    "status": "pass",
+    "latency_ms": 21733,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M10",
+    "text": "동쪽 벽만 스테인드글라스로",
+    "status": "pass",
+    "latency_ms": 21642,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  }
+]

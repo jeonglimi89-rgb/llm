@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Context Query Response",
+  "description": "Schema for domain.context_query responses (shared across builder, cad, animation)",
+  "type": "object",
+  "properties": {
+    "intent": {"type": "string", "minLength": 1},
+    "context_query": {"type": "string"},
+    "summary": {"type": "string", "minLength": 1}
+  },
+  "required": ["intent", "summary"]
+}

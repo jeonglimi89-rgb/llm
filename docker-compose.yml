@@ -1,0 +1,137 @@
+# vLLM Orchestrator — docker-compose for pilot deployment
+#
+# 실행:
+#   cp vllm_orchestrator/.env.example vllm_orchestrator/.env
+#   docker compose up -d
+#
+# vLLM 서버는 별도 GPU 머신 또는 WSL에서 기동하는 것 권장 (이미지에 vLLM 포함 안 함).
+# LLM_BASE_URL 을 해당 vLLM 주소로 설정.
+
+# NOTE: Compose Spec (latest) no longer needs `version:` field.
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "512mb", "--maxmemory-policy", "allkeys-lru"]
+    volumes:
+      - redis-data:/data
+    ports:
+      - "127.0.0.1:6379:6379"     # localhost only; production은 내부망 노출
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  orchestrator:
+    build:
+      context: ./vllm_orchestrator
+      dockerfile: Dockerfile
+    image: vllm-orchestrator:latest
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - vllm_orchestrator/.env
+    environment:
+      # env_file 보다 우선. 컨테이너 내부에서 Redis 주소는 서비스명.
+      REDIS_URL: redis://redis:6379/0
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:8000}
+      ORCHESTRATOR_BASE_DIR: /app
+      STORAGE_DIR: /data/storage
+      LOGS_DIR: /data/logs
+      UVICORN_WORKERS: ${UVICORN_WORKERS:-4}
+    volumes:
+      # Persist data (cache/feedback/training) across container restarts
+      - orchestrator-data:/data
+      # Optional: mount local prompts/schemas for hot-reload during pilot
+      # - ./vllm_orchestrator/prompts:/app/prompts:ro
+      # - ./vllm_orchestrator/schemas:/app/schemas:ro
+    ports:
+      - "8100:8100"
+    # For Linux hosts, use host-network or extra_hosts to reach host WSL/vLLM
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8100/health/ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 45s
+
+  # Reverse proxy + TLS termination + vLLM upstream LB
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    profiles: ["proxy"]
+    depends_on:
+      - orchestrator
+    ports:
+      - "${NGINX_HTTP_PORT:-8080}:80"
+      - "${NGINX_HTTPS_PORT:-8443}:443"
+      - "127.0.0.1:18100:8000"     # internal vLLM LB (loopback only) — avoid 8100 conflict
+    volumes:
+      - ./ops/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ops/nginx/certs:/etc/nginx/certs:ro
+      - nginx-logs:/var/log/nginx
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost/health/ready"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Optional: Prometheus scraper for dev
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    restart: unless-stopped
+    profiles: ["observability"]        # docker compose --profile observability up
+    volumes:
+      - ./ops/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "127.0.0.1:9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=30d"
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    restart: unless-stopped
+    profiles: ["observability"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-changeme}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_INSTALL_PLUGINS: ""
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./ops/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./ops/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - prometheus
+
+  # Jaeger for trace visualization (OTEL collector alternative)
+  jaeger:
+    image: jaegertracing/all-in-one:1.56
+    restart: unless-stopped
+    profiles: ["observability"]
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "127.0.0.1:16686:16686"    # UI
+      - "127.0.0.1:4318:4318"       # OTLP HTTP
+    volumes:
+      - jaeger-data:/badger
+
+volumes:
+  redis-data:
+  orchestrator-data:
+  prometheus-data:
+  grafana-data:
+  jaeger-data:
+  nginx-logs:

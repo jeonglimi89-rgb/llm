@@ -1,0 +1,14 @@
+# docker-compose.ha-override.yml — HA topology: 기본 orchestrator 비활성 + nginx HA config
+# Compose spec: profile로 서비스를 빼고, nginx의 depends_on을 명시적으로 재정의
+services:
+  orchestrator:
+    profiles: ["disabled-in-ha"]
+
+  nginx:
+    # 기본 nginx.conf 대신 HA 버전 + upstream 재정의
+    volumes:
+      - ./ops/nginx/nginx-ha.conf:/etc/nginx/nginx.conf:ro
+      - ./ops/nginx/certs:/etc/nginx/certs:ro
+      - nginx-logs:/var/log/nginx
+    depends_on: !reset []
+    # depends_on reset 후 수동 지정 (override 없이)

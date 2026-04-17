@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Minecraft Style Check",
+  "type": "object",
+  "properties": {
+    "verdict": {"type": "string", "enum": ["pass", "warn", "fail"]},
+    "style_score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {"type": "string", "enum": ["critical", "warning", "info"]},
+          "detail": {"type": "string"}
+        }
+      }
+    }
+  },
+  "required": ["verdict", "style_score"]
+}

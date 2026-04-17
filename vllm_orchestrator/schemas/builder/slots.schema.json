@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Builder Slot Extraction",
+  "description": "Schema for builder.requirement_parse and builder.patch_intent_parse outputs",
+  "oneOf": [
+    {
+      "title": "requirement_parse",
+      "type": "object",
+      "properties": {
+        "project_type": {"type": "string", "enum": ["주거", "상업", "복합"]},
+        "floors": {"type": "integer", "minimum": 1, "maximum": 10},
+        "spaces": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {"type": "string", "enum": ["living_room", "kitchen", "master_bedroom", "bedroom", "bathroom", "entrance", "utility", "study", "dressing_room", "balcony", "hallway", "stair", "cafe", "store", "parking", "terrace", "attic"]},
+              "count": {"type": "integer", "minimum": 1},
+              "priority": {"type": "string", "enum": ["high", "normal", "low"], "default": "normal"}
+            },
+            "required": ["type", "count"]
+          },
+          "minItems": 1
+        },
+        "preferences": {
+          "type": "object",
+          "properties": {
+            "style_family": {"type": "string", "enum": ["modern", "classic", "brick", "natural", "minimalist"]}
+          }
+        },
+        "constraints": {"type": "array", "items": {"type": "object"}}
+      },
+      "required": ["floors", "spaces"]
+    },
+    {
+      "title": "patch_intent_parse",
+      "type": "object",
+      "properties": {
+        "intent": {"type": "string", "minLength": 1},
+        "operation_type": {"type": "string", "enum": ["expand", "shrink", "move", "replace", "add", "remove"]},
+        "target": {"type": "string"},
+        "preserve": {"type": "array", "items": {"type": "string"}},
+        "delta": {"type": "object"}
+      },
+      "required": ["intent"]
+    }
+  ]
+}

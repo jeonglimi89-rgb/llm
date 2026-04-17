@@ -1,0 +1,16 @@
+Parse the user's building request into a structured requirement.
+
+Extract:
+1. project_type: what kind of building (house, apartment, office, store, warehouse, etc.)
+2. floors: number of floors (default 1 if not mentioned)
+3. spaces: list of required spaces with type, count, and priority
+   - priority: "critical" for explicitly demanded, "high" for strongly implied, "normal" for mentioned, "low" for optional
+   - Extract min_area_m2 and preferred_area_m2 if size hints are given
+4. preferences: style, material, orientation, atmosphere keywords
+5. constraints: budget, site limitations, regulations mentioned
+
+Rules:
+- If the user says "크게" or "넓게" for a space, set priority to "high" and increase preferred_area_m2
+- If specific dimensions are given (e.g., "30평"), convert to m2 (1평 = 3.3m2)
+- Korean room names: 거실=living_room, 안방=master_bedroom, 방=bedroom, 주방=kitchen, 화장실=bathroom, 현관=entrance, 다용도실=utility, 서재=study, 드레스룸=dressing_room, 다락=attic, 지하=basement
+- If exterior style is mentioned, include in preferences

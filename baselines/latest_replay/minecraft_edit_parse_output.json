@@ -1,0 +1,41 @@
+{
+  "request_id": "req_3766d0475868",
+  "task_type": "minecraft.edit_parse",
+  "provider": "vllm",
+  "model_profile": "strict-json-pool",
+  "resolved_model": "qwen2.5-0.5b-instruct",
+  "structured_content": {
+    "target_anchor": {
+      "anchor_type": "door",
+      "anchor_id": "01"
+    },
+    "scope": "facade",
+    "operations": [
+      {
+        "type": "add",
+        "delta": {
+          "material": "stone",
+          "count": 5
+        }
+      }
+    ],
+    "preserve": [
+      "door"
+    ]
+  },
+  "raw_text": "```json\n{\n  \"target_anchor\": {\n    \"anchor_type\": \"door\",\n    \"anchor_id\": \"01\"\n  },\n  \"scope\": \"facade\",\n  \"operations\": [\n    {\n      \"type\": \"add\",\n      \"delta\": {\n        \"material\": \"stone\",\n        \"count\": 5\n      }\n    }\n  ],\n  \"preserve\": [\"door\"]\n}\n```",
+  "validation": {
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair_attempted": false,
+    "repair_success": false,
+    "errors": []
+  },
+  "latency_ms": 22813,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "route_shard": "strict-json-pool-shard-2",
+  "error_code": null,
+  "error_message": null,
+  "_latency_ms": 22814
+}

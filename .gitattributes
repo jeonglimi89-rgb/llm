@@ -1,0 +1,27 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# Windows scripts keep CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary (never diff)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.safetensors binary
+*.bin binary
+*.gguf binary
+
+# Generated files
+*.min.js linguist-generated
+*.min.css linguist-generated
+
+# Exclude heavy dirs from GitHub language stats
+vllm_orchestrator/prompts/ linguist-documentation
+docs/ linguist-documentation
+ops/grafana/dashboards/*.json linguist-generated

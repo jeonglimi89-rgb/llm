@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": ["priorities"],
+  "properties": {
+    "priorities": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "우선순위 순서 (가장 중요한 것부터)"
+    },
+    "top_constraint": {
+      "type": ["string", "null"],
+      "description": "가장 중요한 제약 (예: 방수, 경량, 내열)"
+    }
+  }
+}

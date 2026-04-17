@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Minecraft Edit Slot Extraction",
+  "type": "object",
+  "properties": {
+    "target_anchor": {
+      "type": "object",
+      "properties": {
+        "anchor_type": {"type": "string", "enum": ["facade", "roof", "interior", "entrance", "window", "wall", "floor", "tower", "garden", "path", "balcony"]},
+        "anchor_id": {"type": "string"}
+      },
+      "required": ["anchor_type"]
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {"type": "string", "enum": ["add", "remove", "enlarge", "shrink", "replace_material", "increase_detail", "simplify", "raise", "lower", "extend", "mirror"]},
+          "delta": {
+            "type": "object",
+            "properties": {
+              "material": {"type": "string"},
+              "count": {"type": "integer", "minimum": 1},
+              "amount": {"type": "integer"}
+            }
+          }
+        },
+        "required": ["type"]
+      }
+    },
+    "preserve": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["target_anchor", "operations"]
+}

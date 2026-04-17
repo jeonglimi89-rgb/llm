@@ -1,0 +1,88 @@
+{
+  "frozen_at": "2026-03-30",
+  "model_name": "Qwen2.5-0.5B-Instruct",
+  "backend": "fallback_server.py (transformers CPU)",
+  "server": "WSL2 Ubuntu 24.04, CPU only",
+  "total_cases": 40,
+  "total_pass": 35,
+  "total_fail": 5,
+  "pass_rate": 87.5,
+  "p50_ms": 39292,
+  "p95_ms": 143137,
+  "per_program": {
+    "builder": {
+      "total": 10,
+      "pass": 8,
+      "fail": 2,
+      "pass_rate": 80.0,
+      "p50_ms": 39986,
+      "p95_ms": 144590,
+      "failures": {
+        "schema_failure": 2
+      }
+    },
+    "cad": {
+      "total": 10,
+      "pass": 8,
+      "fail": 2,
+      "pass_rate": 80.0,
+      "p50_ms": 62714,
+      "p95_ms": 120033,
+      "failures": {
+        "network_failure": 2
+      }
+    },
+    "minecraft": {
+      "total": 10,
+      "pass": 10,
+      "fail": 0,
+      "pass_rate": 100.0,
+      "p50_ms": 28626,
+      "p95_ms": 35786,
+      "failures": {}
+    },
+    "animation": {
+      "total": 10,
+      "pass": 9,
+      "fail": 1,
+      "pass_rate": 90.0,
+      "p50_ms": 43246,
+      "p95_ms": 103606,
+      "failures": {
+        "malformed_output": 1
+      }
+    }
+  },
+  "failure_breakdown": {
+    "schema_failure": 2,
+    "network_failure": 2,
+    "malformed_output": 1
+  },
+  "failure_cases": [
+    {
+      "id": "B04",
+      "status": "schema_failure",
+      "text": "전원주택 평면 설계, 마당 넓게"
+    },
+    {
+      "id": "B08",
+      "status": "schema_failure",
+      "text": "건폐율 60% 이하로 맞춰줘"
+    },
+    {
+      "id": "C07",
+      "status": "network_failure",
+      "text": "PCB 고정 + 배선 정리 케이스"
+    },
+    {
+      "id": "C09",
+      "status": "network_failure",
+      "text": "알루미늄 CNC 가공 히트싱크"
+    },
+    {
+      "id": "A04",
+      "status": "malformed_output",
+      "text": "비 오는 밤 외로운 실루엣 와이드샷"
+    }
+  ]
+}

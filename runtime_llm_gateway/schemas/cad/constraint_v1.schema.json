@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": ["systems", "constraints", "priorities"],
+  "properties": {
+    "systems": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["mechanical", "electrical", "plumbing", "structure", "exterior"]}
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["constraint_type", "severity"],
+        "properties": {
+          "constraint_type": {"type": "string"},
+          "severity": {"type": "string", "enum": ["low", "normal", "high", "critical"]},
+          "details": {"type": "object"}
+        }
+      }
+    },
+    "priorities": {"type": "array", "items": {"type": "string"}}
+  }
+}

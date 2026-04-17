@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": ["error_code", "error_message"],
+  "properties": {
+    "error_code": {
+      "type": "string",
+      "enum": [
+        "PROVIDER_ERROR",
+        "SCHEMA_PARSE_ERROR",
+        "REPAIR_PARSE_ERROR",
+        "REPAIR_PROVIDER_ERROR",
+        "VALIDATION_FAILED",
+        "TIMEOUT",
+        "NETWORK_ERROR",
+        "UNKNOWN"
+      ]
+    },
+    "error_message": {"type": "string"},
+    "request_id": {"type": "string"},
+    "task_type": {"type": "string"},
+    "retry_count": {"type": "integer", "default": 0}
+  }
+}

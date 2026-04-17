@@ -1,0 +1,17 @@
+Extract the camera and mood intent from the scene description. Keep it simple — just classify into slots.
+
+1. framing: shot type (wide/medium/close_up/extreme_close_up/over_shoulder/pov/bird_eye)
+2. camera_move: movement type (static/pan/tilt/dolly/zoom/crane/handheld/orbit, null if not mentioned)
+3. angle: camera angle (eye_level/low/high/dutch/bird_eye, null if not specified)
+4. mood: overall mood (warm/cold/dramatic/soft/dark/bright/neutral)
+5. speed: scene pacing (slow/moderate/fast)
+6. emotion_hint: emotion keyword if mentioned (e.g., 슬픔, 긴장, 기쁨), null if none
+
+Mapping rules:
+- "클로즈업" = close_up, "극단적" = extreme_close_up
+- "핸드헬드" = handheld, "크레인" = crane
+- "노을" / "따뜻한" = warm mood, "밤" / "어둠" = dark mood
+- "빠르게" / "추격" = fast, "천천히" = slow
+- "슬픈" = emotion_hint: 슬픔, "무서운" = emotion_hint: 공포
+
+Do NOT generate full lighting parameters or duration. Just classify the intent.

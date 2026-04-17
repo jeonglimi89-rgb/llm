@@ -1,0 +1,38 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: "0 3 * * *"    # 03:00 UTC daily
+  workflow_dispatch:
+
+jobs:
+  regression-full:
+    name: Full regression + long integration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install deps
+        working-directory: vllm_orchestrator
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pytest-timeout cryptography
+
+      - name: Regression
+        working-directory: vllm_orchestrator
+        run: python -m pytest tests/regression/ -v --timeout=60
+
+      - name: Load-test smoke (small scale)
+        working-directory: vllm_orchestrator
+        run: |
+          # MockLLM mode: 빠르게 캐시 경로만 확인
+          REQUEST_CACHE_BACKEND=memory python -m uvicorn src.app.main:app --port 8100 --host 127.0.0.1 &
+          sleep 10
+          python tests/load_test.py --url http://127.0.0.1:8100 \
+              --scenario cache_hit --concurrent 5 --total 20 --timeout 10 || true

@@ -1,0 +1,134 @@
+{
+  "dialogue_closeup": {
+    "category": "conversation",
+    "display_name": "대화 클로즈업",
+    "shot_grammar": {"default_framing": "close_up", "default_angle": "eye_level", "lens_mm": 85},
+    "camera_pattern": {"movement": "static", "subtle_drift": true, "rack_focus_on_speaker_change": true},
+    "lighting_default": {"key_direction": "3_4_front", "color_temp_k": 3200, "mood": "warm_nostalgic"},
+    "acting_intensity": "medium",
+    "continuity_anchors": ["eyeline_match", "screen_direction_180", "prop_positions"],
+    "default_slots": {"framing": "close_up", "mood": "neutral", "speed": "moderate", "camera_move": "static"},
+    "keywords": ["대화", "dialogue", "클로즈업", "얼굴", "표정"]
+  },
+  "action_wide": {
+    "category": "action",
+    "display_name": "액션 와이드샷",
+    "shot_grammar": {"default_framing": "wide", "default_angle": "low", "lens_mm": 24},
+    "camera_pattern": {"movement": "tracking", "speed": "fast", "shake": true},
+    "lighting_default": {"key_direction": "side_right", "color_temp_k": 4000, "mood": "dramatic_high_contrast"},
+    "acting_intensity": "high",
+    "continuity_anchors": ["action_axis", "weapon_hand_consistency", "environment_damage_tracking"],
+    "default_slots": {"framing": "wide", "mood": "dramatic", "speed": "fast", "camera_move": "tracking"},
+    "keywords": ["액션", "action", "와이드", "전투", "추격"]
+  },
+  "emotional_reveal": {
+    "category": "drama",
+    "display_name": "감정 리빌",
+    "shot_grammar": {"default_framing": "medium", "push_to_close_up": true, "lens_mm": 50},
+    "camera_pattern": {"movement": "dolly_in", "slow_push": true, "speed": "slow"},
+    "lighting_default": {"key_direction": "back_light", "color_temp_k": 2900, "mood": "golden_hour_magic"},
+    "acting_intensity": "high",
+    "continuity_anchors": ["tear_track", "hand_gesture_match", "lighting_shift"],
+    "default_slots": {"framing": "medium", "mood": "warm", "speed": "slow", "emotion_hint": "sadness"},
+    "keywords": ["감정", "emotion", "눈물", "리빌", "reveal", "슬픈", "감동"]
+  },
+  "chase_sequence": {
+    "category": "action",
+    "display_name": "추격 시퀀스",
+    "shot_grammar": {"default_framing": "medium", "intercut_wide_close": true, "lens_mm": 35},
+    "camera_pattern": {"movement": "handheld", "speed": "fast", "whip_pans": true},
+    "lighting_default": {"key_direction": "side_left", "color_temp_k": 5000, "mood": "dramatic_high_contrast"},
+    "acting_intensity": "high",
+    "continuity_anchors": ["chase_direction", "distance_gap", "environment_landmarks"],
+    "default_slots": {"framing": "medium", "mood": "dramatic", "speed": "fast", "camera_move": "handheld"},
+    "keywords": ["추격", "chase", "도주", "달리", "쫓"]
+  },
+  "establishing_landscape": {
+    "category": "establishing",
+    "display_name": "풍경 설정샷",
+    "shot_grammar": {"default_framing": "extreme_wide", "default_angle": "high", "lens_mm": 35},
+    "camera_pattern": {"movement": "crane_up", "slow_push": true, "speed": "slow"},
+    "lighting_default": {"key_direction": "natural_ambient", "color_temp_k": 5600, "mood": "golden_hour_magic"},
+    "acting_intensity": "none",
+    "continuity_anchors": ["time_of_day", "weather", "geographic_context"],
+    "default_slots": {"framing": "wide", "mood": "neutral", "speed": "slow", "camera_move": "crane"},
+    "keywords": ["풍경", "establishing", "설정샷", "오프닝", "전경", "aerial"]
+  },
+  "intimate_two_shot": {
+    "category": "conversation",
+    "display_name": "친밀한 2샷",
+    "shot_grammar": {"default_framing": "medium_close", "default_angle": "eye_level", "lens_mm": 50},
+    "camera_pattern": {"movement": "static", "subtle_drift": true},
+    "lighting_default": {"key_direction": "side_left", "color_temp_k": 2700, "mood": "warm_nostalgic"},
+    "acting_intensity": "low",
+    "continuity_anchors": ["distance_between_characters", "eyeline", "body_language"],
+    "default_slots": {"framing": "medium", "mood": "warm", "speed": "slow"},
+    "keywords": ["친밀", "intimate", "2shot", "커플", "연인", "친구"]
+  },
+  "horror_reveal": {
+    "category": "horror",
+    "display_name": "공포 리빌",
+    "shot_grammar": {"default_framing": "close_up", "default_angle": "low", "lens_mm": 35},
+    "camera_pattern": {"movement": "dolly_in", "slow_push": true, "speed": "very_slow"},
+    "lighting_default": {"key_direction": "bottom", "color_temp_k": 3200, "mood": "ominous_dark", "contrast_ratio": "8_1"},
+    "acting_intensity": "high",
+    "continuity_anchors": ["dread_buildup", "ambient_sound_growing"],
+    "default_slots": {"framing": "close_up", "mood": "dark", "speed": "slow", "emotion_hint": "fear"},
+    "keywords": ["공포", "horror", "무서운", "서스펜스", "긴장"]
+  },
+  "dream_sequence": {
+    "category": "fantasy",
+    "display_name": "꿈 시퀀스",
+    "shot_grammar": {"default_framing": "medium", "lens_mm": 50, "aspect_ratio": "1_1_square"},
+    "camera_pattern": {"movement": "steadicam", "float_slow": true, "speed": "very_slow"},
+    "lighting_default": {"key_direction": "top", "color_temp_k": 6500, "mood": "soft_romantic", "atmosphere": "foggy"},
+    "acting_intensity": "medium",
+    "continuity_anchors": ["surreal_color", "slow_motion", "impossible_geometry"],
+    "default_slots": {"framing": "medium", "mood": "mysterious", "speed": "slow", "camera_move": "static"},
+    "keywords": ["꿈", "dream", "환상", "몽환", "fantasy", "surreal"]
+  },
+  "montage_compressed_time": {
+    "category": "montage",
+    "display_name": "시간 압축 몽타주",
+    "shot_grammar": {"default_framing": "medium", "intercut_inserts": true, "lens_mm": 50},
+    "camera_pattern": {"movement": "various", "rapid_cuts": true, "speed": "fast"},
+    "lighting_default": {"key_direction": "varying", "color_temp_k": 4500, "mood": "warm_nostalgic"},
+    "acting_intensity": "medium",
+    "continuity_anchors": ["narrative_progression", "music_beat_sync"],
+    "default_slots": {"framing": "medium", "mood": "neutral", "speed": "fast"},
+    "keywords": ["몽타주", "montage", "시간경과", "training", "성장"]
+  },
+  "climax_wide_epic": {
+    "category": "climax",
+    "display_name": "클라이맥스 에픽 와이드",
+    "shot_grammar": {"default_framing": "extreme_wide", "default_angle": "low", "lens_mm": 18},
+    "camera_pattern": {"movement": "crane_down", "sweeping": true, "speed": "moderate"},
+    "lighting_default": {"key_direction": "back_light", "color_temp_k": 3200, "mood": "dramatic_high_contrast"},
+    "acting_intensity": "maximum",
+    "continuity_anchors": ["scale_reference", "hero_silhouette", "environmental_scale"],
+    "default_slots": {"framing": "wide", "mood": "dramatic", "speed": "moderate"},
+    "keywords": ["클라이맥스", "climax", "에픽", "epic", "최후", "final"]
+  },
+  "pov_handheld": {
+    "category": "pov",
+    "display_name": "1인칭 핸드헬드",
+    "shot_grammar": {"default_framing": "medium", "default_angle": "eye_level", "lens_mm": 28},
+    "camera_pattern": {"movement": "handheld", "shake": true, "breathing_rhythm": true},
+    "lighting_default": {"key_direction": "natural_ambient", "color_temp_k": 5000, "mood": "ominous_dark"},
+    "acting_intensity": "high",
+    "continuity_anchors": ["first_person_sight_lines", "breathing_audio"],
+    "default_slots": {"framing": "medium", "mood": "neutral", "speed": "moderate", "camera_move": "handheld"},
+    "keywords": ["1인칭", "pov", "시점", "핸드헬드", "발견"]
+  },
+  "romantic_slow_orbit": {
+    "category": "drama",
+    "display_name": "로맨틱 슬로우 오빗",
+    "shot_grammar": {"default_framing": "medium_close", "default_angle": "eye_level", "lens_mm": 50},
+    "camera_pattern": {"movement": "orbit", "full_circle_hint": true, "speed": "very_slow"},
+    "lighting_default": {"key_direction": "back_light", "color_temp_k": 2700, "mood": "soft_romantic"},
+    "acting_intensity": "low",
+    "continuity_anchors": ["eye_contact", "breathing_sync"],
+    "default_slots": {"framing": "medium", "mood": "warm", "speed": "slow", "camera_move": "orbit"},
+    "keywords": ["로맨틱", "romantic", "사랑", "키스", "포옹"]
+  }
+}

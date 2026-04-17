@@ -1,0 +1,54 @@
+{
+  "date": "2026-03-30",
+  "server": "current (from server_config.json)",
+  "total_cases": 40,
+  "total_pass": 35,
+  "total_fail": 5,
+  "pass_rate": 87.5,
+  "p50_ms": 39292,
+  "p95_ms": 143137,
+  "by_program": {
+    "builder": {
+      "total": 10,
+      "pass": 8,
+      "fail": 2,
+      "pass_rate": 80.0,
+      "p50_ms": 39986,
+      "p95_ms": 144590,
+      "failures": {
+        "schema_failure": 2
+      }
+    },
+    "cad": {
+      "total": 10,
+      "pass": 8,
+      "fail": 2,
+      "pass_rate": 80.0,
+      "p50_ms": 62714,
+      "p95_ms": 120033,
+      "failures": {
+        "network_failure": 2
+      }
+    },
+    "minecraft": {
+      "total": 10,
+      "pass": 10,
+      "fail": 0,
+      "pass_rate": 100.0,
+      "p50_ms": 28626,
+      "p95_ms": 35786,
+      "failures": {}
+    },
+    "animation": {
+      "total": 10,
+      "pass": 9,
+      "fail": 1,
+      "pass_rate": 90.0,
+      "p50_ms": 43246,
+      "p95_ms": 103606,
+      "failures": {
+        "malformed_output": 1
+      }
+    }
+  }
+}

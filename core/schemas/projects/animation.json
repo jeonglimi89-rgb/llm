@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "animation-v1",
+  "project_type": "animation",
+  "description": "Animation AI - 연출 의도 해석/샷 플랜 생성. 최종 작화 생성이 아니라 연출 의도 해석 품질이 핵심.",
+
+  "engine_params": {
+    "type": "object",
+    "description": "Animation AI 연출 엔진 파라미터",
+    "required": ["scene_type", "shots"],
+    "properties": {
+      "scene_type": {
+        "type": "string",
+        "enum": ["dialogue", "action", "transition", "montage", "establishing", "emotional", "climax", "custom"],
+        "description": "장면 유형"
+      },
+      "storyboard": {
+        "type": "object",
+        "properties": {
+          "scene_number": {"type": "integer"},
+          "scene_description": {"type": "string"},
+          "emotion_arc": {"type": "string", "enum": ["rising", "falling", "peak", "calm", "tension", "release"]},
+          "pacing": {"type": "string", "enum": ["slow", "moderate", "fast", "dynamic"]},
+          "mood": {"type": "string"},
+          "dialogue": {"type": "array", "items": {"type": "object", "properties": {"character": {"type": "string"}, "line": {"type": "string"}, "emotion": {"type": "string"}}}}
+        }
+      },
+      "shots": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["shot_type", "duration_frames"],
+          "properties": {
+            "shot_id": {"type": "string"},
+            "shot_type": {
+              "type": "string",
+              "enum": ["wide", "medium", "close_up", "extreme_close_up", "over_shoulder", "pov", "bird_eye", "low_angle", "dutch_angle", "tracking"]
+            },
+            "duration_frames": {"type": "integer", "description": "샷 길이 (프레임 수, 24fps 기준)"},
+            "camera": {
+              "type": "object",
+              "properties": {
+                "movement": {"type": "string", "enum": ["static", "pan", "tilt", "dolly", "zoom", "crane", "handheld", "orbit"]},
+                "speed": {"type": "string", "enum": ["slow", "moderate", "fast"]},
+                "focus": {"type": "string", "description": "초점 대상"}
+              }
+            },
+            "acting": {
+              "type": "object",
+              "properties": {
+                "character": {"type": "string"},
+                "expression": {"type": "string"},
+                "gesture": {"type": "string"},
+                "eye_direction": {"type": "string"}
+              }
+            },
+            "timing": {
+              "type": "object",
+              "properties": {
+                "ease_in": {"type": "boolean", "default": false},
+                "ease_out": {"type": "boolean", "default": false},
+                "hold_frames": {"type": "integer", "default": 0}
+              }
+            },
+            "transition_to_next": {
+              "type": "string",
+              "enum": ["cut", "dissolve", "fade", "wipe", "match_cut", "none"],
+              "default": "cut"
+            },
+            "notes": {"type": "string"}
+          }
+        }
+      },
+      "consistency": {
+        "type": "object",
+        "description": "일관성 체크 파라미터",
+        "properties": {
+          "character_model_refs": {"type": "array", "items": {"type": "string"}},
+          "color_palette": {"type": "array", "items": {"type": "string"}},
+          "art_style": {"type": "string", "enum": ["2d_cel", "2d_painterly", "3d_toon", "3d_realistic", "mixed"]},
+          "aspect_ratio": {"type": "string", "default": "16:9"},
+          "fps": {"type": "integer", "default": 24}
+        }
+      },
+      "output_type": {
+        "type": "string",
+        "enum": ["shot_plan", "storyboard_json", "timing_sheet", "direction_notes"],
+        "default": "shot_plan"
+      }
+    }
+  },
+
+  "path_aliases": {
+    "장면 유형": "/scene_type",
+    "장면 번호": "/storyboard/scene_number",
+    "장면 설명": "/storyboard/scene_description",
+    "감정선": "/storyboard/emotion_arc",
+    "페이싱": "/storyboard/pacing",
+    "분위기": "/storyboard/mood",
+    "대사": "/storyboard/dialogue",
+    "샷": "/shots",
+    "카메라": "/shots/camera",
+    "카메라 무브": "/shots/camera/movement",
+    "연기": "/shots/acting",
+    "표정": "/shots/acting/expression",
+    "시선": "/shots/acting/eye_direction",
+    "타이밍": "/shots/timing",
+    "전환": "/shots/transition_to_next",
+    "아트 스타일": "/consistency/art_style",
+    "종횡비": "/consistency/aspect_ratio",
+    "fps": "/consistency/fps",
+    "출력형식": "/output_type"
+  },
+
+  "constraint_mapping": {
+    "대화 장면": {"scene_type": "dialogue"},
+    "액션": {"scene_type": "action"},
+    "몽타주": {"scene_type": "montage"},
+    "클라이맥스": {"scene_type": "climax"},
+    "느리게": {"storyboard/pacing": "slow"},
+    "빠르게": {"storyboard/pacing": "fast"},
+    "다이나믹": {"storyboard/pacing": "dynamic"},
+    "2d": {"consistency/art_style": "2d_cel"},
+    "3d": {"consistency/art_style": "3d_toon"},
+    "리얼": {"consistency/art_style": "3d_realistic"},
+    "컷": {"shots_default_transition": "cut"},
+    "디졸브": {"shots_default_transition": "dissolve"}
+  },
+
+  "critique_criteria": [
+    {
+      "name": "narrative_flow",
+      "label": "서사 흐름",
+      "description": "샷 순서가 감정선/서사를 효과적으로 전달하는지",
+      "weight": 0.30
+    },
+    {
+      "name": "visual_storytelling",
+      "label": "시각적 스토리텔링",
+      "description": "카메라 각도/무브가 의도를 잘 전달하는지",
+      "weight": 0.25
+    },
+    {
+      "name": "pacing",
+      "label": "페이싱",
+      "description": "샷 길이/전환이 장면 리듬에 맞는지",
+      "weight": 0.25
+    },
+    {
+      "name": "consistency",
+      "label": "일관성",
+      "description": "캐릭터/색감/스타일이 장면 간 일관되는지",
+      "weight": 0.20
+    }
+  ],
+
+  "variant_axes": [
+    {
+      "axis": "direction_style",
+      "description": "연출 스타일: 정적(미야자키) / 동적(신카이) / 실험적",
+      "values": ["contemplative", "dynamic", "experimental"]
+    },
+    {
+      "axis": "shot_density",
+      "description": "샷 밀도: 롱테이크 위주 / 표준 / 빈번한 컷",
+      "values": ["long_takes", "balanced", "rapid_cuts"]
+    },
+    {
+      "axis": "camera_complexity",
+      "description": "카메라 복잡도: 고정 / 기본 무브 / 복합 무브",
+      "values": ["static", "basic_movement", "complex_movement"]
+    }
+  ]
+}

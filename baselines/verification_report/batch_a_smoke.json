@@ -1,0 +1,262 @@
+[
+  {
+    "task_type": "builder.requirement_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 322,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "builder.patch_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 23,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "builder.zone_priority_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 6,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "builder.exterior_style_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 5,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "builder.smalltalk_assist",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "builder.project_context",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "minecraft.edit_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 13,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "minecraft.anchor_resolution",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 5,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "minecraft.style_guard",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 10,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "minecraft.patch_commentary",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "minecraft.history_context",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "animation.shot_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 14,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "animation.camera_map",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 5,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "animation.lighting_map",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 1,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "animation.edit_patch_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "animation.ui_chat",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "animation.shot_history",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "cad.constraint_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 11,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "cad.patch_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 5,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "cad.system_split_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 5,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "cad.priority_parse",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 5,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "cad.rule_lookup_context",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "builder.rule_search",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "minecraft.history_search",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "animation.shot_search",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  },
+  {
+    "task_type": "cad.part_search",
+    "response_ok": true,
+    "schema_valid": true,
+    "domain_valid": true,
+    "latency_ms": 0,
+    "repair_used": false,
+    "failure_type": "PASS",
+    "error": null
+  }
+]

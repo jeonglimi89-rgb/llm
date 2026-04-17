@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "core-common-v1",
+  "description": "모든 프로젝트가 공유하는 공통 스키마: intent, critique, patch, session_record",
+
+  "intent_schema": {
+    "type": "object",
+    "required": ["intent_type", "target_object"],
+    "properties": {
+      "intent_type": {
+        "type": "string",
+        "enum": [
+          "create_new",
+          "modify_existing",
+          "explore_variants",
+          "refine",
+          "undo",
+          "compare",
+          "select",
+          "delete",
+          "query"
+        ],
+        "description": "사용자 의도 유형"
+      },
+      "target_object": {
+        "type": "string",
+        "description": "조작 대상 (concept, module, dimension, wiring, drainage, bom, risk 등)"
+      },
+      "constraints": {
+        "type": "object",
+        "description": "사용자가 명시한 제약 조건 (키: 제약 이름, 값: 제약 값)",
+        "additionalProperties": true
+      },
+      "modification_scope": {
+        "type": ["string", "null"],
+        "description": "수정 범위 한정 (null이면 전체)"
+      },
+      "reference_id": {
+        "type": ["string", "null"],
+        "description": "참조할 기존 결과물 ID"
+      },
+      "confidence": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "description": "해석 신뢰도"
+      },
+      "ambiguities": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "해석이 불확실한 부분 목록"
+      },
+      "raw_text": {
+        "type": "string",
+        "description": "원본 사용자 입력"
+      }
+    },
+    "additionalProperties": false
+  },
+
+  "critique_schema": {
+    "type": "object",
+    "required": ["variant_id", "scores", "overall_rank"],
+    "properties": {
+      "variant_id": {"type": "string"},
+      "scores": {
+        "type": "object",
+        "description": "기준별 점수 (키: 기준 이름, 값: 0.0~1.0)",
+        "additionalProperties": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+      },
+      "strengths": {
+        "type": "array",
+        "items": {"type": "string"}
+      },
+      "weaknesses": {
+        "type": "array",
+        "items": {"type": "string"}
+      },
+      "overall_rank": {
+        "type": "integer",
+        "minimum": 1
+      }
+    }
+  },
+
+  "patch_operation_schema": {
+    "type": "object",
+    "required": ["op_type", "path"],
+    "properties": {
+      "op_type": {
+        "type": "string",
+        "enum": ["set", "adjust", "remove", "add"]
+      },
+      "path": {
+        "type": "string",
+        "description": "JSON pointer 경로 (예: /dimensions/overall_width_mm)"
+      },
+      "value": {
+        "description": "새 값 또는 delta 값"
+      },
+      "relative": {
+        "type": "boolean",
+        "default": false,
+        "description": "true이면 value가 기존값 대비 상대값"
+      }
+    }
+  },
+
+  "delta_patch_schema": {
+    "type": "object",
+    "required": ["patch_id", "base_variant_id", "operations"],
+    "properties": {
+      "patch_id": {"type": "string"},
+      "base_variant_id": {"type": "string"},
+      "operations": {
+        "type": "array",
+        "items": {"$ref": "#/patch_operation_schema"}
+      },
+      "description": {"type": "string"}
+    }
+  },
+
+  "session_record_schema": {
+    "type": "object",
+    "required": ["session_id", "project_type", "timestamp", "user_request"],
+    "properties": {
+      "session_id": {"type": "string"},
+      "project_id": {"type": "string"},
+      "project_type": {
+        "type": "string",
+        "enum": ["minecraft", "builder", "product_design", "drawing_ai", "animation"]
+      },
+      "timestamp": {"type": "string", "format": "date-time"},
+      "user_request": {"type": "string"},
+      "context": {"type": "object"},
+      "parsed_intent": {"type": ["object", "null"]},
+      "variants_generated": {
+        "type": "array",
+        "items": {"type": "object"}
+      },
+      "critiques": {
+        "type": "array",
+        "items": {"type": "object"}
+      },
+      "user_selected_variant_id": {"type": ["string", "null"]},
+      "user_edits": {
+        "type": "array",
+        "items": {"type": "object"}
+      },
+      "final_params": {"type": "object"},
+      "final_accepted": {"type": "boolean"},
+      "self_critique": {"type": "string"},
+      "user_satisfaction": {"type": ["integer", "null"], "minimum": 1, "maximum": 5}
+    }
+  },
+
+  "unified_output_schema": {
+    "type": "object",
+    "description": "모든 프로젝트 공용 출력 틀",
+    "properties": {
+      "project_type": {
+        "type": "string",
+        "enum": ["minecraft", "builder", "product_design", "drawing_ai", "animation"]
+      },
+      "goal": {"type": "string"},
+      "constraints": {"type": "array", "items": {"type": "string"}},
+      "style_tags": {"type": "array", "items": {"type": "string"}},
+      "priority_order": {"type": "array", "items": {"type": "string"}},
+      "editable_axes": {"type": "array", "items": {"type": "string"}},
+      "must_keep": {"type": "array", "items": {"type": "string"}},
+      "must_avoid": {"type": "array", "items": {"type": "string"}},
+      "variants": {"type": "array", "items": {"type": "object"}},
+      "critique": {"type": "array", "items": {"type": "object"}},
+      "delta_patch": {"type": "object"}
+    }
+  }
+}

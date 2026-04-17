@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "minecraft-v1",
+  "project_type": "minecraft",
+  "description": "Minecraft AI - 블록 건축 설계. LLM은 설계 JSON만 생성, 블록 직접 생성 금지.",
+
+  "engine_params": {
+    "type": "object",
+    "description": "Minecraft 건축 엔진 파라미터",
+    "required": ["build_type", "style", "dimensions"],
+    "properties": {
+      "build_type": {
+        "type": "string",
+        "enum": ["house", "castle", "tower", "bridge", "farm", "village", "decoration", "redstone", "custom"],
+        "description": "건축물 유형"
+      },
+      "style": {
+        "type": "object",
+        "properties": {
+          "theme": {"type": "string", "enum": ["medieval", "modern", "fantasy", "japanese", "rustic", "industrial", "organic", "custom"]},
+          "palette": {"type": "array", "items": {"type": "string"}, "description": "사용할 블록 팔레트"},
+          "decoration_level": {"type": "string", "enum": ["minimal", "moderate", "detailed", "ornate"]},
+          "symmetry": {"type": "string", "enum": ["symmetric", "asymmetric", "mixed"]}
+        }
+      },
+      "dimensions": {
+        "type": "object",
+        "properties": {
+          "width": {"type": "integer", "description": "가로 블록 수"},
+          "depth": {"type": "integer", "description": "세로 블록 수"},
+          "height": {"type": "integer", "description": "높이 블록 수"}
+        }
+      },
+      "structure": {
+        "type": "object",
+        "properties": {
+          "foundation": {"type": "string", "description": "기초 블록"},
+          "walls": {"type": "string", "description": "벽 블록"},
+          "roof_type": {"type": "string", "enum": ["flat", "gable", "hip", "dome", "tower", "none"]},
+          "roof_block": {"type": "string"},
+          "floors": {"type": "integer", "default": 1},
+          "windows": {"type": "string", "enum": ["none", "small", "large", "stained_glass"]},
+          "door_type": {"type": "string", "enum": ["single", "double", "grand", "none"]}
+        }
+      },
+      "interior": {
+        "type": "object",
+        "properties": {
+          "rooms": {"type": "array", "items": {"type": "object", "properties": {"name": {"type": "string"}, "size": {"type": "string"}}}},
+          "lighting": {"type": "string", "enum": ["torches", "lanterns", "glowstone", "sea_lanterns", "mixed"]},
+          "furniture": {"type": "boolean", "default": true}
+        }
+      },
+      "exterior": {
+        "type": "object",
+        "properties": {
+          "landscaping": {"type": "boolean", "default": false},
+          "path_type": {"type": "string"},
+          "garden": {"type": "boolean", "default": false},
+          "fence": {"type": "boolean", "default": false}
+        }
+      },
+      "constraints": {
+        "type": "object",
+        "properties": {
+          "survival_friendly": {"type": "boolean", "default": true, "description": "서바이벌 모드에서 수집 가능한 블록만 사용"},
+          "max_block_types": {"type": "integer", "description": "사용할 최대 블록 종류 수"},
+          "biome": {"type": "string", "description": "건축 바이옴"}
+        }
+      }
+    }
+  },
+
+  "path_aliases": {
+    "건축 유형": "/build_type",
+    "스타일": "/style/theme",
+    "팔레트": "/style/palette",
+    "장식": "/style/decoration_level",
+    "대칭": "/style/symmetry",
+    "가로": "/dimensions/width",
+    "세로": "/dimensions/depth",
+    "높이": "/dimensions/height",
+    "크기": "/dimensions",
+    "기초": "/structure/foundation",
+    "벽": "/structure/walls",
+    "지붕": "/structure/roof_type",
+    "지붕 블록": "/structure/roof_block",
+    "층수": "/structure/floors",
+    "창문": "/structure/windows",
+    "문": "/structure/door_type",
+    "방": "/interior/rooms",
+    "조명": "/interior/lighting",
+    "가구": "/interior/furniture",
+    "조경": "/exterior/landscaping",
+    "길": "/exterior/path_type",
+    "정원": "/exterior/garden",
+    "울타리": "/exterior/fence",
+    "서바이벌": "/constraints/survival_friendly",
+    "바이옴": "/constraints/biome"
+  },
+
+  "constraint_mapping": {
+    "중세": {"style/theme": "medieval"},
+    "모던": {"style/theme": "modern"},
+    "판타지": {"style/theme": "fantasy"},
+    "일본식": {"style/theme": "japanese"},
+    "소박": {"style/theme": "rustic"},
+    "미니멀": {"style/decoration_level": "minimal"},
+    "화려": {"style/decoration_level": "ornate"},
+    "대칭": {"style/symmetry": "symmetric"},
+    "비대칭": {"style/symmetry": "asymmetric"},
+    "서바이벌": {"constraints/survival_friendly": true},
+    "크리에이티브": {"constraints/survival_friendly": false},
+    "평지붕": {"structure/roof_type": "flat"},
+    "박공지붕": {"structure/roof_type": "gable"},
+    "돔": {"structure/roof_type": "dome"},
+    "스테인드글라스": {"structure/windows": "stained_glass"}
+  },
+
+  "critique_criteria": [
+    {
+      "name": "aesthetic_coherence",
+      "label": "미적 일관성",
+      "description": "블록 팔레트, 비례, 장식이 테마에 맞는지",
+      "weight": 0.30
+    },
+    {
+      "name": "structural_soundness",
+      "label": "구조적 타당성",
+      "description": "비례가 자연스럽고 마인크래프트 물리에서 안정적인지",
+      "weight": 0.25
+    },
+    {
+      "name": "functionality",
+      "label": "기능성",
+      "description": "실제 게임 플레이에 적합한 내부 공간/동선인지",
+      "weight": 0.25
+    },
+    {
+      "name": "resource_efficiency",
+      "label": "자원 효율",
+      "description": "서바이벌 모드에서 수집 난이도 대비 결과물 효율",
+      "weight": 0.20
+    }
+  ],
+
+  "variant_axes": [
+    {
+      "axis": "complexity",
+      "description": "건축 복잡도: 간단(starter) / 중간 / 정교",
+      "values": ["simple", "moderate", "elaborate"]
+    },
+    {
+      "axis": "style_variation",
+      "description": "스타일 변형: 원본 테마 유지 / 퓨전 / 대비",
+      "values": ["faithful", "fusion", "contrast"]
+    },
+    {
+      "axis": "scale",
+      "description": "규모: 소형 / 중형 / 대형",
+      "values": ["small", "medium", "large"]
+    }
+  ]
+}

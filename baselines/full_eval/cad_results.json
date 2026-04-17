@@ -1,0 +1,152 @@
+[
+  {
+    "id": "C01",
+    "text": "방수 샤워필터, 배수 연결 포함",
+    "status": "pass",
+    "latency_ms": 55354,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C02",
+    "text": "USB-C 충전 도킹스테이션 설계",
+    "status": "pass",
+    "latency_ms": 55494,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C03",
+    "text": "모터 내장 접이식 테이블 기구부",
+    "status": "pass",
+    "latency_ms": 30431,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C04",
+    "text": "IP67 방수 센서 하우징",
+    "status": "pass",
+    "latency_ms": 21245,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C05",
+    "text": "3D프린팅 가능한 경량 브래킷",
+    "status": "pass",
+    "latency_ms": 37014,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C06",
+    "text": "급수+배수 배관 연결 어댑터",
+    "status": "pass",
+    "latency_ms": 55345,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C07",
+    "text": "PCB 고정 + 배선 정리 케이스",
+    "status": "pass",
+    "latency_ms": 38591,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C08",
+    "text": "내열 200도 견디는 노즐 부품",
+    "status": "pass",
+    "latency_ms": 24758,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C09",
+    "text": "알루미늄 CNC 가공 히트싱크",
+    "status": "pass",
+    "latency_ms": 42285,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  },
+  {
+    "id": "C10",
+    "text": "펌프 교체 가능한 유지보수 하우징",
+    "status": "pass",
+    "latency_ms": 43597,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "systems",
+      "constraints",
+      "priorities"
+    ]
+  }
+]

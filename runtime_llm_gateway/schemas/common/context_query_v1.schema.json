@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": ["query_type", "focus"],
+  "properties": {
+    "query_type": {
+      "type": "string",
+      "enum": ["summary", "search", "timeline", "comparison", "status"],
+      "description": "요청 유형"
+    },
+    "focus": {
+      "type": "string",
+      "description": "초점 대상 (예: 전체 진행상황, 최근 수정, 특정 시스템)"
+    },
+    "time_range": {
+      "type": ["string", "null"],
+      "enum": ["recent", "all", "last_session", null],
+      "description": "시간 범위"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "검색 키워드 (최대 5개)"
+    }
+  }
+}

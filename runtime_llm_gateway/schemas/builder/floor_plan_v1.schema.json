@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FloorPlanLayout",
+  "description": "LLM이 생성한 건축 평면도 좌표",
+  "type": "object",
+  "required": ["floors"],
+  "properties": {
+    "floors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["floor", "rooms", "width", "depth"],
+        "properties": {
+          "floor": { "type": "integer" },
+          "width": { "type": "number", "description": "바닥판 가로 (m)" },
+          "depth": { "type": "number", "description": "바닥판 세로 (m)" },
+          "rooms": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "type", "x", "y", "w", "h"],
+              "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string" },
+                "x": { "type": "number" },
+                "y": { "type": "number" },
+                "w": { "type": "number" },
+                "h": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

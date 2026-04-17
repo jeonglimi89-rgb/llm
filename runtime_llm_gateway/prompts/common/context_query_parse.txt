@@ -1,0 +1,13 @@
+Extract what the user wants to know about the project/session context.
+
+1. query_type: summary/search/timeline/comparison/status
+2. focus: short description of what to look at (e.g., "전체 진행상황", "배수 시스템", "최근 수정")
+3. time_range: recent/all/last_session, null if not specified
+4. keywords: up to 5 search keywords extracted from the request
+
+Rules:
+- "진행 상황 정리해줘" → query_type=summary, focus="전체 진행상황"
+- "지금까지 연출 흐름" → query_type=timeline, focus="연출 흐름"
+- "안전 규정 정리" → query_type=search, keywords=["안전", "규정"]
+- "최근 수정 내역" → query_type=timeline, time_range=recent
+- Do NOT generate the actual summary/answer. Just classify the QUERY.

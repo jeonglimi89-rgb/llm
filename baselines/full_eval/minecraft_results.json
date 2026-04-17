@@ -1,0 +1,126 @@
+[
+  {
+    "id": "M01",
+    "text": "중세풍 성 정면 창문 넓게",
+    "status": "pass",
+    "latency_ms": 25566,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M02",
+    "text": "지붕을 박공지붕으로 바꿔줘",
+    "status": "pass",
+    "latency_ms": 22512,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M03",
+    "text": "입구에 아치형 문 추가해줘",
+    "status": "pass",
+    "latency_ms": 24500,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M04",
+    "text": "2층 발코니 만들어줘",
+    "status": "pass",
+    "latency_ms": 24374,
+    "schema_ok": true,
+    "domain_ok": true,
+    "repair": false,
+    "error": null,
+    "output_keys": [
+      "target_anchor",
+      "scope",
+      "operations",
+      "preserve"
+    ]
+  },
+  {
+    "id": "M05",
+    "text": "벽을 스프루스 나무로 바꿔",
+    "status": "network_failure",
+    "latency_ms": 8163,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "M06",
+    "text": "내부 조명을 랜턴으로 교체",
+    "status": "network_failure",
+    "latency_ms": 5102,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "M07",
+    "text": "탑 높이를 5블록 더 높여줘",
+    "status": "network_failure",
+    "latency_ms": 5093,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "M08",
+    "text": "정원에 울타리랑 꽃 추가",
+    "status": "network_failure",
+    "latency_ms": 5098,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "M09",
+    "text": "전체적으로 디테일 더 넣어줘",
+    "status": "network_failure",
+    "latency_ms": 5080,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "M10",
+    "text": "동쪽 벽만 스테인드글라스로",
+    "status": "network_failure",
+    "latency_ms": 5082,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  }
+]

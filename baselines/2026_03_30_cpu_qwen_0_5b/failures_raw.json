@@ -1,0 +1,52 @@
+[
+  {
+    "id": "B04",
+    "text": "전원주택 평면 설계, 마당 넓게",
+    "status": "schema_failure",
+    "latency_ms": 143137,
+    "schema_ok": false,
+    "domain_ok": true,
+    "repair": true,
+    "error": null
+  },
+  {
+    "id": "B08",
+    "text": "건폐율 60% 이하로 맞춰줘",
+    "status": "schema_failure",
+    "latency_ms": 144590,
+    "schema_ok": false,
+    "domain_ok": true,
+    "repair": true,
+    "error": null
+  },
+  {
+    "id": "C07",
+    "text": "PCB 고정 + 배선 정리 케이스",
+    "status": "network_failure",
+    "latency_ms": 120028,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "C09",
+    "text": "알루미늄 CNC 가공 히트싱크",
+    "status": "network_failure",
+    "latency_ms": 120033,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "PROVIDER_ERROR"
+  },
+  {
+    "id": "A04",
+    "text": "비 오는 밤 외로운 실루엣 와이드샷",
+    "status": "malformed_output",
+    "latency_ms": 103606,
+    "schema_ok": false,
+    "domain_ok": false,
+    "repair": false,
+    "error": "REPAIR_PARSE_ERROR"
+  }
+]

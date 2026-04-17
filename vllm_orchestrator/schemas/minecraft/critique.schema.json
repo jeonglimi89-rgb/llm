@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Build Critique",
+  "type": "object",
+  "required": ["overall_quality", "weaknesses", "priority_repairs"],
+  "properties": {
+    "overall_quality": {"type": "string", "enum": ["excellent", "good", "mediocre", "poor", "terrible"]},
+    "theme_adherence": {"type": "number", "minimum": 0, "maximum": 1},
+    "weaknesses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "issue", "severity", "repair_code"],
+        "properties": {
+          "category": {"type": "string"},
+          "issue": {"type": "string"},
+          "severity": {"type": "string", "enum": ["critical", "major", "minor"]},
+          "probable_cause": {"type": "string"},
+          "repair_code": {"type": "string"},
+          "expected_impact": {"type": "string"}
+        }
+      }
+    },
+    "strengths": {"type": "array", "items": {"type": "string"}},
+    "priority_repairs": {"type": "array", "items": {"type": "string"}},
+    "creative_suggestion": {"type": "string"}
+  }
+}

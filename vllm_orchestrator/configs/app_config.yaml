@@ -1,0 +1,102 @@
+# vLLM Orchestrator — application config (env-overridable)
+#
+# 우선순위: ENV > config.yaml > 코드 기본값
+# CONFIG_PATH env로 다른 config 파일 지정 가능
+
+app:
+  env: gpu                          # gpu | cpu | dev
+  debug: false
+  # 데이터 디렉토리 (상대경로 → BASE_DIR 기준, 절대경로도 허용)
+  # 컨테이너 배포 시 /data/... 로 바꿔서 볼륨 마운트
+  logs_dir: logs
+  runtime_dir: runtime
+  storage_dir: storage
+
+llm:
+  base_url: ${LLM_BASE_URL:-http://localhost:8000}
+  api_key: ${LLM_API_KEY:-internal-token}
+  model: ${LLM_MODEL:-/mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ}
+  text_model_id: core_text_14b
+  code_model_id: core_text_14b
+  runtime_mode: local_quantized
+  quantization: awq_marlin
+  enable_adapters: false
+  enable_guided_json: true
+  max_context: 2048
+  max_output_tokens: 800
+  health_fail_threshold: 3
+
+queue:
+  max_concurrency: 4
+  max_depth: 20
+  task_timeout_s: 120
+  queue_timeout_s: 300
+  drain_on_shutdown: true
+
+timeouts:
+  strict_json_s: 15.0
+  fast_chat_s: 8.0
+  long_context_s: 30.0
+  creative_json_s: 75.0
+  embedding_s: 5.0
+  hard_kill_s: 120.0
+
+fallback:
+  enable_degraded: true
+  enable_cached: true
+  enable_mock: true
+  max_retries: 1
+  retry_delay_s: 2.0
+
+# --- Cache layer ---
+cache:
+  enabled: true
+  backend: auto                     # auto (redis if available) | memory | redis
+  redis_url: ${REDIS_URL:-redis://localhost:6379/0}
+  ttl_s: 3600
+  max_entries: 1000
+
+semantic_cache:
+  enabled: true
+  max_entries: 500
+  ttl_s: 3600
+  threshold: 0.55
+
+# --- Creative layer ---
+creative:
+  critic_mode: inline               # inline | async | off
+  variant_sampling_enabled: true
+  max_variants: 3
+
+# --- Auth / rate limit ---
+auth:
+  api_key_required: false
+  api_keys: []                      # ["key1", "key2"]
+  rate_limit_rps: 2.0
+  rate_limit_burst: 20
+  rate_limit_backend: auto          # auto (redis if available) | memory
+
+# --- Observability ---
+observability:
+  metrics_enabled: true
+  log_level: INFO
+
+# --- Feedback store ---
+feedback:
+  # logs_dir/feedback.jsonl 에 상대경로. 절대경로도 허용.
+  path: feedback.jsonl
+
+# --- Training / adapters (optional) ---
+training:
+  data_dir: ${TRAINING_DATA_DIR:-training_data}
+  adapters_dir: ${ADAPTERS_DIR:-adapters}
+  benchmark_dir: ${BENCHMARK_DIR:-benchmark_scores}
+
+# --- CORS / security ---
+security:
+  # 프로덕션: 특정 도메인만 허용하도록 수정 필요
+  cors_allow_origins:
+    - http://localhost:5173
+    - http://localhost:3457
+    - http://127.0.0.1:5173
+  cors_allow_credentials: false

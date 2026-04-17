@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "required": ["camera", "lighting", "timing"],
+  "properties": {
+    "camera": {
+      "type": "object",
+      "required": ["framing", "angle", "lens_mm", "move_type", "speed"],
+      "properties": {
+        "framing": {"type": "string", "enum": ["wide", "medium", "close_up", "extreme_close_up", "over_shoulder", "pov", "bird_eye"]},
+        "angle": {"type": "string", "enum": ["eye_level", "low", "high", "dutch", "bird_eye"]},
+        "lens_mm": {"type": "number", "minimum": 12, "maximum": 200},
+        "move_type": {"type": "string", "enum": ["static", "pan", "tilt", "dolly", "zoom", "crane", "handheld", "orbit"]},
+        "speed": {"type": "string", "enum": ["slow", "moderate", "fast"]}
+      }
+    },
+    "lighting": {
+      "type": "object",
+      "required": ["mood", "color_temperature_k", "key_direction"],
+      "properties": {
+        "mood": {"type": "string", "enum": ["warm_golden", "cold_blue", "dramatic_shadow", "soft_diffuse", "backlit_silhouette", "neon_glow", "neutral"]},
+        "color_temperature_k": {"type": "integer", "minimum": 2000, "maximum": 10000},
+        "key_direction": {"type": "string", "enum": ["front", "side", "back", "top", "bottom", "rim"]},
+        "fill_ratio": {"type": "number", "minimum": 0, "maximum": 1, "description": "0=no fill (dramatic), 1=full fill (flat)"},
+        "ambient_level": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "timing": {
+      "type": "object",
+      "required": ["duration_frames"],
+      "properties": {
+        "duration_frames": {"type": "integer", "minimum": 1},
+        "ease_in": {"type": "boolean", "default": false},
+        "ease_out": {"type": "boolean", "default": false},
+        "hold_frames": {"type": "integer", "default": 0}
+      }
+    },
+    "emotion_mapping": {
+      "type": "object",
+      "properties": {
+        "source_emotion": {"type": "string"},
+        "camera_rationale": {"type": "string"},
+        "lighting_rationale": {"type": "string"}
+      }
+    }
+  }
+}

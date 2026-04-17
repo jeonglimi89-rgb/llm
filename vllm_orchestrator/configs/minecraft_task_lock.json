@@ -1,0 +1,52 @@
+{
+  "domain": "minecraft",
+  "version": "2.0",
+  "allowed_tasks": {
+    "generate_build": {
+      "input": ["user_text", "context", "feedback_memory"],
+      "output": ["build_plan", "variant_plans", "compiled_blocks"],
+      "llm_steps": ["build_planner", "variant_planner"]
+    },
+    "refine_build": {
+      "input": ["blocks", "critique", "user_feedback"],
+      "output": ["repair_plan", "repaired_blocks"],
+      "llm_steps": ["repair_planner"]
+    },
+    "critique_build": {
+      "input": ["blocks", "rubric_scores", "user_intent", "screenshot_base64"],
+      "output": ["critique"],
+      "llm_steps": ["build_critic"]
+    },
+    "generate_npc": {
+      "input": ["user_text", "world_context"],
+      "output": ["npc_definition"],
+      "llm_steps": ["npc_planner"]
+    },
+    "refine_npc": {
+      "input": ["npc_definition", "critique", "user_feedback"],
+      "output": ["refined_npc"],
+      "llm_steps": ["npc_planner"]
+    },
+    "critique_npc": {
+      "input": ["npc_definition"],
+      "output": ["npc_critique"],
+      "llm_steps": ["npc_critic"]
+    },
+    "generate_resource_pack_plan": {
+      "input": ["user_text", "style_context"],
+      "output": ["style_plan", "texture_specs"],
+      "llm_steps": ["rp_planner"]
+    },
+    "critique_resource_pack_consistency": {
+      "input": ["texture_set", "style_plan"],
+      "output": ["rp_critique"],
+      "llm_steps": ["rp_critic"]
+    },
+    "apply_repair_patch": {
+      "input": ["blocks", "repair_plan"],
+      "output": ["patched_blocks"],
+      "llm_steps": []
+    }
+  },
+  "blocked_domains": ["cad", "builder", "animation", "product_design"]
+}

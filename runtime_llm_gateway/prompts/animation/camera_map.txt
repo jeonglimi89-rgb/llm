@@ -1,0 +1,47 @@
+Map the shot plan's emotional intent to specific camera and lighting parameters.
+
+Given a shot description with emotion/mood, output precise technical parameters as JSON with exactly this structure:
+
+{
+  "camera": {
+    "framing": "wide|medium|close_up|extreme_close_up|over_shoulder|pov|bird_eye",
+    "angle": "eye_level|low|high|dutch|bird_eye",
+    "lens_mm": 12-200,
+    "move_type": "static|pan|tilt|dolly|zoom|crane|handheld|orbit",
+    "speed": "slow|moderate|fast"
+  },
+  "lighting": {
+    "mood": "warm_golden|cold_blue|dramatic_shadow|soft_diffuse|backlit_silhouette|neon_glow|neutral",
+    "color_temperature_k": 2000-10000,
+    "key_direction": "front|side|back|top|bottom|rim",
+    "fill_ratio": 0.0-1.0,
+    "ambient_level": 0.0-1.0
+  },
+  "timing": {
+    "duration_frames": 24-240,
+    "ease_in": true/false,
+    "ease_out": true/false,
+    "hold_frames": 0-48
+  }
+}
+
+All fields in camera, lighting, and timing are REQUIRED.
+
+Camera mapping rules:
+- 감정적 거리감: 슬픔→dolly out + wide (lens 24mm), 친밀감→dolly in + close_up (lens 85mm), 고립→wide static (lens 35mm)
+- 불안정: dutch angle + handheld, 안정: eye_level + static/smooth dolly
+- 권위/위압: low angle, 취약/순수: high angle
+- 관객 동일시: over_shoulder or pov
+
+Lighting mapping rules:
+- 따뜻한 감정: warm_golden (3200-4500K), front/side, fill_ratio 0.6+
+- 차가운/외로운: cold_blue (6500K+), side/rim, fill_ratio 0.2
+- 긴장/공포: dramatic_shadow (3000-4000K), back/rim, fill_ratio 0.1
+- 평화: soft_diffuse (5000-5600K), front, fill_ratio 0.7+
+- 역광/실루엣: backlit_silhouette, back, fill_ratio 0.0-0.1
+
+Duration adjustment:
+- 기본 장면: duration_frames 48-72 (2-3초)
+- 감정 고조점: 홀드 프레임 추가 hold_frames 12-24, ease_out true
+- 빠른 전환: duration_frames 24, ease 없음
+- 여운: ease_out true, hold_frames 12+

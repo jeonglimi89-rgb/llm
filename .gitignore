@@ -1,0 +1,132 @@
+# === Secrets / env files ===
+.env
+.env.local
+.env.*.local
+!.env.example
+*.env.backup
+vllm_orchestrator/.env
+
+# TLS certs / keys (self-signed for dev — real certs come from cert-manager/ACME)
+ops/nginx/certs/*.pem
+ops/nginx/certs/*.key
+*.pem
+*.key
+!**/ssh_key.pub      # terraform placeholder pubkey OK
+!**/id_*.pub         # public keys OK
+
+# Encrypted secrets files (should be stored in secure vault)
+*.enc
+secrets/
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# === Logs / runtime ===
+logs/
+*.log
+*.log.*
+orchestrator_server.log
+orchestrator_error.log
+vllm_server.log
+*.tmp.*
+*.pid
+
+# Temporary test output files (not code)
+vllm_orchestrator/logs/
+vllm_orchestrator/runtime/
+vllm_orchestrator/storage/
+
+# === Large data / models ===
+# Model weights — NEVER commit (GBs)
+models/
+*.safetensors
+*.bin
+*.gguf
+*.onnx
+*.pt
+*.pth
+
+# HuggingFace cache
+hf_cache/
+.cache/huggingface/
+
+# Training artifacts — large, go to S3/GCS
+training_data/
+adapters/
+benchmark_scores/
+datasets/*.bin
+data/
+baselines/*.bin
+
+# === Node / JS (if webapp included) ===
+node_modules/
+.pnpm-store/
+.next/
+.nuxt/
+
+# === IDE / OS ===
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-*
+
+# === Docker ===
+# Local docker build state
+.dockerignore.local
+
+# === Terraform ===
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraformrc
+terraform.rc
+# Don't commit *.tfvars (may contain secrets); commit example only
+*.tfvars
+!*.tfvars.example
+
+# === Ops sensitive ===
+# Generated at runtime, not source
+feedback.jsonl
+storage/
+ops/nginx/logs/
+
+# === CI / test artifacts ===
+test-results.xml
+junit.xml
+*.cover
+trivy-results.sarif
+
+# === OS-specific runtime ===
+# Windows
+*.lnk
+desktop.ini
+
+# === Misc ===
+*.backup
+*.bak
+scratch/
+TODO.local.md
+.claude/

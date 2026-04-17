@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "required": ["verdict", "checks"],
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["pass", "fail", "warn"]
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["criterion", "status"],
+        "properties": {
+          "criterion": {"type": "string", "enum": ["palette_coherence", "proportion_sanity", "decoration_match", "material_variety"]},
+          "status": {"type": "string", "enum": ["pass", "fail", "warn"]},
+          "detail": {"type": "string"},
+          "suggestion": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "overall_style_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

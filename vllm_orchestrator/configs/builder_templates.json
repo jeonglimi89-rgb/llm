@@ -1,0 +1,240 @@
+{
+  "detached_house_modern": {
+    "category": "residential",
+    "display_name": "모던 단독주택",
+    "default_program": {
+      "floors": 2,
+      "occupancy": "single_family",
+      "spaces": [
+        {"type": "living_room", "count": 1, "area_m2": 30, "priority": "high", "floor": 1},
+        {"type": "kitchen", "count": 1, "area_m2": 12, "priority": "high", "floor": 1},
+        {"type": "dining", "count": 1, "area_m2": 10, "priority": "high", "floor": 1},
+        {"type": "master_bedroom", "count": 1, "area_m2": 18, "priority": "high", "floor": 2},
+        {"type": "bedroom", "count": 2, "area_m2": 11, "priority": "normal", "floor": 2},
+        {"type": "bathroom", "count": 2, "area_m2": 5, "priority": "high", "floor": 2},
+        {"type": "entrance", "count": 1, "area_m2": 6, "priority": "high", "floor": 1}
+      ],
+      "typical_area_m2": {"min": 120, "max": 200}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["concrete", "glass", "wood"], "window_ratio": 0.4, "roof_type": "flat"},
+    "code_rules": ["1층 화장실 필수", "계단 폭 0.9m 이상", "채광면적 거실 1/7 이상"],
+    "mep_basics": ["급수 1계통", "배수 2계통", "전기 단상 220V"],
+    "keywords": ["모던", "단독주택", "현대", "modern_house", "풀빌라"]
+  },
+  "hanok_traditional": {
+    "category": "residential",
+    "display_name": "한옥",
+    "default_program": {
+      "floors": 1,
+      "occupancy": "single_family",
+      "spaces": [
+        {"type": "living_room", "count": 1, "area_m2": 20, "priority": "high", "floor": 1},
+        {"type": "master_bedroom", "count": 1, "area_m2": 15, "priority": "high", "floor": 1},
+        {"type": "bedroom", "count": 2, "area_m2": 10, "priority": "normal", "floor": 1},
+        {"type": "kitchen", "count": 1, "area_m2": 10, "priority": "high", "floor": 1},
+        {"type": "bathroom", "count": 2, "area_m2": 5, "priority": "high", "floor": 1},
+        {"type": "courtyard", "count": 1, "area_m2": 30, "priority": "high", "floor": 1}
+      ],
+      "typical_area_m2": {"min": 80, "max": 150}
+    },
+    "facade": {"primary_style": "hanok_traditional", "main_materials": ["wood", "stone", "traditional_tile"], "window_ratio": 0.3, "roof_type": "hipped"},
+    "structural_motifs": ["기와지붕", "마당", "대청마루", "툇마루", "처마"],
+    "code_rules": ["전통건축 형식 유지", "온돌 설치"],
+    "keywords": ["한옥", "전통", "hanok", "한국전통", "ㅁ자", "안채"]
+  },
+  "townhouse": {
+    "category": "residential",
+    "display_name": "타운하우스",
+    "default_program": {
+      "floors": 3,
+      "occupancy": "single_family",
+      "spaces": [
+        {"type": "living_room", "count": 1, "area_m2": 25, "priority": "high", "floor": 1},
+        {"type": "kitchen", "count": 1, "area_m2": 10, "priority": "high", "floor": 1},
+        {"type": "dining", "count": 1, "area_m2": 8, "priority": "normal", "floor": 1},
+        {"type": "master_bedroom", "count": 1, "area_m2": 16, "priority": "high", "floor": 2},
+        {"type": "bedroom", "count": 2, "area_m2": 10, "priority": "normal", "floor": 2},
+        {"type": "bathroom", "count": 3, "area_m2": 4, "priority": "high"},
+        {"type": "attic", "count": 1, "area_m2": 20, "priority": "normal", "floor": 3},
+        {"type": "garage", "count": 1, "area_m2": 18, "priority": "normal", "floor": 1}
+      ],
+      "typical_area_m2": {"min": 140, "max": 220}
+    },
+    "facade": {"primary_style": "classic_symmetric", "main_materials": ["brick", "wood"], "roof_type": "gabled"},
+    "keywords": ["타운하우스", "townhouse", "주택단지", "연립"]
+  },
+  "small_apartment": {
+    "category": "residential",
+    "display_name": "소형 아파트 유닛",
+    "default_program": {
+      "floors": 1,
+      "occupancy": "single_household_unit",
+      "spaces": [
+        {"type": "living_room", "count": 1, "area_m2": 18, "priority": "high", "floor": 1},
+        {"type": "kitchen", "count": 1, "area_m2": 8, "priority": "high", "floor": 1},
+        {"type": "master_bedroom", "count": 1, "area_m2": 12, "priority": "high", "floor": 1},
+        {"type": "bedroom", "count": 1, "area_m2": 9, "priority": "normal", "floor": 1},
+        {"type": "bathroom", "count": 1, "area_m2": 4, "priority": "high", "floor": 1},
+        {"type": "balcony", "count": 1, "area_m2": 4, "priority": "normal", "floor": 1}
+      ],
+      "typical_area_m2": {"min": 50, "max": 85}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["concrete", "tile"], "roof_type": "flat"},
+    "keywords": ["아파트", "소형", "apartment", "원룸형", "투룸형", "unit"]
+  },
+  "luxury_villa": {
+    "category": "residential",
+    "display_name": "럭셔리 빌라",
+    "default_program": {
+      "floors": 3,
+      "occupancy": "single_family",
+      "spaces": [
+        {"type": "living_room", "count": 1, "area_m2": 50, "priority": "high", "floor": 1},
+        {"type": "kitchen", "count": 1, "area_m2": 20, "priority": "high", "floor": 1},
+        {"type": "dining", "count": 1, "area_m2": 25, "priority": "high", "floor": 1},
+        {"type": "master_bedroom", "count": 1, "area_m2": 35, "priority": "high", "floor": 2},
+        {"type": "bedroom", "count": 3, "area_m2": 15, "priority": "normal", "floor": 2},
+        {"type": "dressing_room", "count": 1, "area_m2": 12, "priority": "high", "floor": 2},
+        {"type": "bathroom", "count": 5, "area_m2": 8, "priority": "high"},
+        {"type": "study", "count": 1, "area_m2": 15, "priority": "normal"},
+        {"type": "garage", "count": 1, "area_m2": 50, "priority": "high", "floor": 1},
+        {"type": "terrace", "count": 2, "area_m2": 20, "priority": "normal"},
+        {"type": "basement", "count": 1, "area_m2": 80, "priority": "normal", "floor": 0}
+      ],
+      "typical_area_m2": {"min": 350, "max": 600}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["stone", "glass", "wood"], "window_ratio": 0.5, "roof_type": "flat"},
+    "keywords": ["럭셔리", "luxury", "빌라", "villa", "대형주택", "pool_villa", "풀빌라"]
+  },
+  "cafe_small": {
+    "category": "commercial",
+    "display_name": "소형 카페",
+    "default_program": {
+      "floors": 1,
+      "occupancy": "commercial",
+      "spaces": [
+        {"type": "cafe", "count": 1, "area_m2": 40, "priority": "high", "floor": 1},
+        {"type": "kitchen", "count": 1, "area_m2": 12, "priority": "high", "floor": 1},
+        {"type": "storage", "count": 1, "area_m2": 4, "priority": "normal", "floor": 1},
+        {"type": "bathroom", "count": 2, "area_m2": 3, "priority": "high", "floor": 1}
+      ],
+      "typical_area_m2": {"min": 40, "max": 100}
+    },
+    "facade": {"primary_style": "industrial_brick", "main_materials": ["brick", "wood", "glass"], "window_ratio": 0.6},
+    "code_rules": ["피난통로 1.2m 이상", "장애인 화장실 의무", "환기 시설 필수"],
+    "keywords": ["카페", "cafe", "coffee", "커피숍"]
+  },
+  "restaurant": {
+    "category": "commercial",
+    "display_name": "레스토랑",
+    "default_program": {
+      "floors": 1,
+      "occupancy": "commercial",
+      "spaces": [
+        {"type": "cafe", "count": 1, "area_m2": 80, "priority": "high", "floor": 1},
+        {"type": "kitchen", "count": 1, "area_m2": 25, "priority": "high", "floor": 1},
+        {"type": "storage", "count": 1, "area_m2": 8, "priority": "normal", "floor": 1},
+        {"type": "bathroom", "count": 3, "area_m2": 4, "priority": "high", "floor": 1},
+        {"type": "office", "count": 1, "area_m2": 6, "priority": "low", "floor": 1}
+      ],
+      "typical_area_m2": {"min": 100, "max": 250}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["concrete", "wood"], "window_ratio": 0.5},
+    "keywords": ["레스토랑", "restaurant", "식당", "fine_dining"]
+  },
+  "retail_store": {
+    "category": "commercial",
+    "display_name": "소매점",
+    "default_program": {
+      "floors": 1,
+      "occupancy": "commercial",
+      "spaces": [
+        {"type": "retail", "count": 1, "area_m2": 60, "priority": "high", "floor": 1},
+        {"type": "storage", "count": 1, "area_m2": 15, "priority": "high", "floor": 1},
+        {"type": "bathroom", "count": 1, "area_m2": 3, "priority": "normal", "floor": 1},
+        {"type": "office", "count": 1, "area_m2": 8, "priority": "low", "floor": 1}
+      ],
+      "typical_area_m2": {"min": 80, "max": 200}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["glass", "metal_panel"], "window_ratio": 0.7},
+    "keywords": ["매장", "retail", "store", "판매점"]
+  },
+  "office_small": {
+    "category": "office",
+    "display_name": "소규모 오피스",
+    "default_program": {
+      "floors": 3,
+      "occupancy": "office",
+      "spaces": [
+        {"type": "lobby", "count": 1, "area_m2": 20, "priority": "high", "floor": 1},
+        {"type": "office", "count": 6, "area_m2": 40, "priority": "high"},
+        {"type": "bathroom", "count": 6, "area_m2": 4, "priority": "high"},
+        {"type": "utility", "count": 2, "area_m2": 8, "priority": "normal"},
+        {"type": "stair", "count": 2, "area_m2": 10, "priority": "high"}
+      ],
+      "typical_area_m2": {"min": 300, "max": 800}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["glass", "concrete", "metal_panel"], "window_ratio": 0.55, "roof_type": "flat"},
+    "code_rules": ["비상계단 2개소", "엘리베이터", "장애인 시설", "소방법 준수"],
+    "keywords": ["오피스", "office", "사무실", "업무시설"]
+  },
+  "mixed_use_commercial": {
+    "category": "complex",
+    "display_name": "상가주택 (근린생활)",
+    "default_program": {
+      "floors": 4,
+      "occupancy": "mixed_use",
+      "spaces": [
+        {"type": "retail", "count": 2, "area_m2": 50, "priority": "high", "floor": 1},
+        {"type": "cafe", "count": 1, "area_m2": 40, "priority": "normal", "floor": 1},
+        {"type": "office", "count": 2, "area_m2": 45, "priority": "normal", "floor": 2},
+        {"type": "living_room", "count": 1, "area_m2": 25, "priority": "high", "floor": 3},
+        {"type": "kitchen", "count": 1, "area_m2": 10, "priority": "high", "floor": 3},
+        {"type": "bedroom", "count": 3, "area_m2": 11, "priority": "normal", "floor": 4},
+        {"type": "bathroom", "count": 5, "area_m2": 4, "priority": "high"},
+        {"type": "stair", "count": 2, "area_m2": 10, "priority": "high"},
+        {"type": "utility", "count": 1, "area_m2": 8, "priority": "normal", "floor": 1}
+      ],
+      "typical_area_m2": {"min": 250, "max": 600}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["concrete", "tile", "glass"], "window_ratio": 0.4},
+    "code_rules": ["내화구조", "비상계단 2개소", "주차 의무대수", "용도별 분리"],
+    "keywords": ["상가주택", "근린생활", "mixed_use", "복합건물"]
+  },
+  "clinic": {
+    "category": "public",
+    "display_name": "병원/클리닉",
+    "default_program": {
+      "floors": 2,
+      "occupancy": "medical",
+      "spaces": [
+        {"type": "lobby", "count": 1, "area_m2": 30, "priority": "high", "floor": 1},
+        {"type": "office", "count": 4, "area_m2": 15, "priority": "high"},
+        {"type": "bathroom", "count": 4, "area_m2": 4, "priority": "high"},
+        {"type": "storage", "count": 2, "area_m2": 8, "priority": "high"}
+      ],
+      "typical_area_m2": {"min": 150, "max": 400}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["white_concrete", "glass"], "window_ratio": 0.4},
+    "code_rules": ["의료법 준수", "장애인 접근성", "소방시설"],
+    "keywords": ["병원", "클리닉", "clinic", "hospital", "의원"]
+  },
+  "library_small": {
+    "category": "public",
+    "display_name": "소규모 도서관",
+    "default_program": {
+      "floors": 2,
+      "occupancy": "public",
+      "spaces": [
+        {"type": "lobby", "count": 1, "area_m2": 25, "priority": "high", "floor": 1},
+        {"type": "library", "count": 1, "area_m2": 200, "priority": "high"},
+        {"type": "office", "count": 2, "area_m2": 10, "priority": "normal"},
+        {"type": "bathroom", "count": 4, "area_m2": 4, "priority": "high"},
+        {"type": "storage", "count": 2, "area_m2": 15, "priority": "normal"}
+      ],
+      "typical_area_m2": {"min": 300, "max": 800}
+    },
+    "facade": {"primary_style": "modern_clean", "main_materials": ["wood", "glass", "concrete"], "window_ratio": 0.5, "roof_type": "flat"},
+    "keywords": ["도서관", "library", "문고"]
+  }
+}

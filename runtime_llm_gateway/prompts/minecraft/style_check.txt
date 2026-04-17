@@ -1,0 +1,13 @@
+Check if this Minecraft build matches its declared style. Answer with simple yes/no for each criterion.
+
+1. theme: What style is this build? (medieval, modern, fantasy, japanese, rustic, industrial, organic)
+2. palette_ok: Does the block palette match the theme? (true/false)
+3. proportion_ok: Are the proportions natural for Minecraft? (true/false)
+4. decoration_ok: Is the decoration level appropriate for the theme? (true/false)
+5. verdict: Overall pass/fail/warn
+6. main_issue: If any check failed, state the single biggest issue in one sentence. null if all pass.
+
+Rules:
+- Be strict: if palette has more than 2 blocks that don't fit the theme, palette_ok = false
+- Proportions: doors should be 2-3 blocks tall, rooms at least 3 blocks high, walls not paper-thin
+- This is a QUICK CHECK, not a detailed review. Keep it simple.

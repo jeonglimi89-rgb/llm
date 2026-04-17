@@ -1,0 +1,252 @@
+{
+  "medieval_tower": {
+    "category": "defensive_structure",
+    "display_name": "중세 타워",
+    "style": "medieval_timber",
+    "palette": ["minecraft:cobblestone", "minecraft:stone_bricks", "minecraft:oak_planks", "minecraft:oak_stairs", "minecraft:oak_log", "minecraft:torch", "minecraft:iron_bars"],
+    "silhouette_rules": {"base_wider_than_top": true, "height_to_width_ratio_min": 2.0, "crenellations": true},
+    "structural_motifs": ["circular_or_square_base", "spiral_staircase", "arrow_slits", "battlements", "corner_buttresses"],
+    "typical_footprint": {"width": 8, "depth": 8, "floors": 4},
+    "keywords": ["타워", "tower", "탑", "중세", "medieval", "성탑", "방어탑", "watchtower", "망루"]
+  },
+  "castle_keep": {
+    "category": "defensive_structure",
+    "display_name": "성채 본성",
+    "style": "gothic_stone",
+    "palette": ["minecraft:stone_bricks", "minecraft:cracked_stone_bricks", "minecraft:mossy_stone_bricks", "minecraft:deepslate_bricks", "minecraft:dark_oak_planks", "minecraft:iron_bars", "minecraft:lantern"],
+    "silhouette_rules": {"multi_volume": true, "central_keep_with_corner_towers": true, "crenellated_walls": true},
+    "structural_motifs": ["curtain_walls", "gatehouse", "drawbridge", "machicolations", "murder_holes", "inner_bailey"],
+    "typical_footprint": {"width": 28, "depth": 24, "floors": 4},
+    "keywords": ["성", "castle", "성채", "keep", "요새", "fortress", "대성"]
+  },
+  "cottage_rustic": {
+    "category": "residential",
+    "display_name": "시골 오두막",
+    "style": "warm_cottage",
+    "palette": ["minecraft:oak_log", "minecraft:oak_planks", "minecraft:cobblestone", "minecraft:stripped_oak_log", "minecraft:campfire", "minecraft:flower_pot", "minecraft:oak_door"],
+    "silhouette_rules": {"low_profile": true, "steep_thatched_roof": true, "chimney_asymmetric": true},
+    "structural_motifs": ["stone_foundation", "timber_frame", "smoking_chimney", "flower_boxes", "garden_path"],
+    "typical_footprint": {"width": 10, "depth": 8, "floors": 1},
+    "keywords": ["오두막", "cottage", "집", "house", "시골집", "hut", "farmhouse"]
+  },
+  "manor_house": {
+    "category": "residential",
+    "display_name": "저택",
+    "style": "tudor_half_timber",
+    "palette": ["minecraft:white_wool", "minecraft:dark_oak_planks", "minecraft:dark_oak_log", "minecraft:stone_bricks", "minecraft:brick", "minecraft:iron_bars"],
+    "silhouette_rules": {"multi_volume": true, "overhanging_upper_floors": true, "prominent_chimney_stacks": true},
+    "structural_motifs": ["half_timbered_facade", "bay_windows", "twin_gables", "servants_wing"],
+    "typical_footprint": {"width": 20, "depth": 14, "floors": 3},
+    "keywords": ["저택", "manor", "mansion", "대저택", "영주관"]
+  },
+  "harbor": {
+    "category": "waterfront_structure",
+    "display_name": "항구",
+    "style": "rustic_village",
+    "palette": ["minecraft:oak_planks", "minecraft:spruce_planks", "minecraft:spruce_log", "minecraft:cobblestone", "minecraft:lantern", "minecraft:barrel", "minecraft:campfire", "minecraft:chain"],
+    "silhouette_rules": {"low_horizontal": true, "extends_over_water": true, "multiple_piers": true},
+    "structural_motifs": ["dock_pillars", "warehouse", "crane", "mooring_posts", "fish_drying_racks", "customs_office"],
+    "typical_footprint": {"width": 24, "depth": 16, "floors": 2},
+    "keywords": ["항구", "harbor", "부두", "dock", "선착장", "port"]
+  },
+  "lighthouse": {
+    "category": "waterfront_structure",
+    "display_name": "등대",
+    "style": "copper_oxidized",
+    "palette": ["minecraft:smooth_stone", "minecraft:stone_bricks", "minecraft:white_terracotta", "minecraft:red_terracotta", "minecraft:copper_block", "minecraft:oxidized_copper", "minecraft:sea_lantern", "minecraft:glass"],
+    "silhouette_rules": {"tall_cylindrical": true, "glass_top_dome": true, "base_wider_than_tower": true},
+    "structural_motifs": ["spiral_internal_stairs", "beacon_room_glass", "copper_dome_cap", "keeper_cottage_attached"],
+    "typical_footprint": {"width": 8, "depth": 8, "floors": 6},
+    "keywords": ["등대", "lighthouse", "beacon_tower"]
+  },
+  "bridge": {
+    "category": "infrastructure",
+    "display_name": "석조 다리",
+    "style": "gothic_stone",
+    "palette": ["minecraft:stone_bricks", "minecraft:stone_brick_stairs", "minecraft:oak_fence", "minecraft:lantern", "minecraft:chiseled_stone_bricks", "minecraft:mossy_stone_bricks"],
+    "silhouette_rules": {"horizontal_span": true, "arch_supports": true, "rhythmic_lanterns": true},
+    "structural_motifs": ["arch_supports", "railings", "lamp_posts", "keystone", "carved_reliefs"],
+    "typical_footprint": {"width": 24, "depth": 6, "floors": 1},
+    "keywords": ["다리", "bridge", "교량", "돌다리", "stone_bridge"]
+  },
+  "gate": {
+    "category": "entrance_structure",
+    "display_name": "성문",
+    "style": "gothic_stone",
+    "palette": ["minecraft:stone_bricks", "minecraft:oak_door", "minecraft:iron_bars", "minecraft:torch", "minecraft:cobblestone_wall", "minecraft:dark_oak_planks"],
+    "silhouette_rules": {"twin_flanking_towers": true, "wide_central_opening": true, "crenellated_top": true},
+    "structural_motifs": ["portcullis", "murder_holes", "flanking_towers", "drawbridge_hint", "guard_chambers"],
+    "typical_footprint": {"width": 14, "depth": 8, "floors": 2},
+    "keywords": ["문", "gate", "성문", "관문", "진입문", "gateway"]
+  },
+  "watchtower": {
+    "category": "defensive_structure",
+    "display_name": "망루",
+    "style": "medieval_timber",
+    "palette": ["minecraft:spruce_log", "minecraft:spruce_planks", "minecraft:cobblestone", "minecraft:torch", "minecraft:spruce_stairs"],
+    "silhouette_rules": {"tall_narrow": true, "open_top_platform": true, "exposed_timber_frame": true},
+    "structural_motifs": ["ladder_access", "beacon_fire_pit", "signal_bell", "wrap_around_platform"],
+    "typical_footprint": {"width": 5, "depth": 5, "floors": 4},
+    "keywords": ["망루", "watchtower", "감시탑", "lookout"]
+  },
+  "windmill": {
+    "category": "industrial",
+    "display_name": "풍차",
+    "style": "rustic_village",
+    "palette": ["minecraft:stone_bricks", "minecraft:oak_planks", "minecraft:oak_log", "minecraft:white_wool", "minecraft:oak_fence"],
+    "silhouette_rules": {"cylindrical_base_with_conical_cap": true, "four_sail_projection": true},
+    "structural_motifs": ["grinding_room", "sail_blades", "rotating_cap_suggestion", "grain_storage"],
+    "typical_footprint": {"width": 10, "depth": 10, "floors": 3},
+    "keywords": ["풍차", "windmill", "mill"]
+  },
+  "farmhouse": {
+    "category": "residential",
+    "display_name": "농가",
+    "style": "rustic_village",
+    "palette": ["minecraft:spruce_planks", "minecraft:spruce_log", "minecraft:cobblestone", "minecraft:hay_block", "minecraft:oak_fence", "minecraft:composter", "minecraft:campfire"],
+    "silhouette_rules": {"long_horizontal": true, "attached_barn": true, "fenced_fields_adjacent": true},
+    "structural_motifs": ["barn_wing", "stable", "crop_fields", "chicken_coop", "root_cellar", "farm_well"],
+    "typical_footprint": {"width": 16, "depth": 12, "floors": 2},
+    "keywords": ["농가", "농장", "farm", "farmhouse", "barn", "축사"]
+  },
+  "shrine_japanese": {
+    "category": "religious",
+    "display_name": "일본 신사",
+    "style": "japanese_clean",
+    "palette": ["minecraft:dark_oak_planks", "minecraft:dark_oak_log", "minecraft:red_terracotta", "minecraft:stripped_dark_oak_log", "minecraft:white_concrete", "minecraft:lantern", "minecraft:spruce_stairs"],
+    "silhouette_rules": {"tiered_pagoda_roof": true, "torii_gate_approach": true, "elevated_platform": true},
+    "structural_motifs": ["torii_gate", "stone_lanterns_path", "sacred_rope_shimenawa", "bell", "purification_fountain"],
+    "typical_footprint": {"width": 12, "depth": 10, "floors": 1},
+    "keywords": ["신사", "shrine", "사당", "torii", "일본풍", "japanese"]
+  },
+  "temple_gothic": {
+    "category": "religious",
+    "display_name": "고딕 성당",
+    "style": "gothic_stone",
+    "palette": ["minecraft:stone_bricks", "minecraft:chiseled_stone_bricks", "minecraft:purple_stained_glass", "minecraft:light_blue_stained_glass", "minecraft:dark_oak_planks", "minecraft:soul_lantern", "minecraft:gold_block"],
+    "silhouette_rules": {"central_spire": true, "flying_buttresses": true, "rose_window_facade": true, "twin_bell_towers": true},
+    "structural_motifs": ["pointed_arches", "ribbed_vaults", "stained_glass_rose", "gargoyles", "crypt_below", "altar"],
+    "typical_footprint": {"width": 20, "depth": 30, "floors": 2},
+    "keywords": ["성당", "cathedral", "교회", "church", "temple", "사원", "고딕"]
+  },
+  "temple_jungle": {
+    "category": "religious",
+    "display_name": "정글 신전",
+    "style": "jungle_temple",
+    "palette": ["minecraft:mossy_cobblestone", "minecraft:mossy_stone_bricks", "minecraft:cracked_stone_bricks", "minecraft:vine", "minecraft:jungle_log", "minecraft:jungle_leaves", "minecraft:gold_block", "minecraft:emerald_block"],
+    "silhouette_rules": {"stepped_pyramid": true, "overgrown_ruins": true, "multiple_tiers": true},
+    "structural_motifs": ["stepped_pyramid", "hidden_chambers", "booby_traps", "vine_covered_walls", "monkey_idols", "treasure_room"],
+    "typical_footprint": {"width": 22, "depth": 22, "floors": 4},
+    "keywords": ["정글신전", "jungle_temple", "아즈텍", "마야", "피라미드", "pyramid"]
+  },
+  "pagoda_tiered": {
+    "category": "religious",
+    "display_name": "탑형 불탑",
+    "style": "pagoda_tiered",
+    "palette": ["minecraft:dark_oak_planks", "minecraft:spruce_planks", "minecraft:red_terracotta", "minecraft:gold_block", "minecraft:lantern", "minecraft:dark_oak_stairs"],
+    "silhouette_rules": {"tiered_roofs_each_smaller": true, "upturned_eaves": true, "central_spire_top": true},
+    "structural_motifs": ["five_story_tiers", "bell_at_top", "prayer_wheels", "dragon_roof_ornaments"],
+    "typical_footprint": {"width": 10, "depth": 10, "floors": 5},
+    "keywords": ["불탑", "pagoda", "탑", "오층탑", "pagoda_tower"]
+  },
+  "inn_tavern": {
+    "category": "commercial",
+    "display_name": "여관",
+    "style": "medieval_timber",
+    "palette": ["minecraft:oak_planks", "minecraft:oak_log", "minecraft:cobblestone", "minecraft:barrel", "minecraft:campfire", "minecraft:lantern", "minecraft:red_bed"],
+    "silhouette_rules": {"hanging_sign_prominent": true, "two_story_common_room_below": true, "stable_attached": true},
+    "structural_motifs": ["hanging_sign", "common_room", "guest_bedrooms", "kitchen_with_hearth", "cellar_for_ale", "attached_stable"],
+    "typical_footprint": {"width": 14, "depth": 12, "floors": 2},
+    "keywords": ["여관", "inn", "tavern", "pub", "주막", "숙소"]
+  },
+  "shop_market": {
+    "category": "commercial",
+    "display_name": "상점",
+    "style": "medieval_timber",
+    "palette": ["minecraft:oak_planks", "minecraft:cobblestone", "minecraft:barrel", "minecraft:oak_fence", "minecraft:lantern", "minecraft:item_frame"],
+    "silhouette_rules": {"open_front_counter": true, "storefront_awning": true, "workshop_backroom": true},
+    "structural_motifs": ["market_stall_front", "display_barrels", "merchant_sign", "small_workshop_behind"],
+    "typical_footprint": {"width": 8, "depth": 10, "floors": 2},
+    "keywords": ["상점", "shop", "store", "market", "가게", "market_stall"]
+  },
+  "desert_pyramid": {
+    "category": "religious",
+    "display_name": "사막 피라미드",
+    "style": "desert_sandstone",
+    "palette": ["minecraft:sandstone", "minecraft:cut_sandstone", "minecraft:chiseled_sandstone", "minecraft:smooth_sandstone", "minecraft:orange_terracotta", "minecraft:gold_block"],
+    "silhouette_rules": {"pyramidal": true, "stepped_sides": true, "entrance_through_base": true},
+    "structural_motifs": ["stepped_pyramid", "hieroglyphs", "hidden_tomb_chambers", "obelisk_entrance"],
+    "typical_footprint": {"width": 24, "depth": 24, "floors": 4},
+    "keywords": ["피라미드", "pyramid", "사막신전", "tomb", "desert_temple"]
+  },
+  "ice_castle": {
+    "category": "fantasy",
+    "display_name": "얼음 성",
+    "style": "ice_frozen",
+    "palette": ["minecraft:packed_ice", "minecraft:blue_ice", "minecraft:snow_block", "minecraft:ice", "minecraft:light_blue_stained_glass", "minecraft:sea_lantern", "minecraft:white_wool"],
+    "silhouette_rules": {"tall_jagged_spires": true, "crystalline_appearance": true, "translucent_walls": true},
+    "structural_motifs": ["crystalline_spires", "ice_throne_room", "frozen_moat", "snowflake_motifs", "elsa_style_stairs"],
+    "typical_footprint": {"width": 22, "depth": 18, "floors": 4},
+    "keywords": ["얼음성", "ice_castle", "frozen", "겨울왕국", "elsa", "얼음궁전"]
+  },
+  "nether_fortress": {
+    "category": "fantasy",
+    "display_name": "네더 요새",
+    "style": "nether_dark",
+    "palette": ["minecraft:nether_bricks", "minecraft:red_nether_bricks", "minecraft:blackstone", "minecraft:gilded_blackstone", "minecraft:soul_lantern", "minecraft:crimson_planks"],
+    "silhouette_rules": {"angular_menacing": true, "bridge_networks": true, "lava_integration": true},
+    "structural_motifs": ["bridge_spans", "blaze_spawners", "dark_corridors", "soul_fire_lanterns", "magma_pools"],
+    "typical_footprint": {"width": 30, "depth": 24, "floors": 3},
+    "keywords": ["네더", "nether", "지옥", "요새", "네더요새", "fortress"]
+  },
+  "end_sanctum": {
+    "category": "fantasy",
+    "display_name": "엔드 성소",
+    "style": "obsidian_fortress",
+    "palette": ["minecraft:end_stone", "minecraft:end_stone_bricks", "minecraft:purpur_block", "minecraft:purpur_pillar", "minecraft:obsidian", "minecraft:end_rod"],
+    "silhouette_rules": {"floating_asymmetric": true, "purpur_towers": true, "end_rod_lighting": true},
+    "structural_motifs": ["floating_platforms", "chorus_plants", "purpur_stairs", "end_crystal_anchors"],
+    "typical_footprint": {"width": 18, "depth": 18, "floors": 3},
+    "keywords": ["엔드", "end", "엔드성소", "end_city", "purpur"]
+  },
+  "mage_tower": {
+    "category": "fantasy",
+    "display_name": "마법사 탑",
+    "style": "fantasy_mystic",
+    "palette": ["minecraft:deepslate_bricks", "minecraft:cracked_deepslate_bricks", "minecraft:purple_stained_glass", "minecraft:amethyst_block", "minecraft:soul_lantern", "minecraft:bookshelf"],
+    "silhouette_rules": {"twisted_spiral_tower": true, "amethyst_cap": true, "floating_books_hint": true},
+    "structural_motifs": ["twisted_spiral", "library_floors", "alchemy_lab", "crystal_ball_room", "familiar_perches"],
+    "typical_footprint": {"width": 10, "depth": 10, "floors": 5},
+    "keywords": ["마법탑", "mage_tower", "wizard_tower", "마법사탑", "탑"]
+  },
+  "alpine_chalet": {
+    "category": "residential",
+    "display_name": "알프스 샬레",
+    "style": "alpine_chalet",
+    "palette": ["minecraft:spruce_log", "minecraft:spruce_planks", "minecraft:stone", "minecraft:cobblestone", "minecraft:snow_block", "minecraft:red_wool", "minecraft:oak_fence"],
+    "silhouette_rules": {"steep_overhanging_roof": true, "stone_foundation_wood_upper": true, "decorative_balconies": true},
+    "structural_motifs": ["overhanging_eaves", "carved_balcony_railings", "flower_boxes", "stone_chimney", "snow_load_roof"],
+    "typical_footprint": {"width": 14, "depth": 12, "floors": 2},
+    "keywords": ["샬레", "chalet", "산장", "ski_lodge", "스위스"]
+  },
+  "bamboo_pavilion": {
+    "category": "residential",
+    "display_name": "대나무 정자",
+    "style": "bamboo_zen",
+    "palette": ["minecraft:bamboo_planks", "minecraft:bamboo", "minecraft:bamboo_mosaic", "minecraft:spruce_planks", "minecraft:stone", "minecraft:lantern"],
+    "silhouette_rules": {"open_airy": true, "low_hip_roof": true, "raised_platform": true},
+    "structural_motifs": ["open_walls_screens", "koi_pond_adjacent", "bamboo_grove_garden", "tea_ceremony_table"],
+    "typical_footprint": {"width": 10, "depth": 10, "floors": 1},
+    "keywords": ["정자", "pavilion", "대나무", "bamboo", "선", "zen"]
+  },
+  "modern_villa": {
+    "category": "residential",
+    "display_name": "모던 빌라",
+    "style": "modern_clean",
+    "palette": ["minecraft:smooth_quartz", "minecraft:white_concrete", "minecraft:dark_oak_planks", "minecraft:glass", "minecraft:smooth_stone", "minecraft:sea_lantern", "minecraft:gray_concrete"],
+    "silhouette_rules": {"flat_roof_geometric": true, "large_glass_walls": true, "cantilevered_sections": true},
+    "structural_motifs": ["floor_to_ceiling_windows", "cantilevered_second_floor", "infinity_pool", "green_roof", "minimalist_entry"],
+    "typical_footprint": {"width": 20, "depth": 14, "floors": 2},
+    "keywords": ["모던", "modern", "빌라", "villa", "현대", "minimalist"]
+  }
+}

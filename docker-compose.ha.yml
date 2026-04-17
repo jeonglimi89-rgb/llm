@@ -1,0 +1,70 @@
+# docker-compose.ha.yml — HA topology overlay (2 orchestrator replicas)
+#
+# 사용법:
+#   docker compose -f docker-compose.yml -f docker-compose.ha.yml \
+#     --profile proxy --profile observability up -d
+#
+# 효과:
+#   - orchestrator 서비스는 orchestrator-1 과 orchestrator-2 로 분리
+#   - nginx upstream이 두 인스턴스 앞에서 load balance (least_conn)
+#   - Redis는 두 인스턴스 간 state 공유 (cache + rate limit)
+#   - 하나가 죽어도 다른 쪽이 받아서 continuing
+services:
+  orchestrator:
+    deploy:
+      replicas: 0        # 기존 단일 orch 비활성
+    scale: 0
+
+  orchestrator-1:
+    image: vllm-orchestrator:latest
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - vllm_orchestrator/.env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:8000}
+      ORCHESTRATOR_BASE_DIR: /app
+      STORAGE_DIR: /data/storage
+      LOGS_DIR: /data/logs
+      UVICORN_WORKERS: ${UVICORN_WORKERS:-2}
+      INSTANCE_ID: orch-1
+    volumes:
+      - orchestrator-data:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8100/health/ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 45s
+
+  orchestrator-2:
+    image: vllm-orchestrator:latest
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file:
+      - vllm_orchestrator/.env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.docker.internal:8000}
+      ORCHESTRATOR_BASE_DIR: /app
+      STORAGE_DIR: /data/storage
+      LOGS_DIR: /data/logs
+      UVICORN_WORKERS: ${UVICORN_WORKERS:-2}
+      INSTANCE_ID: orch-2
+    volumes:
+      - orchestrator-data:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8100/health/ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 45s

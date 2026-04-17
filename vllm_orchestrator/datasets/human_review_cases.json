@@ -1,0 +1,22 @@
+{
+  "_comment": "vllm_orchestrator/scripts/export_human_review.py case list. 12-case HR-001..HR-012 baseline. Order is preserved exactly. Loaded by review/export_runtime.load_cases_file. To run a different set, pass --cases-file PATH or override the default path.",
+  "schema_version": "1.0",
+  "generated_at": "2026-04-07",
+  "cases": [
+    {"domain": "builder",   "task": "requirement_parse",       "input": "2층 주택 거실 크게, 모던 스타일"},
+    {"domain": "builder",   "task": "requirement_parse",       "input": "지하 카페 + 2층 주거, 벽돌 외관"},
+    {"domain": "builder",   "task": "patch_intent_parse",      "input": "창문 유지하고 출입문만 키워줘"},
+
+    {"domain": "cad",       "task": "constraint_parse",        "input": "방수 샤워필터, 배수 연결 포함"},
+    {"domain": "cad",       "task": "constraint_parse",        "input": "모터+PCB 내장 접이식 기구부"},
+    {"domain": "cad",       "task": "system_split_parse",      "input": "전기/배수/구조 시스템 분리"},
+
+    {"domain": "minecraft", "task": "edit_parse",              "input": "정면 창문 넓게, 지붕 유지"},
+    {"domain": "minecraft", "task": "style_check",             "input": "중세풍 스타일에 맞는지 체크"},
+    {"domain": "minecraft", "task": "anchor_resolution",       "input": "동쪽 2층 발코니 위치"},
+
+    {"domain": "animation", "task": "shot_parse",              "input": "노을빛에 슬픈 클로즈업"},
+    {"domain": "animation", "task": "camera_intent_parse",     "input": "공포 장면 어둠 연출"},
+    {"domain": "animation", "task": "lighting_intent_parse",   "input": "비 오는 밤 외로운 분위기"}
+  ]
+}

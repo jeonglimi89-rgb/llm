@@ -1,0 +1,116 @@
+[
+  {
+    "task_type": "builder.requirement_parse",
+    "consistency_grade": "A",
+    "runs": [
+      {
+        "keys": [
+          "constraints",
+          "floors",
+          "preferences",
+          "project_type",
+          "spaces"
+        ],
+        "schema_ok": true,
+        "ms": 1
+      },
+      {
+        "keys": [
+          "constraints",
+          "floors",
+          "preferences",
+          "project_type",
+          "spaces"
+        ],
+        "schema_ok": true,
+        "ms": 0
+      },
+      {
+        "keys": [
+          "constraints",
+          "floors",
+          "preferences",
+          "project_type",
+          "spaces"
+        ],
+        "schema_ok": true,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "task_type": "cad.constraint_parse",
+    "consistency_grade": "A",
+    "runs": [
+      {
+        "keys": [
+          "constraints",
+          "priorities",
+          "systems"
+        ],
+        "schema_ok": true,
+        "ms": 0
+      },
+      {
+        "keys": [
+          "constraints",
+          "priorities",
+          "systems"
+        ],
+        "schema_ok": true,
+        "ms": 0
+      },
+      {
+        "keys": [
+          "constraints",
+          "priorities",
+          "systems"
+        ],
+        "schema_ok": true,
+        "ms": 0
+      }
+    ]
+  },
+  {
+    "task_type": "animation.shot_parse",
+    "consistency_grade": "A",
+    "runs": [
+      {
+        "keys": [
+          "acting",
+          "camera",
+          "characters",
+          "duration_frames",
+          "lighting",
+          "shot_id"
+        ],
+        "schema_ok": true,
+        "ms": 1
+      },
+      {
+        "keys": [
+          "acting",
+          "camera",
+          "characters",
+          "duration_frames",
+          "lighting",
+          "shot_id"
+        ],
+        "schema_ok": true,
+        "ms": 0
+      },
+      {
+        "keys": [
+          "acting",
+          "camera",
+          "characters",
+          "duration_frames",
+          "lighting",
+          "shot_id"
+        ],
+        "schema_ok": true,
+        "ms": 0
+      }
+    ]
+  }
+]

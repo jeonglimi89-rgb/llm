@@ -1,0 +1,77 @@
+{
+  "baseline": {
+    "label": "CPU Qwen2.5-0.5B",
+    "date": "2026-03-30",
+    "pass": 35,
+    "total": 40,
+    "rate": 87.5,
+    "p50_ms": 39292,
+    "p95_ms": 143137
+  },
+  "candidate": {
+    "label": "Current",
+    "date": "2026-03-30",
+    "pass": 35,
+    "total": 40,
+    "rate": 87.5,
+    "p50_ms": 39292,
+    "p95_ms": 143137
+  },
+  "delta": {
+    "pass": 0,
+    "rate": 0.0,
+    "p50_ms": 0,
+    "p95_ms": 0,
+    "speedup_p50": 1.0
+  },
+  "per_program": {
+    "builder": {
+      "baseline_pass": "8/10",
+      "current_pass": "8/10",
+      "delta": 0,
+      "baseline_p50": 39986,
+      "current_p50": 39986
+    },
+    "cad": {
+      "baseline_pass": "8/10",
+      "current_pass": "8/10",
+      "delta": 0,
+      "baseline_p50": 62714,
+      "current_p50": 62714
+    },
+    "minecraft": {
+      "baseline_pass": "10/10",
+      "current_pass": "10/10",
+      "delta": 0,
+      "baseline_p50": 28626,
+      "current_p50": 28626
+    },
+    "animation": {
+      "baseline_pass": "9/10",
+      "current_pass": "9/10",
+      "delta": 0,
+      "baseline_p50": 43246,
+      "current_p50": 43246
+    }
+  },
+  "judgment": {
+    "verdict": "ROLLBACK",
+    "checks": [
+      "minecraft: 10/10 >= 10 OK",
+      "animation: 9/10 >= 9 OK",
+      "malformed_output: 1 <= 1 OK"
+    ],
+    "warnings": [
+      "p50: 39292ms > 5000ms (slow)",
+      "p95: 143137ms > 15000ms (slow)",
+      "schema_failure: 2 > 1"
+    ],
+    "blockers": [
+      "total_pass: 35/40 < 38",
+      "pass_rate: 87.5% < 95.0%",
+      "builder: 8/10 < 9",
+      "cad: 8/10 < 9",
+      "network_failure: 2 > 0"
+    ]
+  }
+}

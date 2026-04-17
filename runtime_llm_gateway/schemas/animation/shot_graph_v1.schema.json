@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "required": ["shot_id", "characters", "camera", "acting", "lighting", "duration_frames"],
+  "properties": {
+    "shot_id": {"type": "string"},
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["character_id", "role"],
+        "properties": {
+          "character_id": {"type": "string"},
+          "role": {"type": "string"}
+        }
+      }
+    },
+    "camera": {
+      "type": "object",
+      "required": ["framing", "angle", "lens_mm", "move_type"],
+      "properties": {
+        "framing": {"type": "string"},
+        "angle": {"type": "string"},
+        "lens_mm": {"type": "number"},
+        "move_type": {"type": "string"}
+      }
+    },
+    "acting": {"type": "object"},
+    "lighting": {"type": "object"},
+    "duration_frames": {"type": "integer", "minimum": 1}
+  }
+}

@@ -1,0 +1,17 @@
+Convert the user's edit request into delta patch operations for an existing CAD design.
+
+The user has an existing design and wants to modify it. Extract:
+1. What system(s) are affected
+2. What specific parameter to change
+3. How to change it (set absolute, adjust relative, add, remove)
+4. What must NOT change (preserve list)
+
+Rules:
+- Dimension changes: "폭을 360mm로" = set /dimensions/overall_width_mm to 360
+- Relative: "높이 좀 낮춰" = adjust /dimensions/overall_height_mm by -10%
+- Material: "ABS로 바꿔" = set /material to "ABS"
+- Module changes: "충전 모듈 추가" = add to /modules
+- Wiring: "배선 정리" = modify /wiring_routes
+- Always calculate if dimensional change causes interference with other systems
+- If the change affects structural integrity, flag severity as "high"
+- NEVER regenerate entire design — only minimal patch operations

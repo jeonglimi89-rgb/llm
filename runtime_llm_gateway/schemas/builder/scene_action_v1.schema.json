@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BuilderSceneAction",
+  "description": "3D 씬 조작 명령 + 어시스턴트 응답",
+  "type": "object",
+  "required": ["actions", "reply"],
+  "properties": {
+    "actions": {
+      "type": "array",
+      "description": "실행할 3D 씬 명령 목록 (빈 배열 가능)",
+      "items": {
+        "type": "object",
+        "required": ["command", "params"],
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "select",
+              "isolate_floor",
+              "isolate_type",
+              "show_all",
+              "set_material",
+              "set_render_mode",
+              "set_section",
+              "clear_section",
+              "fit_camera",
+              "save_bookmark",
+              "analyze_compliance",
+              "explain_selection",
+              "generate_plan",
+              "generate_elevation",
+              "generate_section",
+              "generate_all_drawings",
+              "export_plan"
+            ],
+            "description": "실행할 명령 종류"
+          },
+          "params": {
+            "type": "object",
+            "description": "명령별 매개변수",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "reply": {
+      "type": "string",
+      "description": "사용자에게 보여줄 한국어 응답 메시지"
+    }
+  }
+}

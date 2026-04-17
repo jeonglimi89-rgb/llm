@@ -1,0 +1,19 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: orchestrator
+spec:
+  minAvailable: 1                 # 업그레이드/drain 중에도 항상 1개는 살아있음
+  selector:
+    matchLabels:
+      app: vllm-orchestrator
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: redis
+spec:
+  maxUnavailable: 0              # Redis는 downtime 없이
+  selector:
+    matchLabels:
+      app: redis

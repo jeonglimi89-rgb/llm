@@ -1,0 +1,74 @@
+{
+  "cad_full_design": {
+    "domain": "cad",
+    "steps": [
+      {"task_name": "system_split_parse", "prompt": "Identify which engineering systems this product needs. Choose from: mechanical, electrical, plumbing, structure, exterior.\nOutput ONLY: {\"systems\": [{\"name\": \"<system>\"}]}\nNo explanations.", "required": true},
+      {"task_name": "constraint_parse", "prompt": "Extract design constraints for this product.\nOutput ONLY: {\"constraints\": [{\"constraint_type\": \"<type>\", \"description\": \"<Korean>\", \"category\": \"기계|전기|배수|구조\"}]}\nNo explanations.", "required": true},
+      {"task_name": "_tool:cad.generate_part", "prompt": null, "required": true},
+      {"task_name": "_tool:cad.solve_assembly", "prompt": null, "required": true},
+      {"task_name": "_tool:cad.route_wiring", "prompt": null, "required": false},
+      {"task_name": "_tool:cad.route_drainage", "prompt": null, "required": false},
+      {"task_name": "_tool:cad.validate_geometry", "prompt": null, "required": false}
+    ]
+  },
+  "builder_full_plan": {
+    "domain": "builder",
+    "steps": [
+      {"task_name": "requirement_parse", "prompt": "Extract building requirements.\nOutput ONLY: {\"floors\": <int>, \"spaces\": [{\"type\": \"<room_type>\", \"count\": <int>}], \"preferences\": {\"style_family\": \"<style>\"}}\nNo explanations. Korean for text values.", "required": true},
+      {"task_name": "_tool:builder.generate_plan", "prompt": null, "required": true},
+      {"task_name": "_tool:builder.validate", "prompt": null, "required": true},
+      {"task_name": "_tool:builder.export", "prompt": null, "required": false}
+    ]
+  },
+  "minecraft_full_build": {
+    "domain": "minecraft",
+    "steps": [
+      {"task_name": "build_parse", "prompt": "Analyze the user's building request. Determine the building type, architectural style, scale, mood, and material preferences.\nOutput a BuildSpecV1 JSON.\nNo explanations.", "required": true},
+      {"task_name": "style_check", "prompt": "Evaluate style coherence for this build spec. Does the style match the building type? Is the material palette appropriate?\nOutput ONLY: {\"verdict\": \"pass|warn|fail\", \"style_score\": <0-1>, \"issues\": []}\nNo explanations.", "required": true},
+      {"task_name": "_tool:minecraft.compile_archetype", "prompt": null, "required": true},
+      {"task_name": "_tool:minecraft.validate_palette", "prompt": null, "required": false}
+    ]
+  },
+  "minecraft_llm_active_build": {
+    "domain": "minecraft",
+    "steps": [
+      {"task_name": "build_planner", "prompt": "You are a master Minecraft architect. Analyze the user's building request and create a detailed structural plan.\nOutput the build_planner JSON format with build_type, style, footprint, silhouette_strategy, roof, material_hints, key_features, and creative_notes.\nBe specific and creative — every field you set controls the actual building.", "required": true},
+      {"task_name": "variant_planner", "prompt": "Given the base build plan in context, generate 3 meaningfully different variants.\nVariant A: silhouette-focused. Variant B: gameplay-focused. Variant C: decorative-focused.\nEach must feel like a DISTINCT architectural choice.\nOutput the variant_planner JSON.", "required": true},
+      {"task_name": "_tool:minecraft.compile_archetype", "prompt": null, "required": true},
+      {"task_name": "build_critic", "prompt": "You are a harsh Minecraft architecture critic. Given the build statistics and rubric scores in context, identify REAL problems.\nDo NOT praise mediocrity. Be specific about what's wrong and WHY.\nOutput the build_critic JSON.", "required": true},
+      {"task_name": "repair_planner", "prompt": "Based on the critique in context, plan EXACT repair operations.\nBe precise about what to add/remove/modify.\nMax 5-8 steps. Don't over-repair.\nOutput the repair_planner JSON.", "required": false}
+    ]
+  },
+  "minecraft_edit": {
+    "domain": "minecraft",
+    "steps": [
+      {"task_name": "edit_parse", "prompt": "Extract the edit target, operations, and elements to preserve.\nOutput ONLY the edit slot JSON.\nNo explanations.", "required": true},
+      {"task_name": "style_check", "prompt": "Evaluate style coherence after the proposed edit.\nOutput ONLY: {\"verdict\": \"pass|warn|fail\", \"style_score\": <0-1>, \"issues\": []}\nNo explanations.", "required": true},
+      {"task_name": "_tool:minecraft.compile_archetype", "prompt": null, "required": true},
+      {"task_name": "_tool:minecraft.validate_palette", "prompt": null, "required": false}
+    ]
+  },
+  "animation_full_scene": {
+    "domain": "animation",
+    "steps": [
+      {"task_name": "shot_parse", "prompt": "Extract the scene intent: framing, mood, speed, emotion.\nOutput ONLY: {\"framing\": \"<type>\", \"mood\": \"<mood>\", \"speed\": \"slow|moderate|fast\", \"emotion_hint\": \"<emotion>\"}\nNo explanations.", "required": true},
+      {"task_name": "camera_intent_parse", "prompt": "Plan the camera motion for this shot.\nOutput ONLY: {\"movement\": \"<type>\", \"angle\": \"<angle>\", \"subject\": \"<Korean description>\", \"focus\": \"sharp|shallow|rack\"}\nNo explanations.", "required": true},
+      {"task_name": "lighting_intent_parse", "prompt": "Describe the lighting mood for this scene.\nOutput ONLY: {\"atmosphere\": \"<Korean description>\", \"mood_tag\": \"<한국어 한 단어>\", \"intensity\": \"low|medium|high\", \"color_temperature\": \"warm|neutral|cold\"}\nNo explanations.", "required": true},
+      {"task_name": "_tool:animation.solve_shot", "prompt": null, "required": true},
+      {"task_name": "creative_direction", "prompt": "Direct the acting, lighting, and scene with cinematic specificity for this shot.\nUse the shot parameters provided in context.\nOutput the creative_shot_direct JSON format.", "required": true},
+      {"task_name": "_tool:animation.check_continuity", "prompt": null, "required": false}
+    ]
+  },
+  "product_design_full_cycle": {
+    "domain": "product_design",
+    "steps": [
+      {"task_name": "requirement_parse", "prompt": "Extract product design requirements: target user, category, key features, constraints.\nOutput ONLY: {\"concept\": {\"name\": \"<Korean>\", \"category\": \"<category>\", \"target_user\": \"<Korean>\"}, \"specifications\": {\"features\": [\"<Korean>\"], \"constraints\": [{\"type\": \"<type>\", \"description\": \"<Korean>\"}]}}\nNo explanations.", "required": true},
+      {"task_name": "concept_parse", "prompt": "Generate product concept details: BOM estimate, manufacturing approach, certification needs.\nOutput ONLY: {\"bom\": [{\"name\": \"<part>\", \"material\": \"<mat>\", \"quantity\": <n>}], \"manufacturing\": \"<method>\", \"certification\": [\"<cert>\"]}\nNo explanations.", "required": true},
+      {"task_name": "_tool:cad.generate_part", "prompt": null, "required": true},
+      {"task_name": "_tool:cad.solve_assembly", "prompt": null, "required": true},
+      {"task_name": "_tool:cad.route_wiring", "prompt": null, "required": false},
+      {"task_name": "_tool:cad.route_drainage", "prompt": null, "required": false},
+      {"task_name": "_tool:cad.validate_geometry", "prompt": null, "required": false}
+    ]
+  }
+}

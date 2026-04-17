@@ -1,0 +1,53 @@
+groups:
+  - name: orchestrator_slo
+    interval: 30s
+    rules:
+      # 요청 실패율 > 5% (5분 윈도우) — 품질 저하
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(orchestrator_requests_total{status!="TaskStatus.DONE"}[5m]))
+          / sum(rate(orchestrator_requests_total[5m])) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Orchestrator error rate >5% for 2m"
+          description: "Error rate is {{ $value | humanizePercentage }} over last 5m"
+
+      # P99 latency > 60s — SLO 초과
+      - alert: HighP99Latency
+        expr: |
+          histogram_quantile(0.99, sum(rate(orchestrator_request_latency_seconds_bucket[5m])) by (le)) > 60
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "P99 latency >60s"
+          description: "P99 is {{ $value }}s"
+
+      # Circuit breaker open — LLM 장애
+      - alert: LLMCircuitOpen
+        expr: orchestrator_llm_circuit_open == 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "LLM circuit breaker open"
+
+      # 캐시 hit rate < 10% (30분) — 뭔가 이상
+      - alert: LowCacheHitRate
+        expr: orchestrator_cache_hit_rate < 0.10
+        for: 30m
+        labels:
+          severity: info
+        annotations:
+          summary: "Cache hit rate <10% for 30m"
+
+      # Rate limit rejections burst — 공격 의심
+      - alert: RateLimitBurst
+        expr: sum(rate(orchestrator_auth_rejections_total{reason="rate_limited"}[1m])) > 10
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Rate limit rejections >10/s"

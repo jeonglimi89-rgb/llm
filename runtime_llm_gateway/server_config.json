@@ -1,0 +1,114 @@
+{
+  "_comment": "GPU 운영 설정 — Qwen2.5-14B-Instruct-AWQ (fits RTX 5070 12GB)",
+
+  "provider": "vllm",
+  "base_url": "http://localhost:8000",
+  "api_key": "internal-token",
+  "mode": "gpu",
+  "canonical_text_model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
+  "canonical_code_model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
+
+  "profiles": {
+    "strict-json-pool": {
+      "resolved_model": "/mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ",
+      "temperature": 0.1,
+      "top_p": 0.95,
+      "max_output_tokens": 512,
+      "timeout_ms": 15000,
+      "structured_only": true,
+      "enable_repair": true
+    },
+    "fast-chat-pool": {
+      "resolved_model": "/mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ",
+      "temperature": 0.3,
+      "top_p": 0.9,
+      "max_output_tokens": 128,
+      "timeout_ms": 8000,
+      "structured_only": false,
+      "enable_repair": false
+    },
+    "long-context-pool": {
+      "resolved_model": "/mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ",
+      "temperature": 0.1,
+      "top_p": 0.95,
+      "max_output_tokens": 512,
+      "timeout_ms": 30000,
+      "structured_only": true,
+      "enable_repair": true
+    },
+    "embedding-pool": {
+      "resolved_model": "/mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ",
+      "temperature": 0.0,
+      "max_output_tokens": 1,
+      "timeout_ms": 5000,
+      "structured_only": false,
+      "enable_repair": false
+    }
+  },
+
+  "shard_count": 1,
+
+  "model_endpoints": {
+    "text-32b": {
+      "tier": "text",
+      "logical_id": "core_text_32b",
+      "base_url": "http://localhost:8000",
+      "model_path": "/mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ",
+      "max_output_tokens": 512,
+      "temperature": 0.1,
+      "timeout_ms": 15000,
+      "max_context": 32768,
+      "enabled": true
+    },
+    "creative-32b": {
+      "tier": "creative",
+      "logical_id": "core_text_32b",
+      "base_url": "http://localhost:8000",
+      "model_path": "/mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ",
+      "max_output_tokens": 512,
+      "temperature": 0.4,
+      "timeout_ms": 20000,
+      "max_context": 32768,
+      "enabled": true
+    },
+    "long-ctx-32b": {
+      "tier": "long_context",
+      "logical_id": "core_text_32b",
+      "base_url": "http://localhost:8000",
+      "model_path": "/mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ",
+      "max_output_tokens": 512,
+      "temperature": 0.1,
+      "timeout_ms": 30000,
+      "max_context": 131072,
+      "enabled": true
+    },
+    "code-32b": {
+      "tier": "code",
+      "logical_id": "core_code_32b",
+      "base_url": "http://localhost:8000",
+      "model_path": "Qwen/Qwen2.5-Coder-32B-Instruct",
+      "max_output_tokens": 1024,
+      "temperature": 0.1,
+      "timeout_ms": 20000,
+      "max_context": 32768,
+      "enabled": true
+    }
+  },
+
+  "lora_adapters": {
+    "enabled": false,
+    "_comment": "Enable after training. vLLM: --lora-modules minecraft-lora=/path/to/adapter",
+    "adapters": {
+      "minecraft-lora": {"domain": "minecraft", "path": "", "enabled": false},
+      "builder-lora": {"domain": "builder", "path": "", "enabled": false},
+      "animation-lora": {"domain": "animation", "path": "", "enabled": false},
+      "cad-lora": {"domain": "cad", "path": "", "enabled": false}
+    }
+  },
+
+  "vllm_serve_commands": {
+    "text_14b_awq_local": "vllm serve /mnt/d/LLM/models/Qwen2.5-14B-Instruct-AWQ --host 0.0.0.0 --port 8000 --api-key internal-token --gpu-memory-utilization 0.88 --max-model-len 6144 --quantization awq_marlin --enable-request-id-headers",
+    "text_32b_quantized": "vllm serve Qwen/Qwen2.5-32B-Instruct-AWQ --host 0.0.0.0 --port 8000 --api-key internal-token --gpu-memory-utilization 0.90 --max-model-len 32768 --quantization awq_marlin --tensor-parallel-size 2",
+    "text_32b_full": "vllm serve Qwen/Qwen2.5-32B-Instruct --host 0.0.0.0 --port 8000 --api-key internal-token --tensor-parallel-size 2 --max-model-len 32768"
+  }
+}

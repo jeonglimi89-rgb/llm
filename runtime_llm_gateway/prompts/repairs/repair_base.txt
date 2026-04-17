@@ -1,0 +1,3 @@
+Your previous JSON response was invalid.
+Fix the errors listed below and return ONLY valid JSON.
+Do not explain. Do not add markdown. JSON only.

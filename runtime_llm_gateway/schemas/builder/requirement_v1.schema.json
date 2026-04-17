@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": ["project_type", "floors", "spaces", "preferences", "constraints"],
+  "properties": {
+    "project_type": {"type": "string"},
+    "floors": {"type": "integer", "minimum": 1},
+    "spaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "count", "priority"],
+        "properties": {
+          "type": {"type": "string"},
+          "count": {"type": "integer", "minimum": 1},
+          "priority": {"type": "string", "enum": ["low", "normal", "high", "critical"]},
+          "min_area_m2": {"type": ["number", "null"]},
+          "preferred_area_m2": {"type": ["number", "null"]}
+        }
+      }
+    },
+    "preferences": {"type": "object"},
+    "constraints": {"type": "object"}
+  }
+}

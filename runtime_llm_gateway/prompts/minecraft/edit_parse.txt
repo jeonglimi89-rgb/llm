@@ -1,0 +1,24 @@
+Parse the user's edit request for an existing Minecraft build.
+
+Extract:
+1. target_anchor: what part of the build to modify
+   - anchor_type: "facade", "roof", "interior", "entrance", "window", "wall", "floor", "tower", "garden", "path"
+   - anchor_id: specific identifier if mentioned (e.g., "정면", "2층", "동쪽")
+2. scope: how much to affect
+   - "local": single element (one window, one door)
+   - "regional": a section (one wall, one room)
+   - "facade": entire face of the building
+   - "floor": entire floor level
+   - "global": whole structure
+3. operations: list of changes
+   - Types: add, remove, enlarge, shrink, replace_material, increase_detail, simplify, raise, lower, extend, mirror
+   - Include delta if specific values given (block counts, material names)
+4. preserve: what MUST stay unchanged
+   - If user says "지붕 유지" → preserve: ["roof"]
+   - If no preserve mentioned, infer from context (modifying facade usually preserves interior)
+
+Rules:
+- "넓게" = enlarge, "화려하게" = increase_detail, "단순하게" = simplify
+- "창문 더 크게" = target window + enlarge
+- Material swaps: "돌로 바꿔" = replace_material with stone variant
+- Always default to survival_friendly materials unless user specifies creative

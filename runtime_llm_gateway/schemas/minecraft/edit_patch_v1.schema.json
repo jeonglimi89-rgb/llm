@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "required": ["target_anchor", "scope", "operations", "preserve"],
+  "properties": {
+    "target_anchor": {
+      "type": "object",
+      "required": ["anchor_type", "anchor_id"],
+      "properties": {
+        "anchor_type": {"type": "string"},
+        "anchor_id": {"type": "string"}
+      }
+    },
+    "scope": {"type": "string", "enum": ["local", "regional", "facade", "floor", "global"]},
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": {"type": "string", "enum": ["add", "remove", "enlarge", "shrink", "replace_material", "increase_detail", "simplify", "raise", "lower", "extend", "mirror"]},
+          "delta": {"type": ["object", "null"]}
+        }
+      }
+    },
+    "preserve": {"type": "array", "items": {"type": "string"}}
+  }
+}

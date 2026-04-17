@@ -1,0 +1,42 @@
+{
+  "date": "2026-03-31",
+  "server": "WSL CPU fallback (Qwen2.5-0.5B)",
+  "config": "optimized prompts + CPU timeouts",
+  "total_cases": 40,
+  "total_pass": 40,
+  "total_fail": 0,
+  "pass_rate": 100.0,
+  "by_program": {
+    "builder": {
+      "total": 10,
+      "pass": 10,
+      "fail": 0,
+      "pass_rate": 100.0,
+      "failures": {}
+    },
+    "cad": {
+      "total": 10,
+      "pass": 10,
+      "fail": 0,
+      "pass_rate": 100.0,
+      "failures": {}
+    },
+    "minecraft": {
+      "total": 10,
+      "pass": 10,
+      "fail": 0,
+      "pass_rate": 100.0,
+      "failures": {}
+    },
+    "animation": {
+      "total": 10,
+      "pass": 10,
+      "fail": 0,
+      "pass_rate": 100.0,
+      "failures": {}
+    }
+  },
+  "notes": "minecraft/animation rerun separately with 2s interval to avoid CPU overload",
+  "p50_ms": 32000,
+  "p95_ms": 55000
+}

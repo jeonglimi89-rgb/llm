@@ -46,7 +46,7 @@ jobs:
 
       # SBOM via syft (Anchore)
       - name: Install syft
-        uses: anchore/sbom-action/download-syft@v0.17.0
+        uses: anchore/sbom-action/download-syft@v0.24.0
 
       - name: Generate SBOM (SPDX JSON)
         run: |

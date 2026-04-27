@@ -16,7 +16,7 @@ aiohttp>=3.9,<4.0
 pyyaml>=6.0,<7.0
 
 # --- Cache / state ---
-redis>=5.0,<8.0
+redis>=7.4.0,<8.0
 
 # --- Observability ---
 prometheus-client>=0.20,<1.0

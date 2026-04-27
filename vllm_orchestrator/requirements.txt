@@ -4,7 +4,7 @@
 # --- Web framework ---
 # FastAPI 0.118+ ships with starlette 0.49.x which fixes CVE-2025-62727
 fastapi>=0.118,<0.125
-uvicorn[standard]>=0.27,<0.35
+uvicorn[standard]>=0.46.0,<0.47
 gunicorn>=21.2,<24
 python-multipart>=0.0.9
 
